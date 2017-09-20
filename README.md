@@ -1,8 +1,8 @@
 # Playing with WaveNet implementations found around the internet
 
 ### What was done during the experimentation:
-Trained and gathered results from WaveNet implementation in Keras, in Tensorflow, the 'fast' implementation in TF and in text-oriented wavenet in TF. The experimentation with sound was done on VCTK data as well as music (IRMAS). This repo contains only the final results after specific number of steps.
-Training was done on VCTK corpus, music (piano on [IRMAS](https://www.upf.edu/web/mtg/irmas)) and text files, generated wavs corresponding to different number of steps in the training phase
+Trained and gathered results from WaveNet implementation in Keras, in Tensorflow, the 'fast' implementation in TF and in text-oriented wavenet in TF. This repo contains only the final results after specific number of steps.
+Training was done on VCTK corpus, music (piano on [IRMAS](https://www.upf.edu/web/mtg/irmas)) and [Shakespeare](http://www.gutenberg.org/ebooks/100), generated wavs corresponding to different number of steps in the training phase
 
 ### What was not done:
 There is no direct implementation having the text-to-speech functionality integrated, see [this link](https://github.com/ibab/tensorflow-wavenet/issues/252) - that wasn't tried. Neither was adjusting the wavenet architecture and comparing results (no time for that since)

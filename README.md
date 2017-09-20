@@ -18,5 +18,5 @@ I also tried to train on music wavs to see what comes out, after approximatelly 
 ## [Fast-Wavenet in Tensorflow](https://github.com/tomlepaine/fast-wavenet)
 Implementation focusing on speeding up the generation (not training). The model was run for little over 4 hours, was trained on a single wav file and was able to directly reconstruct the same waveform. Run through jupyter notebook to hear the generated output. Fast-wavenet is now completely integrated into https://github.com/ibab/tensorflow-wavenet according to their README, that could explain significantly faster training time compared to keras' model.
 
-## [Tex-Wavenet in Tensorflow](https://github.com/Zeta36/tensorflow-tex-wavenet0
+## [Tex-Wavenet in Tensorflow](https://github.com/Zeta36/tensorflow-tex-wavenet)
 Uses wavenet model to generate text, reusing tensorflow-wavenet. When trained on the default data with 108000 iterations (it was quite fast) on complete works of Shakespeare, with loss of about 1.3, it created interesting results

@@ -1,0 +1,2 @@
+model_checkpoint_path: "/pub/tmp/xslani06/wavenet/clean_version/BP/2018-03-13_18-39-37/saved_weights/2018-03-13_18-39-37_model.ckpt-3640"
+all_model_checkpoint_paths: "/pub/tmp/xslani06/wavenet/clean_version/BP/2018-03-13_18-39-37/saved_weights/2018-03-13_18-39-37_model.ckpt-3640"

@@ -68,7 +68,7 @@ class Generator:
         template = np.linspace(-1, 1, self.model.n_classes)
         for step in range(num_samples):
             output = self.model.sess.run(self.outputs, feed_dict={self.inputs: input})[0]
-            value = np.argmax(output[0, :])
+            value = np.random.choice(np.arange(self.model.n_classes), p=output[0, :])
 
             input = np.array(template[value])[None, None]
             predictions.append(input)

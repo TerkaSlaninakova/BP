@@ -9,12 +9,15 @@
 - generate.py -> class Generate representing the Generator
 - utils.py -> all the other useful utilities, such as plotting, logging and timestamp creation
 
-## Examples
+## Data
 I trained the net on 3 simple (1-2s long) wavs, `bed.wav` and `yes.wav` are from the [speech recognition challenge](https://www.kaggle.com/c/tensorflow-speech-recognition-challenge/data) `p225_001.wav` is form the [vctk corpus](http://homepages.inf.ed.ac.uk/jyamagis/page3/page58/page58.html)
 
 ## Output
 - generated wav saved in `--output_dir` named `pred_[timestamp].wav`
 - if `--plot` is set to True (False by default), a waveform plot of input wav and generated wav
+
+## Examples of usage
+Run `python3 run.py --model=trained/2018-03-13_18-39-37/saved_weights/ --train=False` for generation of wav from pre-trained model (no GPU required). For training and generating, default `python3 run.py` suffices
 
 ## TODOs
 - Support for training with multiple wavs

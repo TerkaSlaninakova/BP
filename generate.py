@@ -2,6 +2,8 @@ import numpy as np
 import tensorflow as tf
 import librosa
 import argparse
+from utils import create_logspace_template
+from sklearn.metrics import log_loss
 
 def generate_sample(inputs, state, name=None, activation=None):
     '''Performs convolution for a single convolutional step'''
@@ -60,22 +62,19 @@ class Generator:
         
         self.model.sess.run(self.init_ops)
 
-    def run(self, input, num_samples, restore_from):
+    def run(self, input, num_samples, validation_data, restore_from):
         predictions = []
         if restore_from:
             self.model.load_weights(restore_from)
-
-        template = np.linspace(-1, 1, self.model.n_classes)
+        template = create_logspace_template(self.model.n_classes)
         for step in range(num_samples):
             output = self.model.sess.run(self.outputs, feed_dict={self.inputs: input})[0]
             value = np.random.choice(np.arange(self.model.n_classes), p=output[0, :])
-
             input = np.array(template[value])[None, None]
+            input_ = template[value]
             predictions.append(input)
-
             if step % 1000 == 0:
                 predictions_ = np.concatenate(predictions, axis=1)
                 print(step, '/', num_samples)
-
-        preditions_ = np.concatenate(predictions, axis=1)
-        return preditions_[0]
+        predictions_ = np.concatenate(predictions, axis=1)
+        return predictions_[0]

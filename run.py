@@ -7,14 +7,14 @@ from utils import  *
 from train import Net
 from generate import Generator
 
-TRAIN_ITERATIONS = 7000
+TRAIN_ITERATIONS = 10000
 TARGET_LOSS = 0.0001
-PATH_TO_WAV = 'data/p225_001.wav'
+PATH_TO_WAV = 'data/yes.wav'
+DATA_DIR = '/pub/tmp/xslani06/wavenet/data/irmas/test/'
 OUTPUT_DIR = ''
 LEARNING_RATE = 0.0005
 GPU_FRACTION = 0.5
 SAMPLE_RATE = 8000
-OUTPUT_AUDIO_LENGTH = 16000
 N_DILATIONS = 14
 N_BLOCKS = 2
 N_HIDDEN = 128
@@ -42,7 +42,6 @@ def get_arguments():
     parser.add_argument('--path_to_wav', type=str, default=PATH_TO_WAV, help='Path to a single wav file (current limitation)')
     parser.add_argument('--learning_rate', type=float, default=LEARNING_RATE, help='Learning rate to be used in training, default: ' + str(LEARNING_RATE))
     parser.add_argument('--output_dir', type=str, default=OUTPUT_DIR, help='Directory for outputs (wavs, plots, ...), default: ' + str(OUTPUT_DIR))
-    parser.add_argument('--output_length', type=int, default=OUTPUT_AUDIO_LENGTH, help='How many sampls should there be in the output audio (audio length), default: ' + str(OUTPUT_AUDIO_LENGTH))
     parser.add_argument('--gpu_fraction', type=float, default=GPU_FRACTION, help='Percentage of GPU to be used, default: ' + str(GPU_FRACTION))
     parser.add_argument('--plot', type=str2bool, default=PLOT, help='Bool to decide whether to plot output data' + str(PLOT))
     parser.add_argument('--n_dilations', type=int, default=N_DILATIONS, help='How many successive dilations should the net consist of, default: ' + str(N_DILATIONS))
@@ -62,17 +61,15 @@ if __name__ == '__main__':
     log = Log(should_log=parser.log).log
     log('Got arguments: {}'.format(parser))
 
-    if not parser.train and parser.model is None:
-        print('Either provide directory to load saved model from or allow training, exiting.');exit()
+    if parser.train and parser.model is not None:
+        parser.train = False
+        log('Assigning False to --train since --model was provided')
 
-    read_audio = read_audio(parser.path_to_wav, parser.sample_rate, parser.output_dir)
     log('Read audio from \'{}\''.format(parser.path_to_wav))
-    inputs, targets = create_inputs_and_targets(read_audio, parser.n_classes, log)
-    log('Created inputs, shape: \'{}\' and targets, shape: \'{}\''.format(inputs.shape, targets.shape))
-    plot_waveform(parser.output_dir, 'in_'+timestamp()+'.png', read_audio, parser.sample_rate, parser.plot, log)
-    plot_spectogram(parser.output_dir, 'in_spectograms_'+timestamp()+'.png', read_audio, parser.sample_rate, parser.plot, log)
+    inputs, targets, audio, duration = create_batch_dir(DATA_DIR, parser.sample_rate, parser.n_classes, log)
+    log('Created inputs, number of batches: \'{}\' shape: \'{}\' and targets, shape: \'{}\''.format(len(inputs), inputs[0].shape, targets[0].shape))
     model = Net(
-        n_samples=inputs.shape[1],
+        n_samples=inputs[0].shape[1],
         n_classes=parser.n_classes, 
         n_dilations=parser.n_dilations, 
         n_blocks=parser.n_blocks, 
@@ -80,7 +77,6 @@ if __name__ == '__main__':
         gpu_fraction=parser.gpu_fraction,
         learning_rate=parser.learning_rate,
         log=log)
-    #exit()
     if parser.train:
         costs = model.train(
             inputs=inputs, 
@@ -91,13 +87,15 @@ if __name__ == '__main__':
             should_plot=parser.plot, 
             should_save_weights=parser.save_weights,
             load_dir=parser.model,
+            n_of_batches=len(inputs),
             log=log)
     else:
         log('Skipping training')
 
     gen = Generator(model)
-    final_predictions = gen.run(inputs[:, 0:1, 0], parser.output_length, parser.model)
-
-    plot_waveform(parser.output_dir, 'out_'+timestamp()+'.png', final_predictions, parser.output_length, parser.plot, log)
-    plot_spectogram(parser.output_dir, 'out_spectograms_'+timestamp()+'.png', final_predictions, parser.output_length, parser.plot, log)
+    output_length = int(parser.sample_rate * duration)
+    final_predictions = gen.run(inputs[0][:, 0:1, 0], output_length, inputs[0][0, :, 0], parser.model)
+    create_out_dir(parser.output_dir, log)
+    plot_waveform(parser.output_dir, 'out_'+timestamp()+'.png', final_predictions, output_length, parser.plot, log)
+    plot_spectogram(parser.output_dir, 'out_spectograms_'+timestamp()+'.png', final_predictions, output_length, parser.plot, log)
     write_data(parser.output_dir, 'pred_'+timestamp()+'.wav', final_predictions, parser.sample_rate, log)

@@ -125,38 +125,30 @@ class Net:
 			return step
 		return 0
 
-	def train(self, inputs, targets, target_loss, train_iterations, output_dir, should_plot, should_save_weights, load_dir, log):
+	def train(self, inputs, targets, target_loss, train_iterations, output_dir, should_plot, should_save_weights, load_dir, n_of_batches, log):
 		losses = []
 		stop_iteration = train_iterations
 		init_step = 0
 		if load_dir:
 			init_step = self.load_weights(load_dir)
 		print("Beginning of training, initial step: ", init_step)
-		saved_model_losses = []
 		log_every = train_iterations // 100
-		for iter in range(init_step, train_iterations):
-			try:
-				feed_dict = {self.inputs: inputs, self.targets: targets}
-				loss, _ = self.sess.run([self.loss, self.train_step], feed_dict)
-				if iter == 0:
-					saved_model_losses.append(loss)
-				if iter % log_every == 0:
-					print(iter,'/', train_iterations, ': ', loss)
-					if should_save_weights and loss < saved_model_losses[len(saved_model_losses)-1]:
-						saved_model_losses.append(loss)
-						self._save_weights(output_dir, iter, log)
-				if loss < target_loss:
+		for batch in range(n_of_batches):
+			for iter in range(init_step, train_iterations):
+				try:
+					feed_dict = {self.inputs: inputs[batch], self.targets: targets[batch]}
+					loss, _ = self.sess.run([self.loss, self.train_step], feed_dict)
+					if iter % log_every == 0:
+						print(iter,'/', train_iterations, ': ', loss)
+					if loss < target_loss:
+						stop_iteration = iter
+						break						
+					losses.append(loss)
+				except KeyboardInterrupt:
 					stop_iteration = iter
 					break
-				losses.append(loss)
-			except KeyboardInterrupt:
-				stop_iteration = iter
-				break
-		if len(saved_model_losses) != 0 and saved_model_losses[len(saved_model_losses)-1] < loss:
-			self.load_weights(output_dir)
-			loss = saved_model_losses[len(saved_model_losses)-1] 
-		elif should_save_weights:
-			self._save_weights(output_dir, stop_iteration, log)
+			if should_save_weights:
+				self._save_weights(output_dir, stop_iteration, log)
 		print("Final loss: ", loss)
 		plot_losses(output_dir, 'training_process_' + timestamp() + '.png', losses, len(losses), should_plot, log)
 		return losses

@@ -9,73 +9,57 @@ import os
 import tensorflow as tf
 from scipy.io import wavfile
 import glob
+import sys
+from random import shuffle
+import GPUtil
+import resource
 
 plt.switch_backend('agg')
 CURRENT_RUN_TIMESTAMP = None
 
-'''
-For experimentation with preprocessing:
-
-def normalize(data):
-    temp = np.float32(data) - np.min(data)
-    out = (temp / np.max(temp) - 0.5) * 2
-    return out
-
-def mu_law_decode(output, channels=256):
-    
-    signal = 2 * (np.float32(output) / channels) - 1
-    # Perform inverse of mu-law transformation.
-    magnitude = (1 / channels) * ((1 + channels)**abs(signal) - 1)
-    return np.sign(signal) * magnitude
-
-def mu_law_encode(audio, channels):
-    template = np.linspace(-1, 1, channels)
-    safe_audio_abs = np.minimum(np.abs(audio), 1.0)
-    magnitude = np.log1p(channels * safe_audio_abs) / np.log1p(channels)
-    signal = np.sign(audio) * magnitude
-    return signal
-'''
+def get_files(directory):
+	return list(glob.iglob(directory + '[[]pia[]][[]cla[]]*.*wav'))
 
 def create_logspace_template(n_channels=256):
-    pos = list(np.logspace(-10, 0.00000001, 128, base=math.e).reshape(-1, 1).T[0])
-    neg = list(reversed(-np.logspace(-10, 0.00000001, 128, base=math.e).reshape(-1, 1).T[0]))
-    template = np.array(neg + pos)
-    return template
-'''
-def read_audio(path, sample_rate, outdir):
-	audio_, _ = librosa.load(path, sr=sample_rate, mono=True)
-	duration = librosa.core.get_duration(audio_, sr=sample_rate)
-	return audio_.reshape(-1, 1).T[0].T, duration
-'''
-def create_batch_dir(data_dir, sample_rate, channels, log):
-    l_inputs = []
-    l_targets = []
-    audio_files = list(glob.iglob(data_dir + '*.wav'))
-    audio = None
-    duration = 0
-    log('Reading audio from {}, found {}'.format(data_dir, len(audio_files)))
-    for filename in audio_files:
-        inputs, targets, audio, duration = create_batch(filename, sample_rate, channels, log)
-        l_inputs.append(inputs)
-        l_targets.append(targets)
-    return l_inputs, l_targets, audio, duration
+	pos = list(np.logspace(-10, 0.00000001, n_channels/2, base=math.e).reshape(-1, 1).T[0])
+	neg = list(reversed(-np.logspace(-10, 0.00000001, n_channels/2, base=math.e).reshape(-1, 1).T[0]))
+	template = np.array(neg + pos)
+	return template
 
-def create_batch(path, sample_rate, channels, log):
-	audio_, _ = librosa.load(path, sr=sample_rate, mono=True)
-	duration = librosa.core.get_duration(audio_, sr=sample_rate)
-	audio = audio_.reshape(-1, 1).T[0].T
-	# Quantization of the audio to 'channels' different amplitudes, representing the sample rate of the final output
-	log('Quantized the audio to {} different amplitudes'.format(channels))
-	template = create_logspace_template(channels)
-	bins = np.digitize(audio[0:-1], template) - 1
-	inputs_ = template[bins]
-	inputs = inputs_[None, :, None]
-	targets = np.digitize(audio[1::], template) - 1
-	outdir = os.path.dirname(os.path.realpath(__file__)) + '/'
-	return inputs, targets[None, :], audio, duration
+def create_audio(directory, sample_rate, template=create_logspace_template()):
+	if directory[-1] != '/':
+		directory += '/'
+	files = get_files(directory)
+	shuffle(files)
+	for filename in files:
+		audio, _ = librosa.load(filename, sr=sample_rate, mono=True)
+		audio = audio.reshape(-1, 1)
+		yield audio
+
+class Reader():
+	def __init__(self, audio_dir, coord, sample_rate, receptive_field):
+		self.audio_dir = audio_dir
+		self.sample_rate = sample_rate
+		self.coord = coord
+		self.receptive_field = receptive_field
+		self.audio = tf.placeholder(dtype=tf.float32, shape=None)
+		self.queue = tf.PaddingFIFOQueue(32, ['float32'], shapes=[(None, 1)])
+		self.enqueue = self.queue.enqueue([self.audio])
+		self.sample_size = None
+		self.template = create_logspace_template()
+
+	def enqueue_audio(self, sess, should_stop):
+		while not should_stop:
+			iterator = create_audio(self.audio_dir, self.sample_rate, self.template)
+			for audio in iterator:
+				if self.coord.should_stop():
+					should_stop = True; break
+				audio = np.pad(audio, [[self.receptive_field, 0], [0, 0]], mode='constant')
+				sess.run(self.enqueue, feed_dict={self.audio: audio})
 
 def write_data(outdir, name, data, output_sample_rate, log):
 	create_out_dir(outdir, log)
+	data = np.array(data)
 	log('Saving generated wav as {}'.format(outdir + name))
 	librosa.output.write_wav(outdir + name, data, output_sample_rate)
 
@@ -96,6 +80,25 @@ class Log:
 				print("[D] {}: {} {}".format(name,object_to_log.dtype,object_to_log.get_shape()))
 			else:
 				print("[D] {}".format(name))
+
+def create_session():
+	gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.85)
+	config = tf.ConfigProto(
+		gpu_options=gpu_options,
+		intra_op_parallelism_threads=1, 
+		inter_op_parallelism_threads=1,
+		device_count={'GPU': 1})
+	sess = tf.Session(config=config)
+	return sess
+
+def prepare_environment(resource_limit, log):
+	DEVICE_ID_LIST = GPUtil.getFirstAvailable(order = 'last', maxLoad=0.1, verbose=True)
+	DEVICE_ID = DEVICE_ID_LIST[0] # grab first element from list
+
+	os.environ["CUDA_VISIBLE_DEVICES"] = str(DEVICE_ID)
+	log('Preparing environment by choosing a gpu {} and setting resource limit={}'.format(DEVICE_ID, resource_limit))
+	soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
+	resource.setrlimit(resource.RLIMIT_CPU, (resource_limit, hard))
 
 def plot_waveform(outdir, name, data, sr, should_plot, log):
 	if should_plot:

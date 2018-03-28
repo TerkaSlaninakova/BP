@@ -1,5 +1,5 @@
 import os
-from utils import create_out_dir, timestamp, create_session, Reader, create_audio
+from utils import create_out_dir, timestamp, create_session, Reader, create_audio, plot_losses
 import tensorflow as tf
 from wavenet import Wavenet
 import sys
@@ -52,7 +52,6 @@ class Trainer():
         self.net = net
 
     def _save_weights(self, outdir, iteration, sess, log):
-        print('saving, iter: {}'.format(iteration))
         sys.stdout.flush()
         create_out_dir(outdir, log)
         checkpoint_dir = outdir + 'saved_weights/'
@@ -73,6 +72,7 @@ class Trainer():
 
     def train(self, target_loss, train_iterations, output_dir, should_plot, load_dir, log):
         losses = []
+        saved_model_losses = []
         stop_iteration = train_iterations
         sess = create_session()
         sess.run(tf.global_variables_initializer())
@@ -93,8 +93,13 @@ class Trainer():
             for iter in range(init_step, train_iterations):
                 stop_iteration = iter
                 loss, _ = sess.run([self.loss, self.optim])
-                if iter % save_every == 0 and iter != 0:
-                    self._save_weights(output_dir, iter, sess, log)
+                if iter % save_every == 0:
+                    if len(saved_model_losses) > 0 and loss < saved_model_losses[len(saved_model_losses)-1]:
+                        self._save_weights(output_dir, iter, sess, log)
+                        saved_model_losses.append(loss)
+                    elif len(saved_model_losses) == 0:
+                        self._save_weights(output_dir, iter, sess, log)
+                        saved_model_losses.append(loss)
                 if iter % log_every == 0:
                     print(iter, '/', train_iterations, ': ', loss)
                     sys.stdout.flush()
@@ -102,13 +107,17 @@ class Trainer():
                 if loss < target_loss:
                     break
                 losses.append(loss)
-        except KeyboardInterrupt:
+        except Exception:
             pass
         finally:
-            if stop_iteration % save_every != 0:
-                self._save_weights(output_dir, stop_iteration, sess, log)
-            print("Final loss: ", loss)
+            #if stop_iteration % save_every != 0:
+            #    self._save_weights(output_dir, stop_iteration, sess, log)
+            if len(saved_model_losses) > 0:
+                print("Final loss: ", saved_model_losses[len(saved_model_losses)-1])
+            else:
+                print("No saved loss")
             self.coordinator.request_stop()
             self.coordinator.join(threads)
             sys.stdout.flush()
+        plot_losses(output_dir, 'training_process_' + timestamp() + '.png', losses, len(losses), should_plot, log)
         return losses

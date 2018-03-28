@@ -83,7 +83,7 @@ class Trainer():
         
         print("Starting training, initial step: ", init_step)
         log_every = train_iterations // 10000
-        save_every = train_iterations // 1000
+        #save_every = train_iterations // 1000
         
         loss = None
         # initialize input data supply though threads
@@ -93,13 +93,12 @@ class Trainer():
             for iter in range(init_step, train_iterations):
                 stop_iteration = iter
                 loss, _ = sess.run([self.loss, self.optim])
-                if iter % save_every == 0:
-                    if len(saved_model_losses) > 0 and loss < saved_model_losses[len(saved_model_losses)-1]:
-                        self._save_weights(output_dir, iter, sess, log)
-                        saved_model_losses.append(loss)
-                    elif len(saved_model_losses) == 0:
-                        self._save_weights(output_dir, iter, sess, log)
-                        saved_model_losses.append(loss)
+                if len(saved_model_losses) > 0 and loss < saved_model_losses[len(saved_model_losses)-1]:
+                    self._save_weights(output_dir, iter, sess, log)
+                    saved_model_losses.append(loss)
+                elif len(saved_model_losses) == 0:
+                    self._save_weights(output_dir, iter, sess, log)
+                    saved_model_losses.append(loss)
                 if iter % log_every == 0:
                     print(iter, '/', train_iterations, ': ', loss)
                     sys.stdout.flush()

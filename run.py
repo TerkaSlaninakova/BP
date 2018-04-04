@@ -9,10 +9,10 @@ from generate import Generator
 
 TRAIN_ITERATIONS = 100000
 TARGET_LOSS = 0.001
-DATA_DIR = '/pub/tmp/xslani06/wavenet/data/irmas/pia/'
+DATA_DIR = '/pub/tmp/xslani06/wavenet/data/magnatagatune/'
 OUTPUT_DIR = ''
 LEARNING_RATE = 1e-3
-GPU_FRACTION = 0.5
+GPU_FRACTION = 0.8
 SAMPLE_RATE = 8000
 N_DILATIONS = 10
 N_BLOCKS = 5
@@ -23,8 +23,9 @@ SHOULD_TRAIN = True
 DIL_CHANNELS=32
 SKIP_CHANNELS=1024
 KERNEL_WIDTH=2
-RESOURCE_LIMIT = 18000
+RESOURCE_LIMIT = 27000
 OUT_SAMPLES = 72000
+SEED_FROM = None
 # allows for boolean arg parsing
 def str2bool(v):
     if v.lower() in ('yes', 'true', 't', 'y', '1'):
@@ -51,6 +52,7 @@ def get_arguments():
     parser.add_argument('--n_dilations', type=int, default=N_DILATIONS, help='How many successive dilations should the net consist of, default: ' + str(N_DILATIONS))
     parser.add_argument('--n_blocks', type=int, default=N_BLOCKS, help='How many blocks of dilations should be there, default: ' + str(N_BLOCKS))
     parser.add_argument('--out_samples', type=int, default=OUT_SAMPLES, help='Number of output samples, default: ' + str(OUT_SAMPLES))
+    parser.add_argument('--seed_from', type=int, default=SEED_FROM, help='Wav file to seed the generation from' + str(SEED_FROM))
     parser.add_argument('--log', type=bool, default=LOG, help='Should log: ' + str(LOG))
     parser.add_argument('--model', type=str, default=None, help='Directory of the saved model to restore for further training, default: None')
     parser.add_argument('--train', type=str2bool, default=SHOULD_TRAIN, help='Decides whether to start training the model (form scratch or saved) or proceed to generation. Default: ' + str(SHOULD_TRAIN))
@@ -63,8 +65,11 @@ if __name__ == '__main__':
     log = Log(should_log=parser.log).log
     log('Got arguments: {}'.format(parser))
     prepare_environment(RESOURCE_LIMIT, log)
+    train_files, validation_files = prepare_datasets(parser.data_dir, log)
+    losses = []
     trainer = Trainer(
-    	data_dir=parser.data_dir,
+    	train_data=train_files,
+        validation_data=validation_files,
         q_channels=parser.q_channels,
         dil_channels=parser.dil_channels,
         skip_channels=parser.skip_channels,
@@ -77,7 +82,7 @@ if __name__ == '__main__':
         log=log)
 
     if parser.train:
-        costs = trainer.train(
+        losses = trainer.train(
             target_loss=parser.target_loss, 
             train_iterations=parser.train_iters, 
             output_dir=parser.output_dir,
@@ -87,9 +92,13 @@ if __name__ == '__main__':
     else:
         log('Skipping training')
     
-    generator = Generator(trainer)
-    final_predictions = generator.generate(parser.model, parser.out_samples, log)
-    final_predictions = np.array(final_predictions)
-    plot_waveform(parser.output_dir, 'out_'+timestamp()+'.png', final_predictions, parser.out_samples, parser.plot, log)
-    plot_spectogram(parser.output_dir, 'out_spectograms_'+timestamp()+'.png', final_predictions, parser.out_samples, parser.plot, log)
-    write_data(parser.output_dir, 'pred_'+timestamp()+'.wav', final_predictions, parser.sample_rate, log)
+    if losses != [] or not parser.train:
+        generator = Generator(trainer)
+        final_predictions = generator.generate(parser.model, parser.out_samples, parser.seed_from, log)
+        final_predictions = np.array(final_predictions)
+        plot_waveform(parser.output_dir, 'out_'+timestamp()+'.png', final_predictions, parser.out_samples, parser.plot, log)
+        plot_spectogram(parser.output_dir, 'out_spectograms_'+timestamp()+'.png', final_predictions, parser.out_samples, parser.plot, log)
+        write_data(parser.output_dir, 'pred_'+timestamp()+'.wav', final_predictions, parser.sample_rate, log)
+    else:
+        log('Skipping generation')
+    

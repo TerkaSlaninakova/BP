@@ -108,5 +108,4 @@ class Wavenet():
         total = sum(outputs)
         out_conv = conv1d(tf.nn.relu(total), self.variables['pp']['pp1'], False)
         out_conv = conv1d(tf.nn.relu(out_conv), self.variables['pp']['pp2'], False)
-
         return out_conv

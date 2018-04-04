@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 import librosa
 import sys
-from utils import create_session
+from utils import create_session, get_first_audio, create_logspace_template
 
 def mu_law_decode(output, q_channels):
     '''
@@ -30,7 +30,7 @@ class Generator():
         self.sess = create_session()
         self.sess.run(tf.global_variables_initializer())
         
-    def generate(self, restore_from, n_samples, log):
+    def generate(self, restore_from, n_samples, seed_from, log):
         current_sample = tf.placeholder(tf.int32)
 
         next_sample = self.generate_next_sample(current_sample)
@@ -40,8 +40,18 @@ class Generator():
             self.trainer._load_weights(restore_from, self.sess, log)
 
         waveform = []
-        # start the generation with one random sample
-        waveform.append(np.random.randint(self.trainer.q_channels))
+        template = create_logspace_template()
+        if not seed_from == None:
+            _, waveform = get_first_audio(seed_from)
+            waveform = list(waveform)
+            outputs = [next_sample]
+            outputs.extend(self.push_ops)
+            for sample in waveform[-self.trainer.receptive_field: -1]:
+                self.sess.run(outputs, feed_dict={current_sample: sample})
+        else:
+            waveform.append(np.random.randint(self.trainer.q_channels))
+
+        preds = []
         for step in range(n_samples):
             outputs = [next_sample]
             outputs.extend(self.push_ops)
@@ -53,8 +63,8 @@ class Generator():
             # based on predicted set of samples chose one with conditional probability
             sample = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
             waveform.append(sample)
-        decode = mu_law_decode(current_sample, self.trainer.q_channels)
-        out = self.sess.run(decode, feed_dict={current_sample: waveform})
+        decode = mu_law_decode(current_sample, self.trainer.q_channels)#[-8000:]
+        out = self.sess.run(decode, feed_dict={current_sample: waveform[-n_samples:]})
         return out
 
     def generate_dil(self, input, state, i):

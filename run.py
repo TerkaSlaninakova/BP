@@ -7,9 +7,9 @@ from utils import  *
 from train import Trainer
 from generate import Generator
 
-TRAIN_ITERATIONS = 100000
+TRAIN_ITERATIONS = 5000
 TARGET_LOSS = 0.001
-DATA_DIR = '/pub/tmp/xslani06/wavenet/data/magnatagatune/'
+DATA_DIR = '/pub/tmp/xslani06/wavenet/data/magna_piano_out/'
 OUTPUT_DIR = ''
 LEARNING_RATE = 1e-3
 GPU_FRACTION = 0.8
@@ -24,8 +24,8 @@ DIL_CHANNELS=32
 SKIP_CHANNELS=1024
 KERNEL_WIDTH=2
 RESOURCE_LIMIT = 27000
-OUT_SAMPLES = 72000
-SEED_FROM = None
+OUT_SAMPLES = 48000
+SEED_FROM = None#"/pub/tmp/xslani06/wavenet/data/magna_piano_out/1_576000.wav"
 # allows for boolean arg parsing
 def str2bool(v):
     if v.lower() in ('yes', 'true', 't', 'y', '1'):
@@ -52,7 +52,7 @@ def get_arguments():
     parser.add_argument('--n_dilations', type=int, default=N_DILATIONS, help='How many successive dilations should the net consist of, default: ' + str(N_DILATIONS))
     parser.add_argument('--n_blocks', type=int, default=N_BLOCKS, help='How many blocks of dilations should be there, default: ' + str(N_BLOCKS))
     parser.add_argument('--out_samples', type=int, default=OUT_SAMPLES, help='Number of output samples, default: ' + str(OUT_SAMPLES))
-    parser.add_argument('--seed_from', type=int, default=SEED_FROM, help='Wav file to seed the generation from' + str(SEED_FROM))
+    parser.add_argument('--seed_from', type=str, default=SEED_FROM, help='Wav file to seed the generation from' + str(SEED_FROM))
     parser.add_argument('--log', type=bool, default=LOG, help='Should log: ' + str(LOG))
     parser.add_argument('--model', type=str, default=None, help='Directory of the saved model to restore for further training, default: None')
     parser.add_argument('--train', type=str2bool, default=SHOULD_TRAIN, help='Decides whether to start training the model (form scratch or saved) or proceed to generation. Default: ' + str(SHOULD_TRAIN))

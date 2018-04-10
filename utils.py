@@ -13,12 +13,13 @@ import sys
 from random import shuffle
 import GPUtil
 import resource
+import matplotlib.mlab as mlab
+import scipy.stats as stats
 
 plt.switch_backend('agg')
 CURRENT_RUN_TIMESTAMP = None
 
 def prepare_datasets(directory, log):
-	#return list(glob.iglob(directory + 'vio/' + '*wav')) + list(glob.iglob(directory + 'pia/' + '*wav')) + list(glob.iglob(directory + 'gac/' + '*wav'))
 	if directory[-1] != '/':
 		directory += '/'
 	files = list(glob.iglob(directory + '*wav'))
@@ -46,47 +47,20 @@ def get_first_audio(path, template=create_logspace_template()):
 		audio = audio[:72000]
 	bins = np.digitize(audio, template) - 1
 
-	return template[bins][:, None], bins
+	return template[bins], bins
 
-def create_audio(filenames, sample_rate, template=create_logspace_template()):
+def create_audio(filenames, sample_rate=8000, template=create_logspace_template()):
+	data = []
 	for filename in filenames:
+		print('loading ', filename)
 		audio, _ = librosa.load(filename, sr=sample_rate, mono=True)
 		audio = audio.reshape(-1, 1).T[0].T
 		if len(audio) > 120000:
 			audio = audio[:120000]
 		if template is not None:
 			bins = np.digitize(audio, template) - 1
-			yield template[bins][:, None]
-		else:
-			yield audio
-
-class Reader():
-	def __init__(self, train_data, validation_data, coord, val_coord, sample_rate, receptive_field):
-		self.train_data = train_data
-		self.validation_data = validation_data
-		self.sample_rate = sample_rate
-		self.coord = coord
-		self.val_coord = val_coord
-		self.receptive_field = receptive_field
-		self.audio = tf.placeholder(dtype=tf.float32, shape=None)
-		self.queue = tf.PaddingFIFOQueue(32, ['float32'], shapes=[(None, 1)])
-		self.enqueue = self.queue.enqueue([self.audio])
-		self.sample_size = None
-
-	def enqueue_train_audio(self, sess, should_stop):
-		enqueue_audio(self, sess, should_stop, self.coord, self.train_data)
-
-	def enqueue_val_audio(self, sess, should_stop):
-		enqueue_audio(self, sess, should_stop, self.val_coord, self.validation_data)
-
-	def enqueue_audio(self, sess, should_stop, coord, dataset):
-		while not should_stop:
-			iterator = create_audio(dataset, self.sample_rate)
-			for audio in iterator:
-				if coord.should_stop():
-					should_stop = True; break
-				audio = np.pad(audio, [[self.receptive_field, 0], [0, 0]], mode='constant')
-				sess.run(self.enqueue, feed_dict={self.audio: audio})
+			data.append(template[bins][:, None])
+	return data
 
 def write_data(outdir, name, data, output_sample_rate, log):
 	create_out_dir(outdir, log)
@@ -131,6 +105,19 @@ def prepare_environment(resource_limit, log):
 	soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
 	resource.setrlimit(resource.RLIMIT_CPU, (resource_limit, hard))
 
+def plot_gaussian_distr(outdir, name, data, chosen_sample, should_plot, log):
+	if should_plot:
+		create_out_dir(outdir, log)
+		fig = plt.figure(figsize=(10, 4))
+		host = fig.add_subplot(111)
+		par = host.twinx()
+		host.bar(np.arange(256), data)
+		par.scatter(chosen_sample, data[chosen_sample], color=['green'])
+		log('Saving plot of the waveform as \'{}\''.format(outdir + name))
+		host.set_xlabel('bin')
+		host.set_ylabel('probability')
+		plt.savefig(outdir + name, dpi=100)
+
 def plot_waveform(outdir, name, data, sr, should_plot, log):
 	if should_plot:
 		create_out_dir(outdir, log)
@@ -154,18 +141,34 @@ def plot_spectogram(outdir, name, data, sr, should_plot, log):
 		log('Saving spectogram as \'{}\''.format(outdir + name))
 		plt.savefig(outdir + name)
 
-def plot_losses(outdir, name, losses, losses_val, val_every, should_plot, log):
+def plot_entropy(outdir, name, entropies, spacing_int, should_plot, log):
+	if should_plot:
+		create_out_dir(outdir, log)
+		plt.figure(figsize=(12, 4))
+		range_entropies = [i*spacing_int for i in range(len(entropies))]
+		plt.title('Entropy of probabilities')
+		plt.xlabel('Sample')
+		plt.ylabel('Entropy')
+		plt.plot(range_entropies, entropies)
+		plt.grid(True)
+		log('Saving entropy plot as \'{}\''.format(outdir + name))
+		plt.savefig(outdir + name)
+
+def plot_losses(outdir, name, losses, losses_val, loss_every, val_every, epoch_every, epochs, start_at, should_plot, log):
 	if should_plot:
 		create_out_dir(outdir, log)
 		fig = plt.figure(figsize=(12, 6))
 		ax1 = fig.add_subplot(111)
-		iterations_range_losses = [i for i in range(len(losses))]
-		iterations_range_val_losses = [i*val_every if i!=0 else 0 for i in range(len(losses_val))]
+		iterations_range_losses = [((i*loss_every)/epoch_every)+start_at for i in range(len(losses))]
+		iterations_range_val_losses = [((i*val_every)/epoch_every)+start_at if i!=0 else 0 for i in range(len(losses_val))]
+		epoch_range = [i for i in range(epochs+1)]
+		#print(epoch_range);exit()
 		#plt.scatter(iterations_range, losses)
 		ax1.plot(iterations_range_losses, losses, label='training loss')#, s=10, c='b', marker="s", label='training loss')
 		ax1.plot(iterations_range_val_losses, losses_val, label='valid. loss')#, s=10, c='r', marker="o", label='valid. loss')
+		#ax1.set_xticks(epoch_range)
 		plt.legend(loc='upper right');
-		plt.xlabel('iterations')
+		plt.xlabel('epochs')
 		plt.ylabel('losses')
 		plt.title('Training process')
 		plt.grid(True)

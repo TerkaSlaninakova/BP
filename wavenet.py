@@ -48,31 +48,32 @@ def dilated_conv(value, kernel, dilation):
 
 class Wavenet():
 
-    def __init__(self, dilations, kernel_width, dilation_channels, skip_channels, q_channels, receptive_field, log):
+    def __init__(self, dilations, kernel_width, dilation_width, residual_width, skip_width, q_channels, receptive_field, log):
         self.dilations = dilations
         self.kernel_w = kernel_width
-        self.dil_channels = dilation_channels
+        self.dil_w = dilation_width
+        self.res_w = residual_width
         self.q_channels = q_channels
-        self.skip_channels = skip_channels
+        self.skip_w = skip_width
         self.receptive_field = receptive_field
 
         variables = dict()
         with tf.variable_scope('wavenet_model'):
             variables['causal_layer'] = dict()
-            variables['causal_layer']['kernel'] = tf.get_variable(name='kernel', shape=[self.kernel_w, self.q_channels, self.dil_channels], initializer=init)
+            variables['causal_layer']['kernel'] = tf.get_variable(name='kernel', shape=[self.kernel_w, self.q_channels, self.res_w], initializer=init)
             variables['dil_stack'] = []
             for i, dilation in enumerate(self.dilations):
                 with tf.variable_scope('layer{}-dil{}'.format(i, dilation)):
                     current_layer = dict()
-                    current_layer['kernel'] = tf.get_variable(name='kernel', shape=[self.kernel_w, self.dil_channels, self.dil_channels], initializer=init)
-                    current_layer['gate'] = tf.get_variable(name='gate', shape=[self.kernel_w, self.dil_channels, self.dil_channels], initializer=init)
-                    current_layer['dense'] = tf.get_variable(name='dense', shape=[1, self.dil_channels, self.dil_channels], initializer=init)
-                    current_layer['skip'] = tf.get_variable(name='skip', shape=[1, self.dil_channels, self.skip_channels], initializer=init)
+                    current_layer['kernel'] = tf.get_variable(name='kernel', shape=[self.kernel_w, self.res_w, self.dil_w], initializer=init)
+                    current_layer['gate'] = tf.get_variable(name='gate', shape=[self.kernel_w, self.res_w, self.dil_w], initializer=init)
+                    current_layer['dense'] = tf.get_variable(name='dense', shape=[1, self.dil_w, self.res_w], initializer=init)
+                    current_layer['skip'] = tf.get_variable(name='skip', shape=[1, self.dil_w, self.skip_w], initializer=init)
                     variables['dil_stack'].append(current_layer)
 
             prostproc_layer = dict()
-            prostproc_layer['pp1'] = tf.get_variable(name='pp1', shape=[1, self.skip_channels, self.skip_channels], initializer=init)
-            prostproc_layer['pp2'] = tf.get_variable(name='pp2', shape=[1, self.skip_channels, self.q_channels], initializer=init)
+            prostproc_layer['pp1'] = tf.get_variable(name='pp1', shape=[1, self.skip_w, self.skip_w], initializer=init)
+            prostproc_layer['pp2'] = tf.get_variable(name='pp2', shape=[1, self.skip_w, self.q_channels], initializer=init)
             
             variables['pp'] = prostproc_layer
 

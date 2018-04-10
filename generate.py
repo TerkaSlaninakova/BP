@@ -2,7 +2,8 @@ import numpy as np
 import tensorflow as tf
 import librosa
 import sys
-from utils import create_session, get_first_audio, create_logspace_template
+from utils import *
+import scipy.stats
 
 def mu_law_decode(output, q_channels):
     '''
@@ -10,7 +11,7 @@ def mu_law_decode(output, q_channels):
     '''
     mu = q_channels - 1
     signal = 2 * (tf.to_float(output) / mu) - 1
-    magnitude = (1 / mu) * ((1 + mu)**abs(signal) - 1)
+    magnitude =  (1 / mu) * ((1 + mu)**abs(signal) - 1)
     return tf.sign(signal) * magnitude
 
 def generate_sample(inputs, state, w, activation=None):
@@ -30,7 +31,7 @@ class Generator():
         self.sess = create_session()
         self.sess.run(tf.global_variables_initializer())
         
-    def generate(self, restore_from, n_samples, seed_from, log):
+    def generate(self, restore_from, n_samples, seed_from, outdir, log, teacher_forcing=False):
         current_sample = tf.placeholder(tf.int32)
 
         next_sample = self.generate_next_sample(current_sample)
@@ -42,29 +43,48 @@ class Generator():
         waveform = []
         template = create_logspace_template()
         if not seed_from == None:
-            _, waveform = get_first_audio(seed_from)
+            waveform_fl, waveform = get_first_audio(seed_from)
             waveform = list(waveform)
-            outputs = [next_sample]
-            outputs.extend(self.push_ops)
-            for sample in waveform[-self.trainer.receptive_field: -1]:
-                self.sess.run(outputs, feed_dict={current_sample: sample})
+            if not teacher_forcing:
+                outputs = [next_sample]
+                outputs.extend(self.push_ops)
+                for sample in waveform[-self.trainer.receptive_field: -1]:
+                    self.sess.run(outputs, feed_dict={current_sample: sample})
         else:
             waveform.append(np.random.randint(self.trainer.q_channels))
 
+        entropies = []
+        entropy_every = 500
+        waveform_ = []
         preds = []
         for step in range(n_samples):
             outputs = [next_sample]
             outputs.extend(self.push_ops)
-            window = waveform[-1]
+            if seed_from and teacher_forcing:
+                window = waveform[step]
+            else:
+                window = waveform[-1]
             if step % 1000 == 0:
                 print(step,'/', n_samples)
                 sys.stdout.flush()
-            prediction = self.sess.run(outputs, feed_dict={current_sample: window})[0]
-            # based on predicted set of samples chose one with conditional probability
+            prediction = self.sess.run(outputs, feed_dict={current_sample: window})[0]      
             sample = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
-            waveform.append(sample)
-        decode = mu_law_decode(current_sample, self.trainer.q_channels)#[-8000:]
+            #sample = np.argmax(prediction)
+            if step % 1000 == 0:
+                plot_gaussian_distr(outdir, 'pred_distr_' + str(step), prediction, sample, True, log)
+                #sample = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
+                #sample = np.argmax(prediction)
+                print(sample, prediction[sample])
+            if step % entropy_every == 0:
+                entropies.append(scipy.stats.entropy(prediction))
+            if seed_from and teacher_forcing:
+                waveform_.append(sample)
+            else:
+                waveform.append(sample)
+                preds.append(sample)
+        decode = mu_law_decode(current_sample, self.trainer.q_channels)
         out = self.sess.run(decode, feed_dict={current_sample: waveform[-n_samples:]})
+        plot_entropy(outdir, 'entropy_' + timestamp() + '.png', entropies, entropy_every, True, log)
         return out
 
     def generate_dil(self, input, state, i):
@@ -98,7 +118,6 @@ class Generator():
         init_ops = []
         push_ops = []
         current_input = one_hot_reshaped_input
-
         convolution_queue = tf.FIFOQueue(1, dtypes=tf.float32, shapes=(1, self.trainer.q_channels))
         init = convolution_queue.enqueue_many(tf.zeros((1, 1, self.trainer.q_channels)))
 
@@ -110,8 +129,8 @@ class Generator():
         current_input = generate_sample(current_input, current_state, self.trainer.net.variables['causal_layer']['kernel'])
         outputs = []
         for i, dilation in enumerate(self.trainer.dilations):
-            dilation_queue = tf.FIFOQueue(dilation, dtypes=tf.float32, shapes=(1, self.trainer.dilation_channels))
-            init = dilation_queue.enqueue_many(tf.zeros((dilation, 1, self.trainer.dilation_channels)))
+            dilation_queue = tf.FIFOQueue(dilation, dtypes=tf.float32, shapes=(1, self.trainer.net.dil_w))
+            init = dilation_queue.enqueue_many(tf.zeros((dilation, 1,  self.trainer.net.dil_w)))
 
             current_state = dilation_queue.dequeue()
             push = dilation_queue.enqueue([current_input])

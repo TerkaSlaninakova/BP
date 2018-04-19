@@ -7,28 +7,30 @@ from utils import  *
 from train import Trainer
 from generate import Generator
 
-TRAIN_ITERATIONS = 5000
+TRAIN_EPOCHS = 300
 TARGET_LOSS = 0.001
-DATA_DIR = '/pub/tmp/xslani06/wavenet/data/magna_piano_out/'
+DATA_DIR = '/pub/tmp/xslani06/wavenet/data/vctk/wav48/p225/'
 OUTPUT_DIR = ''
-LEARNING_RATE = 1e-3
+LEARNING_RATE = 1e-4
 GPU_FRACTION = 0.8
-SAMPLE_RATE = 8000
+SAMPLE_RATE = 48000
 N_DILATIONS = 10
 N_BLOCKS = 5
 Q_CHANNELS = 256
 PLOT = True
 LOG = True
 SHOULD_TRAIN = True
-DIL_CHANNELS=32
-SKIP_CHANNELS=1024
-KERNEL_WIDTH=2
+DIL_WIDTH = 64
+RES_WIDTH = 64
+SKIP_WIDTH = 1024
+KERNEL_WIDTH = 2
 RESOURCE_LIMIT = 27000
-OUT_SAMPLES = 48000
-SEED_FROM = None#"/pub/tmp/xslani06/wavenet/data/magna_piano_out/1_576000.wav"
+OUT_SAMPLES = 16000
+SEED_FROM = '/pub/tmp/xslani06/wavenet/data/vctk/wav48/p225/p225_001.wav' #"/pub/tmp/xslani06/wavenet/data/magna_piano_out/360000.wav" #'/pub/tmp/xslani06/wavenet/data/vctk/wav48/p225/p225_001.wav' #"/pub/tmp/xslani06/wavenet/data/magna_piano_out/360000.wav"
+#SEED_FROM = "/pub/tmp/xslani06/wavenet/data/yt_wav_out/9_768000.wav"
 # allows for boolean arg parsing
 def str2bool(v):
-    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+    if v.lower() in ('yes', 'true', 't', 'y', '1'): 
         return True
     elif v.lower() in ('no', 'false', 'f', 'n', '0'):
         return False
@@ -37,12 +39,13 @@ def str2bool(v):
 
 def get_arguments():
     parser = argparse.ArgumentParser(description='WaveNet')
-    parser.add_argument('--train_iters', type=int, default=TRAIN_ITERATIONS, help='Max number of iterations to be used for training, default: ' + str(TRAIN_ITERATIONS))
+    parser.add_argument('--train_epochs', type=int, default=TRAIN_EPOCHS, help='Max number of epochs to be used for training, default: ' + str(TRAIN_EPOCHS))
     parser.add_argument('--target_loss', type=float, default=TARGET_LOSS, help='Which loss should the training stop on: ' + str(TARGET_LOSS))
     parser.add_argument('--q_channels', type=int, default=Q_CHANNELS, help='How many distinct amplitudes (quantization channels) should be recognized during the training process, default: ' + str(Q_CHANNELS))
-    parser.add_argument('--dil_channels', type=int, default=DIL_CHANNELS, help='How many kernels to learn for the dilated convolution, default: ' + str(DIL_CHANNELS))
+    parser.add_argument('--dil_w', type=int, default=DIL_WIDTH, help='How many kernels to learn for the dilated convolution, default: ' + str(DIL_WIDTH))
+    parser.add_argument('--res_w', type=int, default=RES_WIDTH, help='How many kernels to learn for the residual block, default: ' + str(RES_WIDTH))
     parser.add_argument('--kernel_w', type=int, default=KERNEL_WIDTH, help='With of the kernel window, default: ' + str(KERNEL_WIDTH))
-    parser.add_argument('--skip_channels', type=int, default=SKIP_CHANNELS, help='How many kernels to learn for the skip output, default: ' + str(DIL_CHANNELS))
+    parser.add_argument('--skip_w', type=int, default=SKIP_WIDTH, help='How many kernels to learn for the skip output, default: ' + str(SKIP_WIDTH))
     parser.add_argument('--sample_rate', type=int, default=SAMPLE_RATE, help='Sample rate with which the input wav should be read, default ' + str(SAMPLE_RATE))
     parser.add_argument('--data_dir', type=str, default=DATA_DIR, help='Path to a directory with training data')
     parser.add_argument('--learning_rate', type=float, default=LEARNING_RATE, help='Learning rate to be used in training, default: ' + str(LEARNING_RATE))
@@ -65,26 +68,27 @@ if __name__ == '__main__':
     log = Log(should_log=parser.log).log
     log('Got arguments: {}'.format(parser))
     prepare_environment(RESOURCE_LIMIT, log)
-    train_files, validation_files = prepare_datasets(parser.data_dir, log)
+
     losses = []
     trainer = Trainer(
-    	train_data=train_files,
-        validation_data=validation_files,
         q_channels=parser.q_channels,
-        dil_channels=parser.dil_channels,
-        skip_channels=parser.skip_channels,
+        dil_width=parser.dil_w,
+        res_width=parser.res_w,
+        skip_width=parser.skip_w,
+        kernel_width=parser.kernel_w,
         n_dilations=parser.n_dilations, 
         n_blocks=parser.n_blocks, 
-        gpu_fraction=parser.gpu_fraction,
         learning_rate=parser.learning_rate,
-        sample_rate=parser.sample_rate,
-        kernel_w=parser.kernel_w,
         log=log)
-
     if parser.train:
+        train_files, validation_files = prepare_datasets(parser.data_dir, log)
+        train_batch = create_audio(train_files, parser.sample_rate)
+        val_batch = create_audio(validation_files, parser.sample_rate)
         losses = trainer.train(
+            train_batch=train_batch,
+            val_batch=val_batch,
             target_loss=parser.target_loss, 
-            train_iterations=parser.train_iters, 
+            train_epochs=parser.train_epochs, 
             output_dir=parser.output_dir,
             should_plot=parser.plot, 
             load_dir=parser.model,
@@ -94,10 +98,10 @@ if __name__ == '__main__':
     
     if losses != [] or not parser.train:
         generator = Generator(trainer)
-        final_predictions = generator.generate(parser.model, parser.out_samples, parser.seed_from, log)
+        final_predictions = generator.generate(parser.model, parser.out_samples, parser.seed_from, parser.output_dir, log)
         final_predictions = np.array(final_predictions)
-        plot_waveform(parser.output_dir, 'out_'+timestamp()+'.png', final_predictions, parser.out_samples, parser.plot, log)
-        plot_spectogram(parser.output_dir, 'out_spectograms_'+timestamp()+'.png', final_predictions, parser.out_samples, parser.plot, log)
+        plot_waveform(parser.output_dir, 'out_'+timestamp()+'.png', final_predictions, 1000, parser.plot, log)
+        plot_spectogram(parser.output_dir, 'out_spectograms_'+timestamp()+'.png', final_predictions, 1000, parser.plot, log)
         write_data(parser.output_dir, 'pred_'+timestamp()+'.wav', final_predictions, parser.sample_rate, log)
     else:
         log('Skipping generation')

@@ -32,7 +32,6 @@ class Trainer():
         self.q_channels = q_channels
         self.dilations = n_blocks*[2**x for x in range(n_dilations)]
         self.receptive_field = (kernel_width - 1) * sum(self.dilations) + kernel_width
-
         net = Wavenet(dilations=self.dilations, kernel_width=kernel_width, dilation_width=dil_width, residual_width=res_width, skip_width=skip_width, 
             q_channels=self.q_channels, receptive_field=self.receptive_field, log=log)
 
@@ -66,12 +65,18 @@ class Trainer():
             print("Checkpoint: ", checkpoint.model_checkpoint_path)
             step = int(checkpoint.model_checkpoint_path.split('-')[-1])
             last_loss = float(checkpoint.model_checkpoint_path.split('=')[1].split('_')[0])
-            last_epoch = int(checkpoint.model_checkpoint_path.split('epoch')[1].split('_')[0])
+            #print(checkpoint.model_checkpoint_path.split('epoch'))
+            #print(checkpoint.model_checkpoint_path)
+            #print(checkpoint.model_checkpoint_path.split('epoch')[2]);exit()
+            if checkpoint.model_checkpoint_path.split('epoch')[-2] != checkpoint.model_checkpoint_path:
+                last_epoch = int(checkpoint.model_checkpoint_path.split('epoch')[-1].split('_')[0])
+            else:
+                last_epoch = 0
             self.saver.restore(sess, checkpoint.model_checkpoint_path)
             return step, last_loss, last_epoch
         return 0, None, None
 
-    def train(self, train_batch, val_batch, target_loss, train_iterations, output_dir, should_plot, load_dir, log, log_every=50, val_every=1000):
+    def train(self, train_batch, val_batch, target_loss, train_epochs, output_dir, should_plot, load_dir, log, log_every=50):
         assert log_every > 0
         losses = []
         saved_model_losses = []
@@ -92,30 +97,30 @@ class Trainer():
         loss = None
         losses_to_display = []
         epoch_counter = last_epoch
+        epoch_length = len(train_batch)
         try:
-            for iter in range(init_step, train_iterations):
-                if iter%len(train_batch) == 0 and iter != 0:
+            for iter in range(init_step, epoch_length*train_epochs):
+                if iter%epoch_length == 0 and iter != 0:
                     shuffle(train_batch)
                     shuffle(val_batch)
                     epoch_counter += 1
-                    if epoch_counter == 251:
-                        break
 
-                loss, _ = sess.run([self.loss, self.optim], feed_dict={self.input_batch: train_batch[iter%len(train_batch)]}) 
+                loss, _ = sess.run([self.loss, self.optim], feed_dict={self.input_batch: train_batch[iter%epoch_length], self.net.keep_prob : 0.25}) 
                 losses.append(loss)
 
                 if iter % log_every == 0:
-                    print(epoch_counter, '/', iter, '/', train_iterations, ': ', loss)
+                    print(epoch_counter, '/', iter, '/', train_epochs, ': ', loss)
                     sys.stdout.flush()
                     losses_to_display.append(np.mean(losses[-log_every:]))
 
-                if iter % val_every == 0:
-                    loss_ = sess.run([self.loss], feed_dict={self.input_batch: val_batch[iter%len(val_batch)]})[0]
+                if iter % epoch_length == 0:
+                    loss_ = sess.run([self.loss], feed_dict={self.input_batch: val_batch[iter%len(val_batch)], self.net.keep_prob : 1.0})[0]
                     print('Validation loss: ', loss_);sys.stdout.flush()
                     val_losses.append(loss_)
-                    self._save_weights(output_dir, str(epoch_counter), iter, sess, str(loss), log)
-                    saved_model_losses.append(loss)
-                    print('Stored loss {}'.format(loss));sys.stdout.flush()
+                    if len(saved_model_losses) == 0 or len(saved_model_losses) > 0 and loss_ < saved_model_losses[len(saved_model_losses)-1]:
+                        self._save_weights(output_dir, str(epoch_counter), iter, sess, str(loss_), log)
+                        saved_model_losses.append(loss_)
+                        print('Stored loss {}'.format(loss_));sys.stdout.flush()
 
         except KeyboardInterrupt:
             pass
@@ -126,6 +131,21 @@ class Trainer():
             else:
                 print("No saved loss")
             sys.stdout.flush()
-        
-        plot_losses(output_dir, 'training_process_' + timestamp() + '.png', losses_to_display, val_losses, log_every,val_every, len(train_batch), epoch_counter, start_at, should_plot, log)
+        '''
+        loss_ = sess.run([self.loss], feed_dict={self.input_batch: val_batch[iter%len(val_batch)], self.net.keep_prob : 1.0})[0]
+        print('Validation loss: ', loss_);sys.stdout.flush()
+        val_losses.append(loss_)
+        if len(val_losses) == 0 or len(val_losses) > 0 and loss_ < val_losses[len(val_losses)-1]:
+            self._save_weights(output_dir, str(epoch_counter), iter, sess, str(loss_), log)
+            saved_model_losses.append(loss_)
+            print('Stored loss {}'.format(loss_));sys.stdout.flush()
+        losses_to_display.append(np.mean(losses[-log_every:]))
+        '''
+        plot_losses(output_dir, 'training_process_' + timestamp() + '.png', losses_to_display, val_losses, log_every, epoch_length, epoch_length, epoch_counter, start_at, should_plot, log)
+        f = open(output_dir + 'training_losses', 'w')
+        f.write('\n'.join(map(str, losses_to_display)))
+        f.close()
+        f = open(output_dir + 'val_losses', 'w')
+        f.write('\n'.join(map(str, val_losses)))
+        f.close()
         return losses

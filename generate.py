@@ -31,7 +31,7 @@ class Generator():
         self.sess = create_session()
         self.sess.run(tf.global_variables_initializer())
         
-    def generate(self, restore_from, n_samples, seed_from, outdir, log, teacher_forcing=False):
+    def generate(self, restore_from, n_samples, seed_from, outdir, log, tf_sr=48000, teacher_forcing=True):
         current_sample = tf.placeholder(tf.int32)
 
         next_sample = self.generate_next_sample(current_sample)
@@ -42,8 +42,8 @@ class Generator():
 
         waveform = []
         template = create_logspace_template()
-        if not seed_from == None:
-            waveform_fl, waveform = get_first_audio(seed_from)
+        if seed_from:
+            waveform_fl, waveform = get_first_audio(seed_from, tf_sr)
             waveform = list(waveform)
             if not teacher_forcing:
                 outputs = [next_sample]
@@ -54,9 +54,15 @@ class Generator():
             waveform.append(np.random.randint(self.trainer.q_channels))
 
         entropies = []
-        entropy_every = 500
+        cross_entropies = []
+        entropies_to_display = []
+        cross_entropies_to_display = []
+        entropy_every = 50
         waveform_ = []
+        waveform_pred_ = []
         preds = []
+        out_rand = []
+        template = create_logspace_template()
         for step in range(n_samples):
             outputs = [next_sample]
             outputs.extend(self.push_ops)
@@ -64,27 +70,54 @@ class Generator():
                 window = waveform[step]
             else:
                 window = waveform[-1]
-            if step % 1000 == 0:
+            if step % 100 == 0:
                 print(step,'/', n_samples)
                 sys.stdout.flush()
-            prediction = self.sess.run(outputs, feed_dict={current_sample: window})[0]      
-            sample = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
-            #sample = np.argmax(prediction)
+            prediction = self.sess.run(outputs, feed_dict={current_sample: window})[0]
+            entropies.append(scipy.stats.entropy(prediction))
+
+            if teacher_forcing and seed_from:
+                sample = np.argmax(prediction)
+                sample_ = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
+                gt_prob_distr = np.zeros(waveform[step+1])
+                gt_prob_distr = np.append(gt_prob_distr, 1)
+                gt_prob_distr = np.append(gt_prob_distr, np.zeros(255-waveform[step+1]))
+                cross_entropies.append(cross_entropy(prediction, gt_prob_distr)) 
+            else:
+                sample = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
             if step % 1000 == 0:
-                plot_gaussian_distr(outdir, 'pred_distr_' + str(step), prediction, sample, True, log)
-                #sample = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
-                #sample = np.argmax(prediction)
-                print(sample, prediction[sample])
-            if step % entropy_every == 0:
-                entropies.append(scipy.stats.entropy(prediction))
+                #print(waveform[step+1]);exit()
+                if seed_from and teacher_forcing:
+                    plot_gaussian_distr(outdir, 'pred_distr_' + str(step), prediction, sample, waveform[step+1], True, log)
+                else:
+                    plot_gaussian_distr(outdir, 'pred_distr_' + str(step), prediction, sample, None, True, log)
+
+            if step % entropy_every == 0 and step != 0:
+                entropies_to_display.append(np.mean(entropies[-entropy_every:]))
+
+                cross_entropies_to_display.append(np.mean(cross_entropies[-entropy_every:]))
+                #print(cross_entropies_to_display);exit()
             if seed_from and teacher_forcing:
                 waveform_.append(sample)
+                waveform_pred_.append(sample_)
             else:
                 waveform.append(sample)
                 preds.append(sample)
         decode = mu_law_decode(current_sample, self.trainer.q_channels)
-        out = self.sess.run(decode, feed_dict={current_sample: waveform[-n_samples:]})
-        plot_entropy(outdir, 'entropy_' + timestamp() + '.png', entropies, entropy_every, True, log)
+
+        if seed_from and teacher_forcing:
+            out = self.sess.run(decode, feed_dict={current_sample: waveform_[-n_samples:]})
+            out_rand = self.sess.run(decode, feed_dict={current_sample: waveform_pred_[-n_samples:]})
+        else:
+            out = self.sess.run(decode, feed_dict={current_sample: waveform[-n_samples:]})
+
+        if teacher_forcing and seed_from:
+            print(len(entropies_to_display));print(len(cross_entropies_to_display))
+            print(cross_entropies_to_display)
+            #plot_entropy(outdir, 'cross_entropies_' + timestamp() + '.png', cross_entropies_to_display, entropy_every, True, log)
+            plot_two_entropies(outdir, 'entropies_' + timestamp() + '.png', entropies_to_display, cross_entropies_to_display, entropy_every, True, log)
+            plot_two_waveforms(outdir, 'waveforms_'+timestamp()+'.png', waveform_fl[:1000], out[:1000], 1000, True, log)
+            plot_three_waveforms(outdir, 'waveforms_'+timestamp()+'.png', waveform_fl[:1000], out[:1000], out_rand[:1000], 1000, True, log)
         return out
 
     def generate_dil(self, input, state, i):

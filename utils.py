@@ -40,8 +40,8 @@ def create_logspace_template(n_channels=256):
 	template = np.array(neg + pos)
 	return template
 
-def get_first_audio(path, template=create_logspace_template()):
-	audio, _ = librosa.load(path, sr=8000, mono=True)
+def get_first_audio(path, sr=8000, template=create_logspace_template()):
+	audio, _ = librosa.load(path, sr=sr, mono=True)
 	audio = audio.reshape(-1, 1).T[0].T
 	if len(audio) > 72000:
 		audio = audio[:72000]
@@ -54,12 +54,15 @@ def create_audio(filenames, sample_rate=8000, template=create_logspace_template(
 	for filename in filenames:
 		print('loading ', filename)
 		audio, _ = librosa.load(filename, sr=sample_rate, mono=True)
+		#rate, data = wavfile.read(filename)
+		#print(rate);print(data);exit()
 		audio = audio.reshape(-1, 1).T[0].T
 		if len(audio) > 120000:
 			audio = audio[:120000]
 		if template is not None:
 			bins = np.digitize(audio, template) - 1
 			data.append(template[bins][:, None])
+	#print(data.shape);print(audio[:, None].shape);exit()
 	return data
 
 def write_data(outdir, name, data, output_sample_rate, log):
@@ -74,6 +77,9 @@ def timestamp():
 	if not CURRENT_RUN_TIMESTAMP:
 		CURRENT_RUN_TIMESTAMP = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H-%M-%S')
 	return CURRENT_RUN_TIMESTAMP
+
+def cross_entropy(A, Y):
+	return -(1.0/256) * np.sum(Y*np.log(A) + (1-Y)*np.log(1-A))
 
 class Log:
 	def __init__(self,should_log):
@@ -105,14 +111,16 @@ def prepare_environment(resource_limit, log):
 	soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
 	resource.setrlimit(resource.RLIMIT_CPU, (resource_limit, hard))
 
-def plot_gaussian_distr(outdir, name, data, chosen_sample, should_plot, log):
+def plot_gaussian_distr(outdir, name, data, chosen_sample, gt, should_plot, log):
 	if should_plot:
 		create_out_dir(outdir, log)
 		fig = plt.figure(figsize=(10, 4))
 		host = fig.add_subplot(111)
 		par = host.twinx()
-		host.bar(np.arange(256), data)
+		host.plot(np.arange(256), data)
 		par.scatter(chosen_sample, data[chosen_sample], color=['green'])
+		if gt:
+			par.scatter(gt, data[gt], color=['red'])
 		log('Saving plot of the waveform as \'{}\''.format(outdir + name))
 		host.set_xlabel('bin')
 		host.set_ylabel('probability')
@@ -122,8 +130,41 @@ def plot_waveform(outdir, name, data, sr, should_plot, log):
 	if should_plot:
 		create_out_dir(outdir, log)
 		times = np.arange(len(data))/float(sr)
-		plt.figure(figsize=(30, 4))
-		plt.fill_between(times,data) 
+		fig = plt.figure(figsize=(60, 4))
+		host = fig.add_subplot(111)
+		plt.plot(times, data)
+		plt.xlim(times[0], times[-1])
+		plt.xlabel('time (s)')
+		plt.ylabel('amplitude')
+		log('Saving plot of the waveform as \'{}\''.format(outdir + name))
+		plt.savefig(outdir + name, dpi=100)
+
+def plot_two_waveforms(outdir, name, gt, data, sr, should_plot, log):
+	if should_plot:
+		create_out_dir(outdir, log)
+		times = np.arange(len(data))/float(sr)
+		fig = plt.figure(figsize=(80, 4))
+		ax1 = fig.add_subplot(111)
+		ax1.plot(times,data, label='predictions') 
+		ax1.plot(times,gt, label='ground truth') 
+		plt.xlim(times[0], times[-1])
+		plt.xlabel('time (s)')
+		plt.ylabel('amplitude')
+		plt.legend(loc='upper right')
+		log('Saving plot of the waveform as \'{}\''.format(outdir + name))
+		plt.savefig(outdir + name, dpi=100)
+
+
+def plot_three_waveforms(outdir, name, gt, data, random_data, sr, should_plot, log):
+	if should_plot:
+		create_out_dir(outdir, log)
+		times = np.arange(len(data))/float(sr)
+		fig = plt.figure(figsize=(60, 4))
+		ax1 = fig.add_subplot(111)
+		ax1.plot(times,random_data, label='predictions (random)') 
+		ax1.plot(times,data, label='predictions (argmax)') 
+		ax1.plot(times,gt, label='ground truth') 
+		plt.legend(loc='upper right')
 		plt.xlim(times[0], times[-1])
 		plt.xlabel('time (s)')
 		plt.ylabel('amplitude')
@@ -137,7 +178,7 @@ def plot_spectogram(outdir, name, data, sr, should_plot, log):
 		D = librosa.amplitude_to_db(librosa.core.magphase(librosa.stft(data))[0])
 		librosa.display.specshow(D, cmap='gray_r', y_axis='linear')
 		plt.colorbar(format='%+2.0f dB')
-		plt.title('Linear power spectrogram (grayscale)')
+		#plt.title('Linear power spectrogram (grayscale)')
 		log('Saving spectogram as \'{}\''.format(outdir + name))
 		plt.savefig(outdir + name)
 
@@ -154,14 +195,37 @@ def plot_entropy(outdir, name, entropies, spacing_int, should_plot, log):
 		log('Saving entropy plot as \'{}\''.format(outdir + name))
 		plt.savefig(outdir + name)
 
+def plot_two_entropies(outdir, name, entropies_1, entropies_2, spacing_int, should_plot, log):
+	if should_plot:
+		create_out_dir(outdir, log)
+		fig = plt.figure(figsize=(24, 12))
+		ax1 = fig.add_subplot(111)
+		range_entropies = [i*spacing_int for i in range(len(entropies_1))]
+		plt.title('Entropy of probabilities')
+		plt.xlabel('Sample')
+		plt.ylabel('Entropy')
+		ax1.plot(range_entropies, entropies_1, label='Entropy')
+		ax1.plot(range_entropies, entropies_2,  label='Cross-entropy')
+		plt.legend(loc='upper right')
+		plt.grid(True)
+		log('Saving entropy plot as \'{}\''.format(outdir + name))
+		plt.savefig(outdir + name)
+
+
 def plot_losses(outdir, name, losses, losses_val, loss_every, val_every, epoch_every, epochs, start_at, should_plot, log):
 	if should_plot:
 		create_out_dir(outdir, log)
 		fig = plt.figure(figsize=(12, 6))
 		ax1 = fig.add_subplot(111)
-		iterations_range_losses = [((i*loss_every)/epoch_every)+start_at for i in range(len(losses))]
-		iterations_range_val_losses = [((i*val_every)/epoch_every)+start_at if i!=0 else 0 for i in range(len(losses_val))]
-		epoch_range = [i for i in range(epochs+1)]
+		if epochs != 0:
+			iterations_range_losses = [(i*loss_every+start_at)/epoch_every for i in range(len(losses))]
+			iterations_range_val_losses = [(i*epoch_every+start_at)/epoch_every for i in range(len(losses_val))]
+		else:
+			iterations_range_losses = [(i*loss_every+start_at) for i in range(len(losses))]
+			iterations_range_val_losses = [(i*epoch_every+start_at) for i in range(len(losses_val))]
+		print(iterations_range_losses)
+		print(iterations_range_val_losses)
+		#epoch_range = [i for i in range(epochs+1)]
 		#print(epoch_range);exit()
 		#plt.scatter(iterations_range, losses)
 		ax1.plot(iterations_range_losses, losses, label='training loss')#, s=10, c='b', marker="s", label='training loss')

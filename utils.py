@@ -15,6 +15,7 @@ import GPUtil
 import resource
 import matplotlib.mlab as mlab
 import scipy.stats as stats
+from scipy.special import xlogy
 
 plt.switch_backend('agg')
 CURRENT_RUN_TIMESTAMP = None
@@ -40,30 +41,42 @@ def create_logspace_template(n_channels=256):
 	template = np.array(neg + pos)
 	return template
 
-def get_first_audio(path, sr=8000, template=create_logspace_template()):
+def mu_law_encode(signal, quantization_channels=256):
+    mu = quantization_channels - 1
+    magnitude = np.log1p(mu * np.abs(signal)) / np.log1p(mu)
+    signal = np.sign(signal) * magnitude
+    signal = (signal + 1) / 2 * mu + 0.5
+    return signal.astype(np.int32)
+
+def mu_law_decode(signal, quantization_channels=256):
+    mu = quantization_channels - 1
+    y = signal.astype(np.float32)
+    y = 2 * (y / mu) - 1
+    x = np.sign(y) * (1.0 / mu) * ((1.0 + mu)**abs(y) - 1.0)
+    return x
+
+def get_first_audio(path, sr=8000):
 	audio, _ = librosa.load(path, sr=sr, mono=True)
 	audio = audio.reshape(-1, 1).T[0].T
-	if len(audio) > 72000:
-		audio = audio[:72000]
-	bins = np.digitize(audio, template) - 1
-
-	return template[bins], bins
+	return audio, manual_mu_law_encode(audio)
 
 def create_audio(filenames, sample_rate=8000, template=create_logspace_template()):
 	data = []
+	audios = []
 	for filename in filenames:
 		print('loading ', filename)
 		audio, _ = librosa.load(filename, sr=sample_rate, mono=True)
 		#rate, data = wavfile.read(filename)
 		#print(rate);print(data);exit()
 		audio = audio.reshape(-1, 1).T[0].T
+		audios.append(audio[:, None])
 		if len(audio) > 120000:
 			audio = audio[:120000]
 		if template is not None:
 			bins = np.digitize(audio, template) - 1
 			data.append(template[bins][:, None])
 	#print(data.shape);print(audio[:, None].shape);exit()
-	return data
+	return audios
 
 def write_data(outdir, name, data, output_sample_rate, log):
 	create_out_dir(outdir, log)
@@ -78,8 +91,11 @@ def timestamp():
 		CURRENT_RUN_TIMESTAMP = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H-%M-%S')
 	return CURRENT_RUN_TIMESTAMP
 
-def cross_entropy(A, Y):
-	return -(1.0/256) * np.sum(Y*np.log(A) + (1-Y)*np.log(1-A))
+def cross_entropy(prob_of_gt_sample, q_channels=256):
+	return -np.log(prob_of_gt_sample)
+
+def entropy(pred):
+	return stats.entropy(pred)
 
 class Log:
 	def __init__(self,should_log):
@@ -111,19 +127,19 @@ def prepare_environment(resource_limit, log):
 	soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
 	resource.setrlimit(resource.RLIMIT_CPU, (resource_limit, hard))
 
-def plot_gaussian_distr(outdir, name, data, chosen_sample, gt, should_plot, log):
+def plot_gaussian_distr(outdir, name, prediction, chosen_sample, gt, should_plot, log):
 	if should_plot:
 		create_out_dir(outdir, log)
-		fig = plt.figure(figsize=(10, 4))
-		host = fig.add_subplot(111)
-		par = host.twinx()
-		host.plot(np.arange(256), data)
-		par.scatter(chosen_sample, data[chosen_sample], color=['green'])
+		plt.figure(figsize=(10, 4))
+		plt.plot(np.arange(256), prediction)
+		print(chosen_sample);print(prediction[chosen_sample])
+		plt.scatter(chosen_sample, prediction[chosen_sample], color=['green'])
 		if gt:
-			par.scatter(gt, data[gt], color=['red'])
+			plt.scatter(gt, prediction[gt], color=['red'])
 		log('Saving plot of the waveform as \'{}\''.format(outdir + name))
-		host.set_xlabel('bin')
-		host.set_ylabel('probability')
+		#plt.xlim(np.arange(-1, 1, 256))
+		plt.xlabel('bin')
+		plt.ylabel('probability')
 		plt.savefig(outdir + name, dpi=100)
 
 def plot_waveform(outdir, name, data, sr, should_plot, log):
@@ -231,7 +247,7 @@ def plot_losses(outdir, name, losses, losses_val, loss_every, val_every, epoch_e
 		ax1.plot(iterations_range_losses, losses, label='training loss')#, s=10, c='b', marker="s", label='training loss')
 		ax1.plot(iterations_range_val_losses, losses_val, label='valid. loss')#, s=10, c='r', marker="o", label='valid. loss')
 		#ax1.set_xticks(epoch_range)
-		plt.legend(loc='upper right');
+		plt.legend(loc='upper right')
 		plt.xlabel('epochs')
 		plt.ylabel('losses')
 		plt.title('Training process')

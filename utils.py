@@ -17,6 +17,12 @@ import matplotlib.mlab as mlab
 import scipy.stats as stats
 from scipy.special import xlogy
 
+font = {'family' : 'calibri',
+        'weight' : 'normal',
+        'size'   : 22}
+
+plt.rc('font', **font)
+
 plt.switch_backend('agg')
 CURRENT_RUN_TIMESTAMP = None
 
@@ -58,7 +64,7 @@ def mu_law_decode(signal, quantization_channels=256):
 def get_first_audio(path, sr=8000):
 	audio, _ = librosa.load(path, sr=sr, mono=True)
 	audio = audio.reshape(-1, 1).T[0].T
-	return audio, manual_mu_law_encode(audio)
+	return audio, mu_law_encode(audio)
 
 def create_audio(filenames, sample_rate=8000, template=create_logspace_template()):
 	data = []
@@ -119,7 +125,7 @@ def create_session():
 	return sess
 
 def prepare_environment(resource_limit, log):
-	DEVICE_ID_LIST = GPUtil.getFirstAvailable(order = 'last', maxLoad=0.1, verbose=True)
+	DEVICE_ID_LIST = GPUtil.getFirstAvailable(order = 'last', maxLoad=0.85, verbose=True)
 	DEVICE_ID = DEVICE_ID_LIST[0] # grab first element from list
 
 	os.environ["CUDA_VISIBLE_DEVICES"] = str(DEVICE_ID)
@@ -132,7 +138,7 @@ def plot_gaussian_distr(outdir, name, prediction, chosen_sample, gt, should_plot
 		create_out_dir(outdir, log)
 		plt.figure(figsize=(10, 4))
 		plt.plot(np.arange(256), prediction)
-		print(chosen_sample);print(prediction[chosen_sample])
+		#print(chosen_sample);print(prediction[chosen_sample])
 		plt.scatter(chosen_sample, prediction[chosen_sample], color=['green'])
 		if gt:
 			plt.scatter(gt, prediction[gt], color=['red'])
@@ -146,7 +152,7 @@ def plot_waveform(outdir, name, data, sr, should_plot, log):
 	if should_plot:
 		create_out_dir(outdir, log)
 		times = np.arange(len(data))/float(sr)
-		fig = plt.figure(figsize=(60, 4))
+		fig = plt.figure(figsize=(60, 8))
 		host = fig.add_subplot(111)
 		plt.plot(times, data)
 		plt.xlim(times[0], times[-1])
@@ -155,6 +161,22 @@ def plot_waveform(outdir, name, data, sr, should_plot, log):
 		log('Saving plot of the waveform as \'{}\''.format(outdir + name))
 		plt.savefig(outdir + name, dpi=100)
 
+
+'''
+def plot_waveform(outdir, name, data, data2, div, sr, should_plot, log):
+	if should_plot:
+		create_out_dir(outdir, log)
+		times = np.arange(len(data)+len(data2))/float(sr)
+		fig = plt.figure(figsize=(60, 4))
+		ax = fig.add_subplot(111)
+		ax.plot(times[:len(data)], data, color='blue')
+		ax.plot(times[len(data):], data2, color='orange')
+		plt.xlim(times[0], times[-1])
+		plt.xlabel('time (s)')
+		plt.ylabel('amplitude')
+		log('Saving plot of the waveform as \'{}\''.format(outdir + name))
+		plt.savefig(outdir + name, dpi=100)
+'''
 def plot_two_waveforms(outdir, name, gt, data, sr, should_plot, log):
 	if should_plot:
 		create_out_dir(outdir, log)
@@ -175,11 +197,11 @@ def plot_three_waveforms(outdir, name, gt, data, random_data, sr, should_plot, l
 	if should_plot:
 		create_out_dir(outdir, log)
 		times = np.arange(len(data))/float(sr)
-		fig = plt.figure(figsize=(60, 4))
+		fig = plt.figure(figsize=(80, 8))
 		ax1 = fig.add_subplot(111)
-		ax1.plot(times,random_data, label='predictions (random)') 
-		ax1.plot(times,data, label='predictions (argmax)') 
 		ax1.plot(times,gt, label='ground truth') 
+		#ax1.plot(times,random_data, label='predictions (random)') 
+		ax1.plot(times,data, label='predictions (argmax)') 
 		plt.legend(loc='upper right')
 		plt.xlim(times[0], times[-1])
 		plt.xlabel('time (s)')
@@ -189,11 +211,20 @@ def plot_three_waveforms(outdir, name, gt, data, random_data, sr, should_plot, l
 
 def plot_spectogram(outdir, name, data, sr, should_plot, log):
 	if should_plot:
-		create_out_dir(outdir, log)
-		plt.figure(figsize=(8, 4))
+		#create_out_dir(outdir, log)
+		plt.figure(figsize=(30, 10))
 		D = librosa.amplitude_to_db(librosa.core.magphase(librosa.stft(data))[0])
-		librosa.display.specshow(D, cmap='gray_r', y_axis='linear')
+		#CQT = librosa.amplitude_to_db(librosa.cqt(data, sr=sr), ref=np.max)
+		'''
+		+		plt.subplot(4, 2, 3)
++		librosa.display.specshow(CQT, y_axis='cqt_note')
++		plt.colorbar(format='%+2.0f dB')
++		plt.title('Constant-Q power spectrogram (note)')
+		'''
+		#plt.subplot(4, 2, 1)
+		librosa.display.specshow(D, y_axis='linear')
 		plt.colorbar(format='%+2.0f dB')
+		plt.title('Linear-frequency power spectrogram')
 		#plt.title('Linear power spectrogram (grayscale)')
 		log('Saving spectogram as \'{}\''.format(outdir + name))
 		plt.savefig(outdir + name)
@@ -201,7 +232,7 @@ def plot_spectogram(outdir, name, data, sr, should_plot, log):
 def plot_entropy(outdir, name, entropies, spacing_int, should_plot, log):
 	if should_plot:
 		create_out_dir(outdir, log)
-		plt.figure(figsize=(12, 4))
+		plt.figure(figsize=(24, 12))
 		range_entropies = [i*spacing_int for i in range(len(entropies))]
 		plt.title('Entropy of probabilities')
 		plt.xlabel('Sample')

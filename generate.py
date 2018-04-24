@@ -5,15 +5,6 @@ import sys
 from utils import *
 import scipy.stats
 
-def mu_law_decode(output, q_channels):
-    '''
-    Performs inverse operation of the u-law encoding to recover the waveform
-    '''
-    mu = q_channels - 1
-    signal = 2 * (tf.to_float(output) / mu) - 1
-    magnitude =  (1 / mu) * ((1 + mu)**abs(signal) - 1)
-    return tf.sign(signal) * magnitude
-
 def generate_sample(inputs, state, w, activation=None):
     '''
     Performs convolution for a single convolutional step
@@ -26,94 +17,155 @@ def generate_sample(inputs, state, w, activation=None):
     return output
 
 class Generator():
-    def __init__(self, trainer):
+    def __init__(self, trainer, outdir, log):
         self.trainer = trainer
+        self.outdir = outdir
+        self.log = log
         self.sess = create_session()
         self.sess.run(tf.global_variables_initializer())
-        
-    def generate(self, restore_from, n_samples, seed_from, outdir, log, tf_sr=8000, teacher_forcing=True):
-        current_sample = tf.placeholder(tf.int32)
+        self.current_sample = tf.placeholder(tf.int32)
+        self.next_sample = self.generate_next_sample(self.current_sample)
+        self.entropies = []
+        self.entropies_to_display = []
+        self.entropy_every = 50
 
-        next_sample = self.generate_next_sample(current_sample)
-        self.sess.run(self.init_ops)
-
-        if restore_from:
-            self.trainer._load_weights(restore_from, self.sess, log)
-
-        waveform = []
-        #template = create_logspace_template()
-        if seed_from:
-            waveform_fl, waveform = get_first_audio(seed_from, tf_sr)
-            waveform = list(waveform)
-            #print(waveform);exit()
-            if not teacher_forcing:
-                outputs = [next_sample]
-                outputs.extend(self.push_ops)
-                for sample in waveform[-self.trainer.receptive_field: -1]:
-                    self.sess.run(outputs, feed_dict={current_sample: sample})
-        else:
-            waveform.append(np.random.randint(self.trainer.q_channels))
-
-        entropies = []
+    def generate_teacher_forcing(self, restore_from, n_samples, seed_from, tf_sr=8000, should_plot_distr=False):
         cross_entropies = []
-        entropies_to_display = []
         cross_entropies_to_display = []
-        entropy_every = 50
-        waveform_ = []
-        if seed_from and teacher_forcing: 
-            waveform_.append(waveform[0])
-        waveform_pred_ = []
-        preds = []
-        out_rand = []
+        self.sess.run(self.init_ops)
+        if restore_from:
+            self.trainer._load_weights(restore_from, self.sess, self.log)
+        gt_waveform, gt_waveform_bins = get_first_audio(seed_from, tf_sr)
+        gt_waveform_bins = list(gt_waveform_bins)
+        print('Starting TF generation with len(waveform_bins)=', len(gt_waveform_bins))
+        pred_waveform_bins = []
+        pred_waveform_bins_random = []
+        n_samples = n_samples-1
         for step in range(n_samples):
-            outputs = [next_sample]
+            outputs = [self.next_sample]
             outputs.extend(self.push_ops)
-            if seed_from and teacher_forcing:
-                window = waveform[step]
-            else:
-                window = waveform[-1]
+            input = gt_waveform_bins[step]
             if step % 100 == 0:
                 print(step,'/', n_samples)
                 sys.stdout.flush()
-            prediction = self.sess.run(outputs, feed_dict={current_sample: window})[0]
+            prediction = self.sess.run(outputs, feed_dict={self.current_sample: input})[0]
+            pred_sample = np.argmax(prediction)
+            pred_waveform_bins.append(pred_sample)
+            pred_sample_random = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
+            pred_waveform_bins_random.append(pred_sample_random)
+            self.entropies.append(entropy(prediction))
+            cross_entropies.append(cross_entropy(prediction[gt_waveform_bins[step+1]])) 
+            if step % 1000 == 0 and should_plot_distr:
+                plot_gaussian_distr(self.outdir, 'pred_distr_' + str(step), prediction, pred_sample, gt_waveform_bins[step+1], True, self.log)
+            if step % self.entropy_every == 0 and step != 0:
+                self.entropies_to_display.append(np.mean(self.entropies[-self.entropy_every:]))
+                cross_entropies_to_display.append(np.mean(cross_entropies[-self.entropy_every:]))
+            
+        out = mu_law_decode(np.array(pred_waveform_bins))
+        out = np.insert(out, 0, gt_waveform[0], axis=0)
+        out_rand = mu_law_decode(np.array(pred_waveform_bins_random[-n_samples:]))
+        out_rand = np.insert(out, 0, gt_waveform[0], axis=0)
+        return out, out_rand, gt_waveform, cross_entropies_to_display
 
-            if teacher_forcing and seed_from:
-                sample = np.argmax(prediction)
-                sample_ = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
-                entropies.append(entropy(prediction))
-                cross_entropies.append(cross_entropy(prediction[waveform[step+1]])) 
-            else:
-                sample = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
-                entropies.append(scipy.stats.entropy(prediction))
-            if step % 1000 == 0:
-                if seed_from and teacher_forcing:
-                    plot_gaussian_distr(outdir, 'pred_distr_' + str(step), prediction, sample, waveform[step+1], True, log)
-                else:
-                    plot_gaussian_distr(outdir, 'pred_distr_' + str(step), prediction, sample, None, True, log)
+    def generate_seed(self, restore_from, n_samples, seed_from, sr=8000, should_plot_distr=False):
+        self.sess.run(self.init_ops)
+        if restore_from:
+            self.trainer._load_weights(restore_from, self.sess, self.log)
+        waveform, waveform_bins = get_first_audio(seed_from, sr)
+        waveform_bins = list(waveform_bins)
+        print('Starting seeding generation with len(waveform_bins)=', len(waveform_bins))
+        # priming the generation with seed
+        outputs = [self.next_sample]
+        outputs.extend(self.push_ops)
+        for sample in waveform_bins[-self.trainer.receptive_field: -1]:
+            self.sess.run(outputs, feed_dict={self.current_sample: sample})
+        for step in range(n_samples):
+            outputs = [self.next_sample]
+            outputs.extend(self.push_ops)
+            input = waveform_bins[-1]
+            if step % 100 == 0:
+                print(step,'/', n_samples)
+                sys.stdout.flush()
+            prediction = self.sess.run(outputs, feed_dict={self.current_sample: input})[0]
+            pred_sample = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
+            #pred_sample = np.argmax(prediction)
+            self.entropies.append(entropy(prediction))
+            if step % 1000 == 0 and should_plot_distr:
+                #pred_sample = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
+                plot_gaussian_distr(self.outdir, 'pred_distr_' + str(step), prediction, pred_sample, None, True, self.log)
+            waveform_bins.append(pred_sample)
+            if step % self.entropy_every == 0 and step != 0:
+                self.entropies_to_display.append(np.mean(self.entropies[-self.entropy_every:]))
 
-            if step % entropy_every == 0 and step != 0:
-                entropies_to_display.append(np.mean(entropies[-entropy_every:]))
+        out = mu_law_decode(np.array(waveform_bins[-n_samples:]))
+        out_seed = mu_law_decode(np.array(waveform_bins[self.trainer.receptive_field:]))
+        # out now contains bins from seed (out[:n_samples]) as well as generated (out[n_samples:])
+        #plot_waveform(self.outdir, 'waveforms_' + timestamp() + '.png', out_seed[-100:], out[:100], n_samples, n_samples, True, self.log)
+        #exit()
+        return out
 
-                cross_entropies_to_display.append(np.mean(cross_entropies[-entropy_every:]))
+    def generate_unique(self, restore_from, n_samples, should_plot_distr=False):
+        self.sess.run(self.init_ops)
+        if restore_from:
+            self.trainer._load_weights(restore_from, self.sess, self.log)
+        waveform_bins = []
+        waveform_bins.append(np.random.randint(self.trainer.q_channels))
+        for step in range(n_samples):
+            outputs = [self.next_sample]
+            outputs.extend(self.push_ops)
+            input = waveform_bins[-1]
+            if step % 100 == 0:
+                print(step,'/', n_samples)
+                sys.stdout.flush()
+            prediction = self.sess.run(outputs, feed_dict={self.current_sample: input})[0]
+            pred_sample = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
+            #pred_sample = np.argmax(prediction)
+            waveform_bins.append(pred_sample)
+            self.entropies.append(entropy(prediction))
+            if step % 1000 == 0 and should_plot_distr:
+                plot_gaussian_distr(self.outdir, 'pred_distr_' + str(step), prediction, pred_sample, None, True, self.log)
+            if step % self.entropy_every == 0 and step != 0:
+                self.entropies_to_display.append(np.mean(self.entropies[-self.entropy_every:]))
+
+        out = mu_law_decode(np.array(waveform_bins))
+        return out
+    '''
+    def generate(self, n_samplese):
+
             if seed_from and teacher_forcing:
                 waveform_.append(sample)
                 waveform_pred_.append(sample_)
             else:
                 waveform.append(sample)
                 preds.append(sample)
-        decode = mu_law_decode(current_sample, self.trainer.q_channels)
+        #decode = mu_law_decode(current_sample, self.trainer.q_channels)
 
         if seed_from and teacher_forcing:
-            out = mu_law_decode(waveform_[-n_samples:])
-            out_rand = mu_law_decode(waveform_[-waveform_pred_:])
+            out = mu_law_decode(np.array(waveform_[-n_samples:]))
+            #print(out);print(len(out));print(type(out));print(type(out[0]))
+            #new_o.append(waveform_fl)
+            out = np.insert(out, 0, waveform_fl[0], axis=0)
+            #out = [waveform_fl[0]] + out
+            #print(out);print(len(out));exit()
+            out_rand = mu_law_decode(np.array(waveform_pred_[-n_samples:]))
+            out_rand = [waveform_fl[0]] + out_rand
         else:
-            out = mu_law_decode(waveform[-n_samples:])
-
+            out = mu_law_decode(np.array(waveform))
+#def plot_waveform(outdir, name, data, sr, should_plot, log):
+        
+        plot_waveform(outdir, 'waveforms_' + timestamp() + '.png', out[:n_samples], out[n_samples:], n_samples, len(out), True, log)
+        #exit()
         if teacher_forcing and seed_from:
+            #print('here');print(waveform_fl[:10])
+            #def plot_waveform(outdir, name, data, data2, div, sr, should_plot, log):
+
+            plot_waveform(outdir, 'waveforms_' + timestamp() + '.png', out[:n_samples], out[n_samples:], n_samples, len(out), True, log)
+            exit()
             plot_two_entropies(outdir, 'entropies_' + timestamp() + '.png', entropies_to_display, cross_entropies_to_display, entropy_every, True, log)
             plot_two_waveforms(outdir, 'waveforms_'+timestamp()+'.png', waveform_fl[:n_samples], out[:n_samples], n_samples, True, log)
             plot_three_waveforms(outdir, 'waveforms_'+timestamp()+'.png', waveform_fl[:1000], out[:1000], out_rand[:1000], n_samples, True, log)
-        return out
+        return out[:n_samples]
+    '''
 
     def generate_dil(self, input, state, i):
         current_dil_l_vars = self.trainer.net.variables['dil_stack'][i]

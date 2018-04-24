@@ -65,9 +65,6 @@ class Trainer():
             print("Checkpoint: ", checkpoint.model_checkpoint_path)
             step = int(checkpoint.model_checkpoint_path.split('-')[-1])
             last_loss = float(checkpoint.model_checkpoint_path.split('=')[1].split('_')[0])
-            #print(checkpoint.model_checkpoint_path.split('epoch'))
-            #print(checkpoint.model_checkpoint_path)
-            #print(checkpoint.model_checkpoint_path.split('epoch')[2]);exit()
             if checkpoint.model_checkpoint_path.split('epoch')[-2] != checkpoint.model_checkpoint_path:
                 last_epoch = int(checkpoint.model_checkpoint_path.split('epoch')[-1].split('_')[0])
             else:
@@ -93,7 +90,7 @@ class Trainer():
         if last_epoch != 0:
             start_at = last_epoch
         print("Starting training, initial step: ", init_step)
-        
+        start = time.time()
         loss = None
         losses_to_display = []
         epoch_counter = last_epoch
@@ -105,7 +102,7 @@ class Trainer():
                     shuffle(val_batch)
                     epoch_counter += 1
 
-                loss, _ = sess.run([self.loss, self.optim], feed_dict={self.input_batch: train_batch[iter%epoch_length], self.net.keep_prob : 0.25}) 
+                loss, _ = sess.run([self.loss, self.optim], feed_dict={self.input_batch: train_batch[iter%epoch_length], self.net.keep_prob : 1.0}) 
                 losses.append(loss)
 
                 if iter % log_every == 0:
@@ -131,6 +128,7 @@ class Trainer():
             else:
                 print("No saved loss")
             sys.stdout.flush()
+        end = time.time()
         '''
         loss_ = sess.run([self.loss], feed_dict={self.input_batch: val_batch[iter%len(val_batch)], self.net.keep_prob : 1.0})[0]
         print('Validation loss: ', loss_);sys.stdout.flush()
@@ -148,4 +146,5 @@ class Trainer():
         f = open(output_dir + 'val_losses', 'w')
         f.write('\n'.join(map(str, val_losses)))
         f.close()
+        print('Training took ', end-start, ' s')
         return losses

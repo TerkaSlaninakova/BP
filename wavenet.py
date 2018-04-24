@@ -56,7 +56,7 @@ class Wavenet():
         self.q_channels = q_channels
         self.skip_w = skip_width
         self.receptive_field = receptive_field
-
+        self.keep_prob = tf.placeholder(tf.float32)
         variables = dict()
         with tf.variable_scope('wavenet_model'):
             variables['causal_layer'] = dict()
@@ -80,6 +80,7 @@ class Wavenet():
         self.variables = variables
 
     def construct_network(self, network_input):
+
         network_input = tf.slice(network_input, [0, 0, 0], [-1, tf.shape(network_input)[1]-1, -1])
         current_l = conv1d(network_input, self.variables['causal_layer']['kernel'])
         final_w = tf.shape(network_input)[1] - self.receptive_field + 1
@@ -108,5 +109,8 @@ class Wavenet():
 
         total = sum(outputs)
         out_conv = conv1d(tf.nn.relu(total), self.variables['pp']['pp1'], False)
-        out_conv = conv1d(tf.nn.relu(out_conv), self.variables['pp']['pp2'], False)
+
+        relu = tf.nn.relu(out_conv)
+        drop_out = tf.nn.dropout(relu, self.keep_prob)
+        out_conv = conv1d(drop_out, self.variables['pp']['pp2'], False)
         return out_conv

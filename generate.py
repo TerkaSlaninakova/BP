@@ -187,6 +187,7 @@ class Generator():
 
         variables = self.trainer.net.variables['pp']
         transformed = tf.nn.relu(sum(outputs))
+        
         conv = tf.matmul(transformed, variables['pp1'][0, :, :])
         transformed = tf.nn.relu(conv)
         conv = tf.matmul(transformed, variables['pp2'][0, :, :])

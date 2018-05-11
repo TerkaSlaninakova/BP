@@ -26,19 +26,30 @@ plt.rc('font', **font)
 plt.switch_backend('agg')
 CURRENT_RUN_TIMESTAMP = None
 
-def prepare_datasets(directory, log):
+def str2bool(v):
+    if v.lower() in ('yes', 'true', 't', 'y', '1'): 
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
+def create_output_dir(output_dir):
+	os.path.dirname(os.path.realpath(__file__)) + '/' + timestamp() + '/' if output_dir == '' else output_dir
+
+def prepare_datasets(directory, log, train_val_ratio = 5):
 	if directory[-1] != '/':
 		directory += '/'
 	files = list(glob.iglob(directory + '*wav'))
 	log('Found {} files in {}'.format(len(files), directory))
 	shuffle(files)
-	how_many_val_files = len(files) // 10
+	how_many_val_files = len(files) // train_val_ratio
 	if how_many_val_files == 0:
 		print('Couldnt create and appropriate validation dataset, there is too few samples in the dataset: ', len(files), ' exiting')
 		exit()
-	log('Assigning {} to be validation data'.format(how_many_val_files))
-	val_dataset = files[:how_many_val_files]
-	train_dataset = files[how_many_val_files:]
+	log('Assigning {} audios to be validation data'.format(how_many_val_files))
+	val_dataset = [file for i, file in enumerate(files) if i % train_val_ratio == 0]
+	train_dataset = [file for i, file in enumerate(files) if i % train_val_ratio != 0]
 	return train_dataset, val_dataset
 
 def create_logspace_template(n_channels=256):
@@ -66,7 +77,7 @@ def get_first_audio(path, sr=8000):
 	audio = audio.reshape(-1, 1).T[0].T
 	return audio, mu_law_encode(audio)
 
-def create_audio(filenames, sample_rate=8000, template=create_logspace_template()):
+def create_audio(filenames, sample_rate=8000):
 	data = []
 	audios = []
 	for filename in filenames:
@@ -76,11 +87,6 @@ def create_audio(filenames, sample_rate=8000, template=create_logspace_template(
 		#print(rate);print(data);exit()
 		audio = audio.reshape(-1, 1).T[0].T
 		audios.append(audio[:, None])
-		if len(audio) > 120000:
-			audio = audio[:120000]
-		if template is not None:
-			bins = np.digitize(audio, template) - 1
-			data.append(template[bins][:, None])
 	#print(data.shape);print(audio[:, None].shape);exit()
 	return audios
 
@@ -132,6 +138,15 @@ def prepare_environment(resource_limit, log):
 	log('Preparing environment by choosing a gpu {} and setting resource limit={}'.format(DEVICE_ID, resource_limit))
 	soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
 	resource.setrlimit(resource.RLIMIT_CPU, (resource_limit, hard))
+
+def save_weights(self, saver, outdir, epoch, iteration, sess, loss, log):
+	create_out_dir(outdir, log)
+	checkpoint_dir = outdir + 'saved_weights/'
+	if not os.path.exists(checkpoint_dir):
+		os.makedirs(checkpoint_dir)
+	checkpoint_path = checkpoint_dir + timestamp() + '_epoch' + epoch + '_loss=' + loss + '_model.ckpt'
+	log('Storing checkpoint as {} ...'.format(checkpoint_path))
+	saver.save(sess, checkpoint_path, global_step=iteration, write_meta_graph=False)
 
 def plot_gaussian_distr(outdir, name, prediction, chosen_sample, gt, should_plot, log):
 	if should_plot:

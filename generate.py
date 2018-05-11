@@ -129,43 +129,6 @@ class Generator():
 
         out = mu_law_decode(np.array(waveform_bins))
         return out
-    '''
-    def generate(self, n_samplese):
-
-            if seed_from and teacher_forcing:
-                waveform_.append(sample)
-                waveform_pred_.append(sample_)
-            else:
-                waveform.append(sample)
-                preds.append(sample)
-        #decode = mu_law_decode(current_sample, self.trainer.q_channels)
-
-        if seed_from and teacher_forcing:
-            out = mu_law_decode(np.array(waveform_[-n_samples:]))
-            #print(out);print(len(out));print(type(out));print(type(out[0]))
-            #new_o.append(waveform_fl)
-            out = np.insert(out, 0, waveform_fl[0], axis=0)
-            #out = [waveform_fl[0]] + out
-            #print(out);print(len(out));exit()
-            out_rand = mu_law_decode(np.array(waveform_pred_[-n_samples:]))
-            out_rand = [waveform_fl[0]] + out_rand
-        else:
-            out = mu_law_decode(np.array(waveform))
-#def plot_waveform(outdir, name, data, sr, should_plot, log):
-        
-        plot_waveform(outdir, 'waveforms_' + timestamp() + '.png', out[:n_samples], out[n_samples:], n_samples, len(out), True, log)
-        #exit()
-        if teacher_forcing and seed_from:
-            #print('here');print(waveform_fl[:10])
-            #def plot_waveform(outdir, name, data, data2, div, sr, should_plot, log):
-
-            plot_waveform(outdir, 'waveforms_' + timestamp() + '.png', out[:n_samples], out[n_samples:], n_samples, len(out), True, log)
-            exit()
-            plot_two_entropies(outdir, 'entropies_' + timestamp() + '.png', entropies_to_display, cross_entropies_to_display, entropy_every, True, log)
-            plot_two_waveforms(outdir, 'waveforms_'+timestamp()+'.png', waveform_fl[:n_samples], out[:n_samples], n_samples, True, log)
-            plot_three_waveforms(outdir, 'waveforms_'+timestamp()+'.png', waveform_fl[:1000], out[:1000], out_rand[:1000], n_samples, True, log)
-        return out[:n_samples]
-    '''
 
     def generate_dil(self, input, state, i):
         current_dil_l_vars = self.trainer.net.variables['dil_stack'][i]

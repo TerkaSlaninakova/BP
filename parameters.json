@@ -1,0 +1,26 @@
+{
+    "dataset_dir" : "/pub/tmp/xslani06/wavenet/data/vctk/wav48/p225/",
+    "output_dir" : "",
+    "gpu_fraction" : 0.8,
+    "resource_limit" : 27000,
+    "sampling_rate" : 16000,
+    "plot" : true,
+    "log" : true,
+    "train": {
+        "epochs" : 300,
+        "learning_rate" : 1e-4
+    },
+    "generate": {
+        "seed_from": null,
+        "out_samples": 32000
+    },
+    "wavenet": {
+        "n_dilations" : 10,
+        "n_blocks" : 5,
+        "bit_depth" : 256,
+        "dilation_ch" : 64,
+        "residual_ch" : 64,
+        "skip_ch": 1024,
+        "kernel_width" : 2
+    }
+}

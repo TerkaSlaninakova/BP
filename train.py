@@ -1,5 +1,5 @@
 import os
-from utils import create_out_dir, timestamp, create_session, create_audio, plot_losses
+from utils import *
 import tensorflow as tf
 from wavenet import Wavenet
 import sys
@@ -50,15 +50,6 @@ class Trainer():
         self.input_batch = input_batch
         self.net = net
 
-    def _save_weights(self, outdir, epoch, iteration, sess, loss, log):
-        create_out_dir(outdir, log)
-        checkpoint_dir = outdir + 'saved_weights/'
-        if not os.path.exists(checkpoint_dir):
-            os.makedirs(checkpoint_dir)
-        checkpoint_path = checkpoint_dir + timestamp() + '_epoch' + epoch + '_loss=' + loss + '_model.ckpt'
-        log('Storing checkpoint as {} ...'.format(checkpoint_path))
-        self.saver.save(sess, checkpoint_path, global_step=iteration, write_meta_graph=False)
-
     def _load_weights(self, load_dir, sess, log):
         checkpoint = tf.train.get_checkpoint_state(load_dir)
         if checkpoint:
@@ -73,7 +64,7 @@ class Trainer():
             return step, last_loss, last_epoch
         return 0, None, None
 
-    def train(self, train_batch, val_batch, target_loss, train_epochs, output_dir, should_plot, load_dir, log, log_every=50):
+    def train(self, train_batch, val_batch, train_epochs, output_dir, should_plot, load_dir, log, log_every=50):
         assert log_every > 0
         losses = []
         saved_model_losses = []
@@ -81,14 +72,11 @@ class Trainer():
         sess = create_session()
         sess.run(tf.global_variables_initializer())
         last_epoch = 0
-        start_at = 0
         init_step = 0
         if load_dir:
             init_step, last_loss, last_epoch = self._load_weights(load_dir, sess, log)
             saved_model_losses.append(last_loss)
             log('Last loss was: {}'.format(last_loss))
-        if last_epoch != 0:
-            start_at = last_epoch
         print("Starting training, initial step: ", init_step)
         start = time.time()
         loss = None
@@ -115,7 +103,7 @@ class Trainer():
                     print('Validation loss: ', loss_);sys.stdout.flush()
                     val_losses.append(loss_)
                     if len(saved_model_losses) == 0 or len(saved_model_losses) > 0 and loss_ < saved_model_losses[len(saved_model_losses)-1]:
-                        self._save_weights(output_dir, str(epoch_counter), iter, sess, str(loss_), log)
+                        save_weights(output_dir, self.saver, str(epoch_counter), iter, sess, str(loss_), log)
                         saved_model_losses.append(loss_)
                         print('Stored loss {}'.format(loss_));sys.stdout.flush()
 
@@ -129,22 +117,6 @@ class Trainer():
                 print("No saved loss")
             sys.stdout.flush()
         end = time.time()
-        '''
-        loss_ = sess.run([self.loss], feed_dict={self.input_batch: val_batch[iter%len(val_batch)], self.net.keep_prob : 1.0})[0]
-        print('Validation loss: ', loss_);sys.stdout.flush()
-        val_losses.append(loss_)
-        if len(val_losses) == 0 or len(val_losses) > 0 and loss_ < val_losses[len(val_losses)-1]:
-            self._save_weights(output_dir, str(epoch_counter), iter, sess, str(loss_), log)
-            saved_model_losses.append(loss_)
-            print('Stored loss {}'.format(loss_));sys.stdout.flush()
-        losses_to_display.append(np.mean(losses[-log_every:]))
-        '''
         plot_losses(output_dir, 'training_process_' + timestamp() + '.png', losses_to_display, val_losses, log_every, epoch_length, epoch_length, epoch_counter, start_at, should_plot, log)
-        f = open(output_dir + 'training_losses', 'w')
-        f.write('\n'.join(map(str, losses_to_display)))
-        f.close()
-        f = open(output_dir + 'val_losses', 'w')
-        f.write('\n'.join(map(str, val_losses)))
-        f.close()
         print('Training took ', end-start, ' s')
         return losses

@@ -1,3 +1,13 @@
+'''
+File: run.py
+Author: Terézia Slanináková (xslani06)
+
+Entry-point to the codebase of a custom WaveNet implementation.
+Uses params.json for parameter specification and initializes the training and generation process.
+
+Usage:
+    python3 run.py [--train=true|false] [--generate=true|false] [--params=parameters.json]
+'''
 import tensorflow as tf
 import librosa
 import argparse
@@ -27,10 +37,11 @@ if __name__ == '__main__':
     args = parse_arguments()
     params = parse_parameters(args.params)
     params['output_dir'] = create_output_dir(params['output_dir']) 
+    
     log = Log(should_log=params['log']).log
-    log('Got arguments: {}'.format(params))
+    log('Proceeding with arguments: {}'.format(params))
     prepare_environment(params['resource_limit'], log)
-    losses = []
+    
     trainer = Trainer(
         q_channels=params['wavenet']['bit_depth'],
         dil_width=params['wavenet']['dilation_ch'],
@@ -41,6 +52,8 @@ if __name__ == '__main__':
         n_blocks=params['wavenet']['n_blocks'],
         learning_rate=params['train']['learning_rate'],
         log=log)
+    
+    losses = []
     if args.train:
         train_files, validation_files = prepare_datasets(params['dataset_dir'], log)
         train_batch = create_audio(train_files, params['sampling_rate'])

@@ -1,23 +1,44 @@
+'''
+File: generate.py
+Author: Terézia Slanináková (xslani06), 
+    repurposed from https://github.com/ibab/tensorflow-wavenet and https://github.com/tomlepaine/fast-wavenet
+
+Based on trained model generates the resulting waveform through a generation process.
+'''
+
 import numpy as np
 import tensorflow as tf
 import librosa
 import sys
 from utils import *
-import scipy.stats
 
-def generate_sample(inputs, state, w, activation=None):
+def generate_sample(input, state, w, activation=None):
     '''
-    Performs convolution for a single convolutional step
+    Performs convolution for a single convolutional step.
+    Slices the weight filter to only 1 current and 1 past value, multiplies if with input and state respectively.
+    Args:
+        input: single sapmle of current input
+        state: past sample (recurrent state)
+    Return:
+        single generated output sample
     '''
     past_sample_w = w[0, :, :]
     current_sample_w = w[1, :, :]
-    output = tf.matmul(inputs, current_sample_w) + tf.matmul(state, past_sample_w)
+    output = tf.matmul(input, current_sample_w) + tf.matmul(state, past_sample_w)
     if activation:
         output = activation(output)
     return output
 
 class Generator():
+    ''' Takes care of the whole generation procedure.'''
     def __init__(self, trainer, outdir, log):
+        '''
+        Defines variables used throughout the generation procedure.
+        Args:
+            trainer: Instance of the Trainer class, used to access properties of WaveNet
+            outdir: Output directory to save results of generation to
+            log: logger instance
+        '''
         self.trainer = trainer
         self.outdir = outdir
         self.log = log
@@ -30,31 +51,45 @@ class Generator():
         self.entropy_every = 50
 
     def generate_teacher_forcing(self, restore_from, n_samples, seed_from, tf_sr=8000, should_plot_distr=False):
+        '''
+        Performs the teacher forcing generation scheme
+        Args:
+            restore_from: Model to use for generation,not needed when running in the same process as training.
+            n_samples: How many amplitudes to generate
+            seed_from: Referential audio to use (the 'teacher')
+            tf_sr: sampling rate used
+            should_plot_distr: decides whether to plot gaussian distribution
+        Return:
+            Resulting waveform, loaded ground truth waveform and collected cross entropies
+        '''
         cross_entropies = []
         cross_entropies_to_display = []
         self.sess.run(self.init_ops)
         if restore_from:
-            self.trainer._load_weights(restore_from, self.sess, self.log)
+            load_weights(restore_from, self.sess, self.log)
+        self.log('Loaded ground truth audio from {}'.format(seed_from))
         gt_waveform, gt_waveform_bins = get_first_audio(seed_from, tf_sr)
+
         gt_waveform_bins = list(gt_waveform_bins)
-        print('Starting TF generation with len(waveform_bins)=', len(gt_waveform_bins))
+        self.log('Starting teacher forcing generation with len(waveform_bins)={}'.format(len(gt_waveform_bins)))
         pred_waveform_bins = []
-        pred_waveform_bins_random = []
         n_samples = n_samples-1
+
         for step in range(n_samples):
             outputs = [self.next_sample]
             outputs.extend(self.push_ops)
             input = gt_waveform_bins[step]
+
             if step % 100 == 0:
                 print(step,'/', n_samples)
                 sys.stdout.flush()
+            
             prediction = self.sess.run(outputs, feed_dict={self.current_sample: input})[0]
             pred_sample = np.argmax(prediction)
             pred_waveform_bins.append(pred_sample)
-            pred_sample_random = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
-            pred_waveform_bins_random.append(pred_sample_random)
             self.entropies.append(entropy(prediction))
             cross_entropies.append(cross_entropy(prediction[gt_waveform_bins[step+1]])) 
+            
             if step % 1000 == 0 and should_plot_distr:
                 plot_gaussian_distr(self.outdir, 'pred_distr_' + str(step), prediction, pred_sample, gt_waveform_bins[step+1], True, self.log)
             if step % self.entropy_every == 0 and step != 0:
@@ -63,53 +98,71 @@ class Generator():
             
         out = mu_law_decode(np.array(pred_waveform_bins))
         out = np.insert(out, 0, gt_waveform[0], axis=0)
-        out_rand = mu_law_decode(np.array(pred_waveform_bins_random[-n_samples:]))
-        out_rand = np.insert(out, 0, gt_waveform[0], axis=0)
-        return out, out_rand, gt_waveform, cross_entropies_to_display
+
+        return out, gt_waveform, cross_entropies_to_display
 
     def generate_seed(self, restore_from, n_samples, seed_from, sr=8000, should_plot_distr=False):
+        '''
+        Performs the seeded generation scheme
+        Args:
+            restore_from: Model to use for generation,not needed when running in the same process as training.
+            n_samples: How many amplitudes to generate
+            seed_from: Referential audio to use (the 'teacher')
+            sr: sampling rate used
+            should_plot_distr: decides whether to plot gaussian distribution
+        Return:
+            Resulting waveform
+        '''
         self.sess.run(self.init_ops)
         if restore_from:
-            self.trainer._load_weights(restore_from, self.sess, self.log)
+            load_weights(restore_from, self.sess, self.log)
         waveform, waveform_bins = get_first_audio(seed_from, sr)
         waveform_bins = list(waveform_bins)
-        print('Starting seeding generation with len(waveform_bins)=', len(waveform_bins))
-        # priming the generation with seed
+        self.log('Starting teacher forcing generation with len(waveform_bins)={}'.format(len(waveform_bins)))
+        
         outputs = [self.next_sample]
         outputs.extend(self.push_ops)
+        
         for sample in waveform_bins[-self.trainer.receptive_field: -1]:
             self.sess.run(outputs, feed_dict={self.current_sample: sample})
+        
         for step in range(n_samples):
             outputs = [self.next_sample]
             outputs.extend(self.push_ops)
             input = waveform_bins[-1]
+
             if step % 100 == 0:
                 print(step,'/', n_samples)
                 sys.stdout.flush()
             prediction = self.sess.run(outputs, feed_dict={self.current_sample: input})[0]
             pred_sample = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
-            #pred_sample = np.argmax(prediction)
             self.entropies.append(entropy(prediction))
             if step % 1000 == 0 and should_plot_distr:
-                #pred_sample = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
                 plot_gaussian_distr(self.outdir, 'pred_distr_' + str(step), prediction, pred_sample, None, True, self.log)
+            
             waveform_bins.append(pred_sample)
             if step % self.entropy_every == 0 and step != 0:
                 self.entropies_to_display.append(np.mean(self.entropies[-self.entropy_every:]))
 
         out = mu_law_decode(np.array(waveform_bins[-n_samples:]))
-        out_seed = mu_law_decode(np.array(waveform_bins[self.trainer.receptive_field:]))
-        # out now contains bins from seed (out[:n_samples]) as well as generated (out[n_samples:])
-        #plot_waveform(self.outdir, 'waveforms_' + timestamp() + '.png', out_seed[-100:], out[:100], n_samples, n_samples, True, self.log)
-        #exit()
         return out
 
     def generate_unique(self, restore_from, n_samples, should_plot_distr=False):
+        '''
+        Performs the unique generation scheme
+        Args:
+            restore_from: Model to use for generation,not needed when running in the same process as training.
+            n_samples: How many amplitudes to generate
+            should_plot_distr: decides whether to plot gaussian distribution
+        Return:
+            Resulting waveform
+        '''
         self.sess.run(self.init_ops)
         if restore_from:
-            self.trainer._load_weights(restore_from, self.sess, self.log)
+            load_weights(restore_from, self.sess, self.log)
         waveform_bins = []
         waveform_bins.append(np.random.randint(self.trainer.q_channels))
+
         for step in range(n_samples):
             outputs = [self.next_sample]
             outputs.extend(self.push_ops)
@@ -119,7 +172,6 @@ class Generator():
                 sys.stdout.flush()
             prediction = self.sess.run(outputs, feed_dict={self.current_sample: input})[0]
             pred_sample = np.random.choice(np.arange(self.trainer.q_channels), p=prediction)
-            #pred_sample = np.argmax(prediction)
             waveform_bins.append(pred_sample)
             self.entropies.append(entropy(prediction))
             if step % 1000 == 0 and should_plot_distr:
@@ -131,6 +183,17 @@ class Generator():
         return out
 
     def generate_dil(self, input, state, i):
+        '''
+        Generates output for one dilation layer.
+        Collects the outputs for the filter and gate portion, performs activation with tanh and sigmoid
+        and constructs the dense and skip output.
+        Args:
+            input: single sample of current input
+            state: past sample (recurrent state)
+            i: index of current dilation layer
+        Return:
+            skip and dense output
+        '''
         current_dil_l_vars = self.trainer.net.variables['dil_stack'][i]
         output_kernel = generate_sample(input, state, current_dil_l_vars['kernel'])
         output_gate = generate_sample(input, state, current_dil_l_vars['gate'])
@@ -144,7 +207,12 @@ class Generator():
 
     def generate_next_sample(self, input_sample):
         '''
-        Predicts the probability of the next sample based on current sample
+        Predicts the probability of the next sample based on current sample.
+        Runs the raw input sample through the generation process, computes softmax probability on the output.
+        Args:
+            input_sample: current input sample
+        Return:
+            Probability distr. of the next sample.
         '''
         one_hot_input = tf.one_hot(input_sample, self.trainer.q_channels)
         one_hot_reshaped_input = tf.reshape(one_hot_input, [-1, self.trainer.q_channels])
@@ -156,7 +224,13 @@ class Generator():
 
     def construct_generator(self, one_hot_reshaped_input):
         '''
-        Generates a waveform of samples based on input
+        The generation process, optimized with fast-wavenet.
+        Iterated through the lyers of the network, sses caching into queues for storing immediate operations.
+        See https://github.com/tomlepaine/fast-wavenet for more information.
+        Args:
+            one_hot_reshaped_input: a single one-hot reshaped input sample.
+        Return:
+            Probability distr. of the next sample.
         '''
         init_ops = []
         push_ops = []

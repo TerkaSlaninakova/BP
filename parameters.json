@@ -6,6 +6,7 @@
     "sampling_rate" : 16000,
     "plot" : true,
     "log" : true,
+    "model": null,
     "train": {
         "epochs" : 300,
         "learning_rate" : 1e-4

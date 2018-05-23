@@ -2,9 +2,13 @@ import tensorflow as tf
 
 init = tf.contrib.layers.xavier_initializer_conv2d()
 
+
 def pad_input(value, dilation):
     '''
-    Performs padding needed to make creation of dilation layer possible
+    Performs padding needed to make creation of dilation layer possible.
+    Args:
+        value: input to pad
+        dilation: order of dilation value corresponds to
     '''
     shape = tf.shape(value)
     pad_elements = dilation - 1 - (shape[1] + dilation - 1) % dilation
@@ -13,42 +17,73 @@ def pad_input(value, dilation):
     transposed = tf.transpose(reshaped, perm=[1, 0, 2])
     return tf.reshape(transposed, [shape[0] * dilation, -1, shape[2]])
 
+
 def pad_output(value, dilation):
     '''
-    Pads back to the original shape
+    Pads value back to the original shape after convolution's transformation
+    Args:
+        value: input to reshape
+        dilation: order of dilation value corresponds to
     '''
     shape = tf.shape(value)
     prepared = tf.reshape(value, [dilation, -1, shape[2]])
     transposed = tf.transpose(prepared, perm=[1, 0, 2])
     return tf.reshape(transposed, [tf.div(shape[0], dilation), -1, shape[2]])
 
-def pad_conv_output(value, transformed, kernel_width, dilation=1):
+def pad_conv_output(value, transformed, dilation=1):
     '''
-    Pads the output of dilated conv. to match and be evenly divisible by quant. channels
+    Pads the output of dilated conv. to match and be evenly divisible by quant. channels.
+    Args:
+        value: input to pad
+        transformed: the convolutional layer to pad to
     '''
-    out_width = tf.shape(value)[1] - (kernel_width - 1) * dilation
+    out_width = tf.shape(value)[1] - dilation
     return tf.slice(transformed, [0, 0, 0], [-1, out_width, -1])
 
+
 def conv1d(value, kernel, pad=True):
+    '''
+    Creates a single convolutional layers, pads the input if necessary
+    Args:
+        value: input for the layer
+        kernel: the filter used in convolution
+    '''
     conv = tf.nn.conv1d(value, kernel, stride=1, padding='VALID')
     if pad:
-        output = pad_conv_output(value, conv, tf.shape(kernel)[0])
+        output = pad_conv_output(value, conv)
     else:
         output = conv
     return output
 
+
 def dilated_conv(value, kernel, dilation):
     '''
+
     Creates a dilated convolutional layer
     '''
+
     transformed = pad_input(value, dilation)
     conv = tf.nn.conv1d(transformed, kernel, stride=1, padding='VALID')
     transformed = pad_output(conv, dilation)
-    return pad_conv_output(value, transformed, tf.shape(kernel)[0], dilation)
+    return pad_conv_output(value, transformed, dilation)
+
 
 class Wavenet():
-
+    """
+    The WaveNet architecture, contains definitions for constructing and initializing WaveNet model.
+    """
     def __init__(self, dilations, kernel_width, dilation_width, residual_width, skip_width, q_channels, receptive_field, log):
+        '''
+        Args:
+            dilations: List of dilations used in WN
+            kernel_width: filter with, first dimension of of kernel and gate dilation component
+            dilation_width: width of dilation convolutional filters
+            residual_width: width of residual convolutional filters
+            skip_width: width of skip channels for the softmax output
+            q_channels: number of quantization levels
+            receptive_field: width of receptive field
+            log: logger instance
+        '''
         self.dilations = dilations
         self.kernel_w = kernel_width
         self.dil_w = dilation_width
@@ -79,8 +114,15 @@ class Wavenet():
 
         self.variables = variables
 
-    def construct_network(self, network_input):
 
+    def construct_network(self, network_input):
+        '''
+        Initializes the network as a stack of dilations with pre- and post-processing layers.
+        Goes over the list of orders of dilations and creates a convolution a trous for every one.
+        Then, a series of post-processing operations is used and the output
+        Args:
+            network_input: pre-processed audio input
+        '''
         network_input = tf.slice(network_input, [0, 0, 0], [-1, tf.shape(network_input)[1]-1, -1])
         current_l = conv1d(network_input, self.variables['causal_layer']['kernel'])
         final_w = tf.shape(network_input)[1] - self.receptive_field + 1

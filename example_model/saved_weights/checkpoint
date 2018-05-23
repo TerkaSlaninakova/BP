@@ -1,0 +1,6 @@
+model_checkpoint_path: "/pub/tmp/xslani06/wavenet/2018-05-08_23-40-01_9_yt_cont/saved_weights/2018-05-08_23-40-01_epoch200_loss=2.851775_model.ckpt-41392"
+all_model_checkpoint_paths: "/pub/tmp/xslani06/wavenet/2018-05-08_23-40-01_9_yt_cont/saved_weights/2018-05-08_23-40-01_epoch196_loss=2.4681892_model.ckpt-40560"
+all_model_checkpoint_paths: "/pub/tmp/xslani06/wavenet/2018-05-08_23-40-01_9_yt_cont/saved_weights/2018-05-08_23-40-01_epoch197_loss=2.2537856_model.ckpt-40768"
+all_model_checkpoint_paths: "/pub/tmp/xslani06/wavenet/2018-05-08_23-40-01_9_yt_cont/saved_weights/2018-05-08_23-40-01_epoch198_loss=2.8956735_model.ckpt-40976"
+all_model_checkpoint_paths: "/pub/tmp/xslani06/wavenet/2018-05-08_23-40-01_9_yt_cont/saved_weights/2018-05-08_23-40-01_epoch199_loss=2.2882092_model.ckpt-41184"
+all_model_checkpoint_paths: "/pub/tmp/xslani06/wavenet/2018-05-08_23-40-01_9_yt_cont/saved_weights/2018-05-08_23-40-01_epoch200_loss=2.851775_model.ckpt-41392"

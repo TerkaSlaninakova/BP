@@ -124,7 +124,7 @@ class Trainer():
         last_epoch = 0
         init_step = 0
         if load_dir:
-            init_step, last_loss, last_epoch = _load_weights(load_dir, sess, log)
+            init_step, last_loss, last_epoch = _load_weights(load_dir, sess, self.saver, log)
             saved_model_losses.append(last_loss)
             log('Last loss was: {}'.format(last_loss))
         print("Starting training, initial step: ", init_step)
@@ -172,6 +172,6 @@ class Trainer():
             sys.stdout.flush()
         end = time.time()
         plot_losses(output_dir, 'training_process_' + timestamp() + '.png', losses_to_display, val_losses, \
-            log_every, epoch_length, epoch_length, epoch_counter, init_step, should_plot, log)
+            log_every, epoch_length, init_step, should_plot, log)
         print('Training took ', end-start, ' s')
         return losses

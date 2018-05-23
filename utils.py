@@ -21,7 +21,7 @@ import resource
 import scipy.stats as stats
 
 # Setups for font size adjustment
-font = {'family' : 'calibri',
+font = {'family' : 'DejaVu Sans',
         'weight' : 'normal',
         'size'   : 22}
 
@@ -191,13 +191,18 @@ def prepare_environment(resource_limit, log):
 	'''	Prepares the environment by choosing one GPU to run on, 
 		adjusts CUDA_VISIBLE_DEVICES env var for TF,
 		sets the max. process length so that the training won't time out.'''
-	DEVICE_ID_LIST = GPUtil.getFirstAvailable(order = 'last', maxLoad=0.85, verbose=True)
-	DEVICE_ID = DEVICE_ID_LIST[0]
-
-	os.environ["CUDA_VISIBLE_DEVICES"] = str(DEVICE_ID)
-	log('Preparing environment by choosing a gpu {} and setting resource limit={}'.format(DEVICE_ID, resource_limit))
-	soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-	resource.setrlimit(resource.RLIMIT_CPU, (resource_limit, hard))
+	try:
+		DEVICE_ID_LIST = GPUtil.getFirstAvailable(order = 'last', maxLoad=0.85, verbose=True)
+		DEVICE_ID = DEVICE_ID_LIST[0]
+		os.environ["CUDA_VISIBLE_DEVICES"] = str(DEVICE_ID)
+		log('Preparing environment by choosing a gpu {} and setting resource limit={}'.format(DEVICE_ID, resource_limit))
+	except:
+		print('No GPU found, continuing in CPU mode.')
+	try:
+		soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
+		resource.setrlimit(resource.RLIMIT_CPU, (resource_limit, hard))
+	except:
+		print('No limit set.')
 
 def save_weights(saver, outdir, epoch, iteration, sess, loss, log):
 	'''
@@ -219,12 +224,13 @@ def save_weights(saver, outdir, epoch, iteration, sess, loss, log):
 	log('Storing checkpoint as {} ...'.format(checkpoint_path))
 	saver.save(sess, checkpoint_path, global_step=iteration, write_meta_graph=False)
 
-def load_weights(load_dir, sess, log):
+def load_weights(load_dir, sess, saver, log):
 	'''
 	Loads model's weights, to used in training .
 	Args:
 		load_dir: Where to load from
 		sess: TF Session instance to run the loading
+		saver: Saver TF instance for saving and loading
 		log: logger instance
 	Returns:
 		0 if viable model was not found, 
@@ -239,7 +245,7 @@ def load_weights(load_dir, sess, log):
 			last_epoch = int(checkpoint.model_checkpoint_path.split('epoch')[-1].split('_')[0])
 		else:
 			last_epoch = 0
-		self.saver.restore(sess, checkpoint.model_checkpoint_path)
+		saver.restore(sess, checkpoint.model_checkpoint_path)
 		return step, last_loss, last_epoch
 	return 0, None, None
 
@@ -364,4 +370,4 @@ def create_out_dir(path, log):
 	''' Creates a dedicated directory for the run if one does not exist already.'''
 	if path is None or not os.path.exists(path):
 		log('Creating directory for storing data of the run: \'{}\''.format(path))
-		os.makedirs(path)
+		os.makedirs(p

@@ -50,6 +50,28 @@ class Generator():
         self.entropies_to_display = []
         self.entropy_every = 50
 
+    def generate(self, restore_from, n_samples, seed_from, teacher_forcing, sr, out_dir, log, should_plot_distr=False):
+        '''
+        Performs generation based on the generation scheme infered by the parameters
+        Args:
+            restore_from: Model to use for generation,not needed when running in the same process as training.
+            n_samples: How many amplitudes to generate
+            seed_from: Referential audio to use (the 'teacher')
+            teacher_forcing: Decides whether teacher forcing should be used or not
+            sr: sampling rate used
+            out_dir: output directory to store plots in
+            log: logger instance
+            should_plot_distr: decides whether to plot gaussian distribution
+        Return:
+            Resulting waveform, loaded ground truth waveform and collected cross entropies
+        '''
+        if teacher_forcing and seed_from:
+            return self.generate_teacher_forcing(restore_from, n_samples, seed_from, sr, should_plot_distr)
+        elif seed_from:
+            return self.generate_seed(restore_from, n_samples, seed_from, sr, should_plot_distr)
+        else:
+            return self.generate_unique(restore_from, n_samples, should_plot_distr)
+
     def generate_teacher_forcing(self, restore_from, n_samples, seed_from, tf_sr=8000, should_plot_distr=False):
         '''
         Performs the teacher forcing generation scheme
@@ -66,7 +88,7 @@ class Generator():
         cross_entropies_to_display = []
         self.sess.run(self.init_ops)
         if restore_from:
-            load_weights(restore_from, self.sess, self.log)
+            load_weights(restore_from, self.sess, self.trainer.saver, self.log)
         self.log('Loaded ground truth audio from {}'.format(seed_from))
         gt_waveform, gt_waveform_bins = get_first_audio(seed_from, tf_sr)
 
@@ -99,7 +121,7 @@ class Generator():
         out = mu_law_decode(np.array(pred_waveform_bins))
         out = np.insert(out, 0, gt_waveform[0], axis=0)
 
-        return out, gt_waveform, cross_entropies_to_display
+        return out
 
     def generate_seed(self, restore_from, n_samples, seed_from, sr=8000, should_plot_distr=False):
         '''
@@ -115,7 +137,7 @@ class Generator():
         '''
         self.sess.run(self.init_ops)
         if restore_from:
-            load_weights(restore_from, self.sess, self.log)
+            load_weights(restore_from, self.sess, self.trainer.saver, self.log)
         waveform, waveform_bins = get_first_audio(seed_from, sr)
         waveform_bins = list(waveform_bins)
         self.log('Starting teacher forcing generation with len(waveform_bins)={}'.format(len(waveform_bins)))
@@ -159,7 +181,7 @@ class Generator():
         '''
         self.sess.run(self.init_ops)
         if restore_from:
-            load_weights(restore_from, self.sess, self.log)
+            load_weights(restore_from, self.sess, self.trainer.saver, self.log)
         waveform_bins = []
         waveform_bins.append(np.random.randint(self.trainer.q_channels))
 

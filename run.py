@@ -69,12 +69,13 @@ if __name__ == '__main__':
     else:
         log('Skipping training')
     
-    if losses != [] or not parser.train:
-        generator = Generator(trainer)
-        generated_waveform = generator.generate(params['model'], params['generate']['out_samples'],params['generate']['seed_from'], params['output_dir'], params['log'])
-        generated_waveform = np.array(generated_waveform)
-        plot_waveform(params['output_dir'], 'out_'+timestamp()+'.png', generated_waveform, len(generated_waveform), parser.plot, log)
-        plot_spectogram(params['output_dir'], 'out_spectograms_'+timestamp()+'.png', generated_waveform, len(generated_waveform), parser.plot, log)
+    if losses != [] or not args.train:
+        generator = Generator(trainer, params['output_dir'], log)
+        generated_waveform = generator.generate(
+            params['model'], params['generate']['out_samples'],params['generate']['seed_from'], params['generate']['teacher_forcing'], params['sampling_rate'], params['output_dir'], params['log'])
+        generated_waveform_ = np.array(generated_waveform)
+        plot_waveform(params['output_dir'], 'out_'+timestamp()+'.png', generated_waveform, len(generated_waveform), params['plot'], log)
+        plot_spectogram(params['output_dir'], 'out_spectograms_'+timestamp()+'.png', generated_waveform, len(generated_waveform), params['plot'], log)
         write_data(params['output_dir'], 'pred_'+timestamp()+'.wav', generated_waveform, params['sampling_rate'], log)
     else:
         log('Skipping generating')

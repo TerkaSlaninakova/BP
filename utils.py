@@ -370,4 +370,4 @@ def create_out_dir(path, log):
 	''' Creates a dedicated directory for the run if one does not exist already.'''
 	if path is None or not os.path.exists(path):
 		log('Creating directory for storing data of the run: \'{}\''.format(path))
-		os.makedirs(p
+		os.makedirs(path)

@@ -247,6 +247,8 @@ def load_weights(load_dir, sess, saver, log):
 			last_epoch = 0
 		saver.restore(sess, checkpoint.model_checkpoint_path)
 		return step, last_loss, last_epoch
+	else:
+		print("Failed to load weights from ", load_dir)
 	return 0, None, None
 
 def plot_gaussian_distr(outdir, name, prediction, chosen_sample, should_plot, log):

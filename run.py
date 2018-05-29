@@ -17,6 +17,7 @@ import json
 from utils import  *
 from train import Trainer
 from generate import Generator
+import shutil
 
 PARAMETERS_PATH = './parameters.json'
 TRAIN = True
@@ -36,9 +37,11 @@ def parse_arguments():
 if __name__ == '__main__':
     args = parse_arguments()
     params = parse_parameters(args.params)
-    params['output_dir'] = create_output_dir(params['output_dir']) 
-    
+    params['output_dir'] = create_output_dir(params['output_dir'])
     log = Log(should_log=params['log']).log
+    create_out_dir(params['output_dir'] ,log)
+    shutil.copyfile(PARAMETERS_PATH, params['output_dir'] + 'parameters.json')
+    
     log('Proceeding with arguments: {}'.format(params))
     prepare_environment(params['resource_limit'], log)
     

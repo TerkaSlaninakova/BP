@@ -1,20 +1,20 @@
 {
-    "dataset_dir" : "/pub/tmp/xslani06/wavenet/data/bed/",
+    "dataset_dir" : "",
     "output_dir" : "",
     "gpu_fraction" : 0.8,
     "resource_limit" : 8000,
     "sampling_rate" : 8000,
     "plot" : true,
     "log" : true,
-    "model": "",
+    "model": "/pub/tmp/xslani06/models/drop/2018-04-22_10-21-3722_exp3_irmas_drop1/saved_weights/",
     "train": {
         "epochs" : 300,
         "learning_rate" : 1e-4
     },
     "generate": {
-        "seed_from": "/pub/tmp/xslani06/wavenet/data/0_1280000.wav",
-        "teacher_forcing": true,
-        "out_samples": 1000
+        "seed_from": "",
+        "teacher_forcing": false,
+        "out_samples": 16000
     },
     "wavenet": {
         "n_dilations" : 10,

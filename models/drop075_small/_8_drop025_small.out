@@ -1,0 +1,2260 @@
+Attempting (1/1) to locate available GPU.
+GPU [2] located!
+[D] Preparing environment by choosing a gpu 2 and setting resource limit=86400
+[D] Got arguments: Namespace(c='_8_drop025_small', data_dir='/pub/tmp/xslani06/wavenet/data/irmas/pia/', dil_w=32, gpu_fraction=0.8, kernel_w=2, learning_rate=0.0001, log=True, model=None, n_blocks=2, n_dilations=5, out_samples=24000, output_dir='/pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/', plot=True, q_channels=256, res_w=32, sample_rate=24000, seed_from='/pub/tmp/xslani06/wavenet/data/GuitarNotes/A0.wav', skip_w=512, target_loss=0.001, teacher_forcing=False, train=True, train_epochs=100)
+64
+Tensor("Shape_106:0", shape=(3,), dtype=int32)
+[D] Found 721 files in /pub/tmp/xslani06/wavenet/data/irmas/pia/
+[D] Assigning 144 to be validation data
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1283__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1370__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1283__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1370__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1374__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1284__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1456__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1284__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1284__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1457__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1291__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1457__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1458__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1291__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1458__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1292__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1292__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1496__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1293__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1496__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1496__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1293__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1294__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1294__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1297__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1297__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1297__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1305__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1305__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1307__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1307__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1307__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1308__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1308__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1312__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1312__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1322__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1322__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1322__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1323__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1323__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1324__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1324__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1324__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1325__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1325__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1327__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1327__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1337__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1337__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1338__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1338__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1341__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1341__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1341__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1346__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1346__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1350__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1350__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1352__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1352__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1355__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1355__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1355__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1361__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1361__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1362__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1362__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1364__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1364__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1365__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1365__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1367__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1367__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1367__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1369__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1369__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1374__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1374__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1375__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1375__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1444__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1444__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1447__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1447__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1448__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1448__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1448__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1449__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1449__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1453__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1453__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1456__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1456__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1497__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1497__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1498__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1498__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1498__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1499__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1499__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1562__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1562__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1562__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1298__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1298__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1300__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1300__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1301__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1301__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1301__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1313__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1313__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1314__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1314__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1314__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1318__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1318__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1328__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1328__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1329__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1329__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1336__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1336__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1339__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1339__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1340__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1340__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1348__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1348__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1348__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1353__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1353__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1354__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1354__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1354__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1356__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1356__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1357__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1357__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1358__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1358__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1358__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1359__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1359__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1360__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1360__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1360__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1363__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1363__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1366__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1366__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1371__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1371__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1372__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1372__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1373__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1373__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1373__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1452__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1452__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1459__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1459__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1459__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1460__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1460__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1461__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1461__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1462__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1462__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1462__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1463__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1463__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1465__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1465__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1465__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1467__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1467__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1468__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1468__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1469__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1469__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1469__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1470__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1470__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1471__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1471__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1471__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1472__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1472__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1473__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1473__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1474__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1474__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1474__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1475__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1475__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1476__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1476__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1476__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1477__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1477__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1478__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1478__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1479__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1479__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1479__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1480__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1480__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1481__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1481__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1481__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1482__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1482__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1483__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1483__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1484__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1484__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1484__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1485__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1485__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1486__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1486__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1486__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1487__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1487__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1488__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1488__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1489__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1489__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1489__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1490__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1490__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1491__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1491__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1491__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1492__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1492__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1493__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1493__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1494__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1494__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1494__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1495__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1495__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1500__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1500__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1500__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1501__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1501__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1502__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1502__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1503__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1503__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1503__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1504__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1504__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1505__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1505__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1505__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1506__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1506__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1507__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1507__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1508__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1508__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1508__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1509__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1509__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1510__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1510__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1510__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1511__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1511__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1512__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1512__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1513__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1513__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1513__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1514__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1514__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1515__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1515__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1515__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1516__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1516__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1517__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1517__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1518__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1518__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1518__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1519__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1519__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1520__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1520__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1520__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1521__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1521__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1522__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1522__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1523__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1523__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1523__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1524__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1524__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1525__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1525__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1525__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1526__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1526__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1527__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1527__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1528__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1528__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1528__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1529__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1529__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1530__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1530__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1530__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1531__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1531__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1532__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1532__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1533__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1533__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1533__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1534__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1534__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1281__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1281__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1281__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1282__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1282__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1286__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1286__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1287__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1287__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1287__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1288__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1288__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1289__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1289__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1289__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1290__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1295__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1295__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1295__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1296__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1296__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1302__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1302__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1303__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1303__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1303__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1306__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1306__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1310__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1310__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1310__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1311__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1311__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1315__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1315__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1316__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1316__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1316__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1317__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1317__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1319__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1320__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1320__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1321__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1321__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1321__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1326__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1326__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1330__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1330__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1331__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1331__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1332__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1332__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1332__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1333__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1333__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1334__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1334__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1335__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1335__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1335__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1343__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1343__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1344__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1344__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1344__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1345__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1345__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1349__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1349__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1351__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1351__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1351__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1376__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1376__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1377__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1377__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1377__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1443__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1443__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1445__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1445__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1446__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1446__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1446__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1450__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1536__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1536__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1536__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1537__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1537__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1541__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1541__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1541__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1546__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/001__[pia][nod][cla]1389__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/001__[pia][nod][cla]1389__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/001__[pia][nod][cla]1389__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/002__[pia][nod][cla]1382__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/002__[pia][nod][cla]1382__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/004__[pia][nod][cla]1394__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/004__[pia][nod][cla]1394__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/024__[pia][nod][cla]1414__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/024__[pia][nod][cla]1414__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/024__[pia][nod][cla]1414__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/027__[pia][nod][cla]1398__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/027__[pia][nod][cla]1398__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/029__[pia][nod][cla]1411__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/029__[pia][nod][cla]1411__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/029__[pia][nod][cla]1411__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/031__[pia][nod][cla]1444__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/032__[pia][dru][jaz_blu]1425__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/032__[pia][dru][jaz_blu]1425__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/032__[pia][dru][jaz_blu]1425__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/042__[pia][nod][cla]1409__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/042__[pia][nod][cla]1409__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/051__[pia][dru][jaz_blu]1431__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/051__[pia][dru][jaz_blu]1431__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/055__[pia][dru][cou_fol]1420__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/055__[pia][dru][cou_fol]1420__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/055__[pia][dru][cou_fol]1420__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/056__[pia][nod][cla]1385__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/056__[pia][nod][cla]1385__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/057__[pia][nod][cla]1413__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/057__[pia][nod][cla]1413__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/057__[pia][nod][cla]1413__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/063__[pia][nod][cla]1418__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/063__[pia][nod][cla]1418__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/064__[pia][dru][jaz_blu]1430__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/064__[pia][dru][jaz_blu]1430__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/067__[pia][nod][cla]1388__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/067__[pia][nod][cla]1388__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/067__[pia][nod][cla]1388__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/072__[pia][nod][cla]1395__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/072__[pia][nod][cla]1395__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/084__[pia][nod][cla]1410__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/084__[pia][nod][cla]1410__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/084__[pia][nod][cla]1410__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/086__[pia][dru][jaz_blu]1424__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/086__[pia][dru][jaz_blu]1424__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/093__[pia][dru][jaz_blu]1428__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/093__[pia][dru][jaz_blu]1428__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/101__[pia][nod][cla]1399__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/101__[pia][nod][cla]1399__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/101__[pia][nod][cla]1399__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/104__[pia][nod][cla]1387__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/104__[pia][nod][cla]1387__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/107__[pia][nod][cla]1412__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/107__[pia][nod][cla]1412__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/107__[pia][nod][cla]1412__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/108__[pia][nod][cla]1386__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/108__[pia][nod][cla]1386__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/112__[pia][nod][cla]1392__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/112__[pia][nod][cla]1392__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/113__[pia][nod][cla]1407__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/113__[pia][nod][cla]1407__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/113__[pia][nod][cla]1407__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/118__[pia][dru][jaz_blu]1429__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/118__[pia][dru][jaz_blu]1429__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/124__[pia][nod][jaz_blu]1426__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/124__[pia][nod][jaz_blu]1426__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/124__[pia][nod][jaz_blu]1426__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/125__[pia][nod][cla]1378__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/125__[pia][nod][cla]1378__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/131__[pia][nod][cla]1402__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/131__[pia][nod][cla]1402__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/134__[pia][nod][cla]1405__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/134__[pia][nod][cla]1405__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/134__[pia][nod][cla]1405__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/135__[pia][nod][cla]1396__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/135__[pia][nod][cla]1396__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/137__[pia][nod][cla]1381__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/137__[pia][nod][cla]1381__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/137__[pia][nod][cla]1381__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/144__[pia][nod][cla]1380__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/144__[pia][nod][cla]1380__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/152__[pia][dru][pop_roc]1440__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/152__[pia][dru][pop_roc]1440__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/153__[pia][dru][cou_fol]1419__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/153__[pia][dru][cou_fol]1419__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/153__[pia][dru][cou_fol]1419__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/155__[pia][nod][cla]1415__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/155__[pia][nod][cla]1415__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/157__[pia][nod][cla]1400__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/157__[pia][nod][cla]1400__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/157__[pia][nod][cla]1400__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/160__[pia][nod][jaz_blu]1433__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/160__[pia][nod][jaz_blu]1433__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/161__[pia][nod][pop_roc]1441__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/161__[pia][nod][pop_roc]1441__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/162__[pia][dru][pop_roc]1436__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/162__[pia][dru][pop_roc]1436__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/162__[pia][dru][pop_roc]1436__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/170__[pia][nod][cla]1403__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/170__[pia][nod][cla]1403__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/178__[pia][nod][cla]1379__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/178__[pia][nod][cla]1379__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/178__[pia][nod][cla]1379__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/182__[pia][dru][cou_fol]1421__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/185__[pia][dru][pop_roc]1442__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/185__[pia][dru][pop_roc]1442__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/185__[pia][dru][pop_roc]1442__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/187__[pia][nod][cla]1404__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/187__[pia][nod][cla]1404__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/190__[pia][dru][jaz_blu]1435__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/190__[pia][dru][jaz_blu]1435__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/196__[pia][nod][pop_roc]1439__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/196__[pia][nod][pop_roc]1439__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/196__[pia][nod][pop_roc]1439__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/199__[pia][nod][cla]1383__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/199__[pia][nod][cla]1383__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/204__[pia][nod][cla]1401__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/204__[pia][nod][cla]1401__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/204__[pia][nod][cla]1401__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/212__[pia][nod][cla]1397__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/212__[pia][nod][cla]1397__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/215__[pia][dru][jaz_blu]1432__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/215__[pia][dru][jaz_blu]1432__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/218__[pia][nod][cla]1417__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/218__[pia][nod][cla]1417__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/218__[pia][nod][cla]1417__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/219__[pia][nod][cla]1393__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/219__[pia][nod][cla]1393__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/220__[pia][nod][cla]1416__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/220__[pia][nod][cla]1416__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/220__[pia][nod][cla]1416__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/222__[pia][nod][pop_roc]1438__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/222__[pia][nod][pop_roc]1438__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/224__[pia][dru][cou_fol]1422__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/224__[pia][dru][cou_fol]1422__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/228__[pia][nod][pop_roc]1437__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/228__[pia][nod][pop_roc]1437__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/228__[pia][nod][pop_roc]1437__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/229__[pia][nod][jaz_blu]1434__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/229__[pia][nod][jaz_blu]1434__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/231__[pia][nod][cla]1408__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/231__[pia][nod][cla]1408__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/231__[pia][nod][cla]1408__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/239__[pia][nod][cla]1391__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/239__[pia][nod][cla]1391__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/244__[pia][nod][cla]1384__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/244__[pia][nod][cla]1384__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/254__[pia][nod][cla]1406__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/254__[pia][nod][cla]1406__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/254__[pia][nod][cla]1406__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/261__[pia][dru][jaz_blu]1427__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1370__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1283__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1457__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1291__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1458__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1293__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1294__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1305__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1308__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1312__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1323__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1325__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1337__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1338__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1346__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1352__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1361__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1364__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1365__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1369__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1375__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1447__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1449__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1453__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1497__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][cla]1499__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1298__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1300__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1313__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1318__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1328__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1339__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1340__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1353__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1356__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1357__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1359__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1363__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1366__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1372__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1452__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1460__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1461__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1463__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1467__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1468__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1470__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1472__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1473__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1475__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1477__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1478__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1480__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1482__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1483__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1485__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1487__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1488__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1490__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1492__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1493__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1495__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1501__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1502__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1504__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1506__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1507__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1509__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1511__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1512__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1514__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1516__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1517__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1519__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1521__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1522__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1524__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1526__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1527__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1529__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1531__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1532__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][jaz_blu]1534__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1282__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1286__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1288__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1290__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1296__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1302__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1306__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1311__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1315__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1317__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1320__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1326__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1331__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1333__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1334__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1343__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1345__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1349__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1376__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1443__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1445__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1450__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1537__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/[pia][pop_roc]1546__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/002__[pia][nod][cla]1382__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/004__[pia][nod][cla]1394__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/027__[pia][nod][cla]1398__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/031__[pia][nod][cla]1444__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/042__[pia][nod][cla]1409__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/051__[pia][dru][jaz_blu]1431__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/056__[pia][nod][cla]1385__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/063__[pia][nod][cla]1418__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/064__[pia][dru][jaz_blu]1430__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/072__[pia][nod][cla]1395__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/086__[pia][dru][jaz_blu]1424__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/093__[pia][dru][jaz_blu]1428__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/104__[pia][nod][cla]1387__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/108__[pia][nod][cla]1386__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/112__[pia][nod][cla]1392__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/118__[pia][dru][jaz_blu]1429__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/125__[pia][nod][cla]1378__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/131__[pia][nod][cla]1402__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/135__[pia][nod][cla]1396__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/144__[pia][nod][cla]1380__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/152__[pia][dru][pop_roc]1440__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/155__[pia][nod][cla]1415__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/160__[pia][nod][jaz_blu]1433__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/161__[pia][nod][pop_roc]1441__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/170__[pia][nod][cla]1403__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/182__[pia][dru][cou_fol]1421__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/187__[pia][nod][cla]1404__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/190__[pia][dru][jaz_blu]1435__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/199__[pia][nod][cla]1383__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/212__[pia][nod][cla]1397__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/215__[pia][dru][jaz_blu]1432__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/219__[pia][nod][cla]1393__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/222__[pia][nod][pop_roc]1438__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/224__[pia][dru][cou_fol]1422__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/229__[pia][nod][jaz_blu]1434__2.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/239__[pia][nod][cla]1391__1.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/244__[pia][nod][cla]1384__3.wav
+loading  /pub/tmp/xslani06/wavenet/data/irmas/pia/261__[pia][dru][jaz_blu]1427__2.wav
+Starting training, initial step:  0
+0 / 0 / 100 :  5.5541463
+[D] Creating directory for storing data of the run: '/pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/'
+Validation loss:  5.5484266
+[D] Storing checkpoint as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/saved_weights/2018-05-08_11-21-49_epoch0_loss=5.5484266_model.ckpt ...
+Stored loss 5.548426628112793
+0 / 50 / 100 :  5.4535522
+0 / 100 / 100 :  5.362662
+0 / 150 / 100 :  5.218067
+0 / 200 / 100 :  4.499231
+0 / 250 / 100 :  4.8164716
+0 / 300 / 100 :  4.4268155
+0 / 350 / 100 :  4.309001
+0 / 400 / 100 :  4.347057
+0 / 450 / 100 :  4.047551
+0 / 500 / 100 :  4.200298
+0 / 550 / 100 :  3.3834796
+Validation loss:  3.482359
+[D] Storing checkpoint as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/saved_weights/2018-05-08_11-21-49_epoch1_loss=3.482359_model.ckpt ...
+Stored loss 3.482358932495117
+1 / 600 / 100 :  3.4332414
+1 / 650 / 100 :  3.9987028
+1 / 700 / 100 :  3.5170443
+1 / 750 / 100 :  3.7076716
+1 / 800 / 100 :  3.100165
+1 / 850 / 100 :  2.7749445
+1 / 900 / 100 :  3.5524638
+1 / 950 / 100 :  2.7806535
+1 / 1000 / 100 :  3.0027547
+1 / 1050 / 100 :  3.881875
+1 / 1100 / 100 :  2.7106352
+1 / 1150 / 100 :  2.8298547
+Validation loss:  2.7366107
+[D] Storing checkpoint as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/saved_weights/2018-05-08_11-21-49_epoch2_loss=2.7366107_model.ckpt ...
+Stored loss 2.7366106510162354
+2 / 1200 / 100 :  2.977702
+2 / 1250 / 100 :  3.791073
+2 / 1300 / 100 :  2.579052
+2 / 1350 / 100 :  2.693175
+2 / 1400 / 100 :  2.5773907
+2 / 1450 / 100 :  3.4322858
+2 / 1500 / 100 :  2.5654154
+2 / 1550 / 100 :  2.6485457
+2 / 1600 / 100 :  2.8270104
+2 / 1650 / 100 :  2.8381476
+2 / 1700 / 100 :  2.3842366
+Validation loss:  2.2535548
+[D] Storing checkpoint as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/saved_weights/2018-05-08_11-21-49_epoch3_loss=2.2535548_model.ckpt ...
+Stored loss 2.2535548210144043
+3 / 1750 / 100 :  2.6800587
+3 / 1800 / 100 :  2.5509536
+3 / 1850 / 100 :  2.7043302
+3 / 1900 / 100 :  3.5266826
+3 / 1950 / 100 :  2.088773
+3 / 2000 / 100 :  2.871649
+3 / 2050 / 100 :  2.3769405
+3 / 2100 / 100 :  2.3587277
+3 / 2150 / 100 :  2.1522915
+3 / 2200 / 100 :  2.44059
+3 / 2250 / 100 :  2.1755478
+3 / 2300 / 100 :  2.296884
+Validation loss:  2.2200863
+[D] Storing checkpoint as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/saved_weights/2018-05-08_11-21-49_epoch4_loss=2.2200863_model.ckpt ...
+Stored loss 2.2200863361358643
+4 / 2350 / 100 :  2.1303337
+4 / 2400 / 100 :  2.650808
+4 / 2450 / 100 :  2.4084706
+4 / 2500 / 100 :  3.7473826
+4 / 2550 / 100 :  2.9512184
+4 / 2600 / 100 :  2.2406127
+4 / 2650 / 100 :  2.094037
+4 / 2700 / 100 :  2.0062907
+4 / 2750 / 100 :  3.3264604
+4 / 2800 / 100 :  2.6715448
+4 / 2850 / 100 :  2.3779695
+Validation loss:  1.8965435
+[D] Storing checkpoint as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/saved_weights/2018-05-08_11-21-49_epoch5_loss=1.8965435_model.ckpt ...
+Stored loss 1.8965435028076172
+5 / 2900 / 100 :  2.0841403
+5 / 2950 / 100 :  2.347934
+5 / 3000 / 100 :  2.7453725
+5 / 3050 / 100 :  2.378789
+5 / 3100 / 100 :  3.6363943
+5 / 3150 / 100 :  1.9937665
+5 / 3200 / 100 :  2.6439917
+5 / 3250 / 100 :  2.432865
+5 / 3300 / 100 :  2.8165314
+5 / 3350 / 100 :  3.4449015
+5 / 3400 / 100 :  2.7873318
+5 / 3450 / 100 :  1.9390904
+Validation loss:  1.9202094
+6 / 3500 / 100 :  4.5026274
+6 / 3550 / 100 :  2.2014725
+6 / 3600 / 100 :  2.0530646
+6 / 3650 / 100 :  2.430001
+6 / 3700 / 100 :  2.1607258
+6 / 3750 / 100 :  2.3901854
+6 / 3800 / 100 :  2.1665032
+6 / 3850 / 100 :  3.7639942
+6 / 3900 / 100 :  2.068096
+6 / 3950 / 100 :  4.3980336
+6 / 4000 / 100 :  2.4293396
+Validation loss:  1.7865254
+[D] Storing checkpoint as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/saved_weights/2018-05-08_11-21-49_epoch7_loss=1.7865254_model.ckpt ...
+Stored loss 1.7865253686904907
+7 / 4050 / 100 :  2.2335045
+7 / 4100 / 100 :  2.1210945
+7 / 4150 / 100 :  2.760609
+7 / 4200 / 100 :  2.0379012
+7 / 4250 / 100 :  2.3596954
+7 / 4300 / 100 :  2.2944272
+7 / 4350 / 100 :  1.9055271
+7 / 4400 / 100 :  3.6402836
+7 / 4450 / 100 :  4.045029
+7 / 4500 / 100 :  3.0032203
+7 / 4550 / 100 :  2.0958822
+7 / 4600 / 100 :  3.4418445
+Validation loss:  2.3630629
+8 / 4650 / 100 :  2.2058012
+8 / 4700 / 100 :  2.7831414
+8 / 4750 / 100 :  1.777785
+8 / 4800 / 100 :  2.4124827
+8 / 4850 / 100 :  2.073168
+8 / 4900 / 100 :  2.2764728
+8 / 4950 / 100 :  3.6523473
+8 / 5000 / 100 :  4.379857
+8 / 5050 / 100 :  2.112584
+8 / 5100 / 100 :  2.1289856
+8 / 5150 / 100 :  2.315121
+Validation loss:  1.8761282
+9 / 5200 / 100 :  3.7950053
+9 / 5250 / 100 :  3.3637996
+9 / 5300 / 100 :  1.7585465
+9 / 5350 / 100 :  2.0554237
+9 / 5400 / 100 :  2.0204866
+9 / 5450 / 100 :  3.9179645
+9 / 5500 / 100 :  3.3549283
+9 / 5550 / 100 :  2.207947
+9 / 5600 / 100 :  2.330129
+9 / 5650 / 100 :  2.7473013
+9 / 5700 / 100 :  1.9156203
+9 / 5750 / 100 :  2.9133382
+Validation loss:  2.5814035
+10 / 5800 / 100 :  2.25658
+10 / 5850 / 100 :  1.963185
+10 / 5900 / 100 :  4.0820613
+10 / 5950 / 100 :  2.911781
+10 / 6000 / 100 :  1.7972198
+10 / 6050 / 100 :  2.2158384
+10 / 6100 / 100 :  1.978631
+10 / 6150 / 100 :  2.125065
+10 / 6200 / 100 :  2.362662
+10 / 6250 / 100 :  3.577592
+10 / 6300 / 100 :  2.009084
+Validation loss:  2.1179113
+11 / 6350 / 100 :  3.1060443
+11 / 6400 / 100 :  1.9183241
+11 / 6450 / 100 :  4.183435
+11 / 6500 / 100 :  2.5562432
+11 / 6550 / 100 :  2.9476438
+11 / 6600 / 100 :  1.8216865
+11 / 6650 / 100 :  1.7233334
+11 / 6700 / 100 :  2.5918818
+11 / 6750 / 100 :  3.2014582
+11 / 6800 / 100 :  2.7712936
+11 / 6850 / 100 :  2.6884787
+11 / 6900 / 100 :  1.7436773
+Validation loss:  2.213222
+12 / 6950 / 100 :  1.6528833
+12 / 7000 / 100 :  1.7096436
+12 / 7050 / 100 :  2.0555608
+12 / 7100 / 100 :  2.2136781
+12 / 7150 / 100 :  1.7228261
+12 / 7200 / 100 :  1.9698777
+12 / 7250 / 100 :  1.6831158
+12 / 7300 / 100 :  2.5415604
+12 / 7350 / 100 :  2.3175533
+12 / 7400 / 100 :  2.264076
+12 / 7450 / 100 :  2.6060026
+Validation loss:  1.6492089
+[D] Storing checkpoint as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/saved_weights/2018-05-08_11-21-49_epoch13_loss=1.6492089_model.ckpt ...
+Stored loss 1.649208903312683
+13 / 7500 / 100 :  1.9181447
+13 / 7550 / 100 :  1.9956398
+13 / 7600 / 100 :  1.8675455
+13 / 7650 / 100 :  2.2758558
+13 / 7700 / 100 :  2.1762133
+13 / 7750 / 100 :  2.1796665
+13 / 7800 / 100 :  3.786092
+13 / 7850 / 100 :  2.8147388
+13 / 7900 / 100 :  2.340332
+13 / 7950 / 100 :  1.7441715
+13 / 8000 / 100 :  1.6774971
+13 / 8050 / 100 :  2.4479585
+Validation loss:  2.0855644
+14 / 8100 / 100 :  3.229512
+14 / 8150 / 100 :  3.5001
+14 / 8200 / 100 :  1.6591065
+14 / 8250 / 100 :  3.16917
+14 / 8300 / 100 :  3.019418
+14 / 8350 / 100 :  4.015938
+14 / 8400 / 100 :  2.8933988
+14 / 8450 / 100 :  2.879738
+14 / 8500 / 100 :  2.339255
+14 / 8550 / 100 :  2.0156107
+14 / 8600 / 100 :  2.2992036
+Validation loss:  1.6397349
+[D] Storing checkpoint as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/saved_weights/2018-05-08_11-21-49_epoch15_loss=1.6397349_model.ckpt ...
+Stored loss 1.6397348642349243
+15 / 8650 / 100 :  2.3291547
+15 / 8700 / 100 :  1.816791
+15 / 8750 / 100 :  1.8186828
+15 / 8800 / 100 :  1.683539
+15 / 8850 / 100 :  4.1480393
+15 / 8900 / 100 :  2.8528724
+15 / 8950 / 100 :  3.260445
+15 / 9000 / 100 :  1.5604504
+15 / 9050 / 100 :  2.8630352
+15 / 9100 / 100 :  1.9700902
+15 / 9150 / 100 :  1.6779144
+15 / 9200 / 100 :  2.6225712
+Validation loss:  1.6974479
+16 / 9250 / 100 :  3.2990549
+16 / 9300 / 100 :  2.308358
+16 / 9350 / 100 :  1.7338313
+16 / 9400 / 100 :  2.361773
+16 / 9450 / 100 :  1.8228263
+16 / 9500 / 100 :  1.7729787
+16 / 9550 / 100 :  3.2783105
+16 / 9600 / 100 :  2.5190852
+16 / 9650 / 100 :  2.222924
+16 / 9700 / 100 :  1.7894628
+16 / 9750 / 100 :  3.7664537
+Validation loss:  1.799872
+17 / 9800 / 100 :  1.7614123
+17 / 9850 / 100 :  3.6434786
+17 / 9900 / 100 :  2.3237522
+17 / 9950 / 100 :  3.6158104
+17 / 10000 / 100 :  2.502212
+17 / 10050 / 100 :  3.3013668
+17 / 10100 / 100 :  1.6689783
+17 / 10150 / 100 :  4.152762
+17 / 10200 / 100 :  1.8521012
+17 / 10250 / 100 :  3.5815754
+17 / 10300 / 100 :  2.552029
+17 / 10350 / 100 :  2.0377405
+Validation loss:  2.1801236
+18 / 10400 / 100 :  3.658728
+18 / 10450 / 100 :  2.3705728
+18 / 10500 / 100 :  2.5340486
+18 / 10550 / 100 :  2.4916542
+18 / 10600 / 100 :  3.2479825
+18 / 10650 / 100 :  3.4884028
+18 / 10700 / 100 :  2.4824939
+18 / 10750 / 100 :  3.6510844
+18 / 10800 / 100 :  1.6613138
+18 / 10850 / 100 :  1.9207671
+18 / 10900 / 100 :  2.367531
+Validation loss:  1.554671
+[D] Storing checkpoint as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/saved_weights/2018-05-08_11-21-49_epoch19_loss=1.554671_model.ckpt ...
+Stored loss 1.554671049118042
+19 / 10950 / 100 :  1.6482636
+19 / 11000 / 100 :  1.8374549
+19 / 11050 / 100 :  3.6497421
+19 / 11100 / 100 :  2.5706432
+19 / 11150 / 100 :  2.2068162
+19 / 11200 / 100 :  2.318859
+19 / 11250 / 100 :  1.9168566
+19 / 11300 / 100 :  4.249015
+19 / 11350 / 100 :  1.6865454
+19 / 11400 / 100 :  1.7095588
+19 / 11450 / 100 :  3.4003532
+19 / 11500 / 100 :  3.542626
+Validation loss:  2.0583937
+20 / 11550 / 100 :  2.1636634
+20 / 11600 / 100 :  2.1357262
+20 / 11650 / 100 :  2.084007
+20 / 11700 / 100 :  2.2604737
+20 / 11750 / 100 :  2.0465045
+20 / 11800 / 100 :  2.7180543
+20 / 11850 / 100 :  1.7833223
+20 / 11900 / 100 :  2.6991415
+20 / 11950 / 100 :  3.6687376
+20 / 12000 / 100 :  2.7726104
+20 / 12050 / 100 :  3.0929725
+Validation loss:  1.5114976
+[D] Storing checkpoint as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/saved_weights/2018-05-08_11-21-49_epoch21_loss=1.5114976_model.ckpt ...
+Stored loss 1.5114976167678833
+21 / 12100 / 100 :  1.6291184
+21 / 12150 / 100 :  2.0080593
+21 / 12200 / 100 :  1.7183127
+21 / 12250 / 100 :  1.6368304
+21 / 12300 / 100 :  1.9882039
+21 / 12350 / 100 :  1.5656923
+21 / 12400 / 100 :  4.116278
+21 / 12450 / 100 :  2.6965845
+21 / 12500 / 100 :  2.657242
+21 / 12550 / 100 :  3.7525725
+21 / 12600 / 100 :  3.5480726
+21 / 12650 / 100 :  1.7933398
+Validation loss:  1.7782843
+22 / 12700 / 100 :  2.4006994
+22 / 12750 / 100 :  3.5772426
+22 / 12800 / 100 :  1.685101
+22 / 12850 / 100 :  2.3506167
+22 / 12900 / 100 :  2.382866
+22 / 12950 / 100 :  1.9379994
+22 / 13000 / 100 :  3.302733
+22 / 13050 / 100 :  2.4452796
+22 / 13100 / 100 :  2.6128354
+22 / 13150 / 100 :  2.621999
+22 / 13200 / 100 :  2.1095245
+Validation loss:  2.2637622
+23 / 13250 / 100 :  1.6072433
+23 / 13300 / 100 :  2.0785363
+23 / 13350 / 100 :  1.8454859
+23 / 13400 / 100 :  3.527164
+23 / 13450 / 100 :  3.6455374
+23 / 13500 / 100 :  2.4564526
+23 / 13550 / 100 :  2.5548313
+23 / 13600 / 100 :  1.9678558
+23 / 13650 / 100 :  2.887875
+23 / 13700 / 100 :  3.619147
+23 / 13750 / 100 :  1.8578765
+23 / 13800 / 100 :  2.0673816
+Validation loss:  1.6539986
+24 / 13850 / 100 :  1.6511058
+24 / 13900 / 100 :  2.0107396
+24 / 13950 / 100 :  2.706022
+24 / 14000 / 100 :  1.5473045
+24 / 14050 / 100 :  2.7603333
+24 / 14100 / 100 :  1.6932169
+24 / 14150 / 100 :  1.5055029
+24 / 14200 / 100 :  2.0510566
+24 / 14250 / 100 :  1.5575387
+24 / 14300 / 100 :  1.8571734
+24 / 14350 / 100 :  1.9099103
+25 / 14400 / 100 :  2.0157201
+Validation loss:  2.1733418
+25 / 14450 / 100 :  3.2897007
+25 / 14500 / 100 :  1.9593949
+25 / 14550 / 100 :  2.723794
+25 / 14600 / 100 :  1.9242477
+25 / 14650 / 100 :  2.0131724
+25 / 14700 / 100 :  1.7056341
+25 / 14750 / 100 :  3.2628121
+25 / 14800 / 100 :  2.4651673
+25 / 14850 / 100 :  3.4362423
+25 / 14900 / 100 :  2.4435837
+25 / 14950 / 100 :  1.6211028
+Validation loss:  3.0698962
+26 / 15000 / 100 :  3.1579964
+26 / 15050 / 100 :  1.5922648
+26 / 15100 / 100 :  2.4516025
+26 / 15150 / 100 :  2.4208117
+26 / 15200 / 100 :  2.3606946
+26 / 15250 / 100 :  2.2050354
+26 / 15300 / 100 :  2.407825
+26 / 15350 / 100 :  1.9261268
+26 / 15400 / 100 :  3.789974
+26 / 15450 / 100 :  1.5350586
+26 / 15500 / 100 :  2.3180873
+26 / 15550 / 100 :  1.7656033
+Validation loss:  3.6687155
+27 / 15600 / 100 :  3.3715494
+27 / 15650 / 100 :  2.6749415
+27 / 15700 / 100 :  2.1663797
+27 / 15750 / 100 :  1.5356756
+27 / 15800 / 100 :  3.050017
+27 / 15850 / 100 :  2.1544325
+27 / 15900 / 100 :  2.0525243
+27 / 15950 / 100 :  2.251933
+27 / 16000 / 100 :  3.1874278
+27 / 16050 / 100 :  3.9807806
+27 / 16100 / 100 :  2.0631897
+Validation loss:  3.1900704
+28 / 16150 / 100 :  2.7339242
+28 / 16200 / 100 :  1.7174177
+28 / 16250 / 100 :  2.0058777
+28 / 16300 / 100 :  4.0368376
+28 / 16350 / 100 :  1.893011
+28 / 16400 / 100 :  2.2162673
+28 / 16450 / 100 :  3.4811666
+28 / 16500 / 100 :  2.9435031
+28 / 16550 / 100 :  2.3809175
+28 / 16600 / 100 :  2.9405313
+28 / 16650 / 100 :  1.591114
+28 / 16700 / 100 :  3.6087868
+Validation loss:  2.1778612
+29 / 16750 / 100 :  1.9182229
+29 / 16800 / 100 :  1.8466046
+29 / 16850 / 100 :  4.0742474
+29 / 16900 / 100 :  3.2332668
+29 / 16950 / 100 :  1.8451886
+29 / 17000 / 100 :  2.929901
+29 / 17050 / 100 :  3.7417426
+29 / 17100 / 100 :  2.6907592
+29 / 17150 / 100 :  2.106044
+29 / 17200 / 100 :  3.6071084
+29 / 17250 / 100 :  2.2720015
+Validation loss:  2.7538188
+30 / 17300 / 100 :  3.824217
+30 / 17350 / 100 :  2.023978
+30 / 17400 / 100 :  2.2244015
+30 / 17450 / 100 :  2.334545
+30 / 17500 / 100 :  3.073232
+30 / 17550 / 100 :  1.7250128
+30 / 17600 / 100 :  3.5964272
+30 / 17650 / 100 :  2.5933785
+30 / 17700 / 100 :  1.9528217
+30 / 17750 / 100 :  2.712998
+30 / 17800 / 100 :  4.01903
+30 / 17850 / 100 :  2.333951
+Validation loss:  2.4694602
+31 / 17900 / 100 :  2.3977559
+31 / 17950 / 100 :  3.1437786
+31 / 18000 / 100 :  1.568991
+31 / 18050 / 100 :  2.4060535
+31 / 18100 / 100 :  3.7404177
+31 / 18150 / 100 :  2.183851
+31 / 18200 / 100 :  1.9306319
+31 / 18250 / 100 :  2.137045
+31 / 18300 / 100 :  2.6326692
+31 / 18350 / 100 :  1.7604816
+31 / 18400 / 100 :  1.4707155
+Validation loss:  3.0556848
+32 / 18450 / 100 :  1.8593311
+32 / 18500 / 100 :  1.6390883
+32 / 18550 / 100 :  1.9954693
+32 / 18600 / 100 :  1.6632249
+32 / 18650 / 100 :  3.041666
+32 / 18700 / 100 :  3.2105443
+32 / 18750 / 100 :  1.9688152
+32 / 18800 / 100 :  2.499512
+32 / 18850 / 100 :  2.744947
+32 / 18900 / 100 :  2.6355245
+32 / 18950 / 100 :  3.0093997
+32 / 19000 / 100 :  4.023959
+Validation loss:  3.3254378
+33 / 19050 / 100 :  3.1394439
+33 / 19100 / 100 :  1.7576625
+33 / 19150 / 100 :  1.6161636
+33 / 19200 / 100 :  3.4150243
+33 / 19250 / 100 :  2.742964
+33 / 19300 / 100 :  2.240058
+33 / 19350 / 100 :  2.0484338
+33 / 19400 / 100 :  3.0693877
+33 / 19450 / 100 :  2.3597336
+33 / 19500 / 100 :  2.6497793
+33 / 19550 / 100 :  1.9232942
+Validation loss:  2.9646924
+34 / 19600 / 100 :  1.4745532
+34 / 19650 / 100 :  2.005476
+34 / 19700 / 100 :  3.443637
+34 / 19750 / 100 :  1.8201312
+34 / 19800 / 100 :  1.5549762
+34 / 19850 / 100 :  3.1825793
+34 / 19900 / 100 :  1.6132611
+34 / 19950 / 100 :  2.07904
+34 / 20000 / 100 :  2.684774
+34 / 20050 / 100 :  1.780936
+34 / 20100 / 100 :  1.9542062
+34 / 20150 / 100 :  3.9777145
+Validation loss:  3.6502357
+35 / 20200 / 100 :  1.5193857
+35 / 20250 / 100 :  3.091215
+35 / 20300 / 100 :  3.2045827
+35 / 20350 / 100 :  4.3235884
+35 / 20400 / 100 :  1.7228258
+35 / 20450 / 100 :  1.7602402
+35 / 20500 / 100 :  2.2915297
+35 / 20550 / 100 :  1.8761034
+35 / 20600 / 100 :  1.796342
+35 / 20650 / 100 :  1.6476482
+35 / 20700 / 100 :  2.6305046
+Validation loss:  2.3048213
+36 / 20750 / 100 :  3.0439086
+36 / 20800 / 100 :  3.4799287
+36 / 20850 / 100 :  1.9406213
+36 / 20900 / 100 :  3.0835302
+36 / 20950 / 100 :  4.3362083
+36 / 21000 / 100 :  2.9843714
+36 / 21050 / 100 :  2.2979724
+36 / 21100 / 100 :  2.3660889
+36 / 21150 / 100 :  2.244513
+36 / 21200 / 100 :  2.3120604
+36 / 21250 / 100 :  1.9018592
+36 / 21300 / 100 :  2.6725843
+Validation loss:  2.6367166
+37 / 21350 / 100 :  1.9906362
+37 / 21400 / 100 :  1.713375
+37 / 21450 / 100 :  2.3851032
+37 / 21500 / 100 :  1.9868338
+37 / 21550 / 100 :  1.9176247
+37 / 21600 / 100 :  1.8957895
+37 / 21650 / 100 :  2.9410248
+37 / 21700 / 100 :  1.5078511
+37 / 21750 / 100 :  1.818433
+37 / 21800 / 100 :  1.8279725
+37 / 21850 / 100 :  3.9675114
+Validation loss:  2.5361683
+38 / 21900 / 100 :  3.3399253
+38 / 21950 / 100 :  1.8288739
+38 / 22000 / 100 :  2.6046708
+38 / 22050 / 100 :  1.9312335
+38 / 22100 / 100 :  2.1099336
+38 / 22150 / 100 :  2.0751321
+38 / 22200 / 100 :  3.979525
+38 / 22250 / 100 :  2.4721596
+38 / 22300 / 100 :  2.4043894
+38 / 22350 / 100 :  2.4745836
+38 / 22400 / 100 :  1.826489
+38 / 22450 / 100 :  3.280631
+Validation loss:  2.4490705
+39 / 22500 / 100 :  2.5220284
+39 / 22550 / 100 :  2.8674476
+39 / 22600 / 100 :  1.9763105
+39 / 22650 / 100 :  1.4491894
+39 / 22700 / 100 :  1.8391324
+39 / 22750 / 100 :  3.7011957
+39 / 22800 / 100 :  1.8142713
+39 / 22850 / 100 :  3.238906
+39 / 22900 / 100 :  1.9740833
+39 / 22950 / 100 :  2.4916828
+39 / 23000 / 100 :  2.2110975
+Validation loss:  2.0145626
+40 / 23050 / 100 :  2.6454966
+40 / 23100 / 100 :  2.1555872
+40 / 23150 / 100 :  2.2146204
+40 / 23200 / 100 :  2.2902386
+40 / 23250 / 100 :  2.1819196
+40 / 23300 / 100 :  2.4341323
+40 / 23350 / 100 :  2.4271834
+40 / 23400 / 100 :  3.6197152
+40 / 23450 / 100 :  1.6525823
+40 / 23500 / 100 :  2.2391407
+40 / 23550 / 100 :  2.364317
+40 / 23600 / 100 :  2.1089401
+Validation loss:  1.99334
+41 / 23650 / 100 :  1.8130983
+41 / 23700 / 100 :  3.9892626
+41 / 23750 / 100 :  3.3169274
+41 / 23800 / 100 :  2.2298748
+41 / 23850 / 100 :  1.748091
+41 / 23900 / 100 :  3.4938347
+41 / 23950 / 100 :  3.4456089
+41 / 24000 / 100 :  2.615267
+41 / 24050 / 100 :  4.054392
+41 / 24100 / 100 :  2.2126422
+41 / 24150 / 100 :  3.4624052
+Validation loss:  1.9647442
+42 / 24200 / 100 :  2.6155598
+42 / 24250 / 100 :  2.5848277
+42 / 24300 / 100 :  2.3708887
+42 / 24350 / 100 :  2.3677652
+42 / 24400 / 100 :  1.545351
+42 / 24450 / 100 :  3.004033
+42 / 24500 / 100 :  2.2611606
+42 / 24550 / 100 :  1.7594995
+42 / 24600 / 100 :  1.4899665
+42 / 24650 / 100 :  3.3370535
+42 / 24700 / 100 :  1.5598853
+42 / 24750 / 100 :  1.8182964
+Validation loss:  2.086874
+43 / 24800 / 100 :  3.4715376
+43 / 24850 / 100 :  3.7110105
+43 / 24900 / 100 :  3.1913486
+43 / 24950 / 100 :  1.5261772
+43 / 25000 / 100 :  2.1225612
+43 / 25050 / 100 :  4.032644
+43 / 25100 / 100 :  2.0543792
+43 / 25150 / 100 :  1.792419
+43 / 25200 / 100 :  3.2015264
+43 / 25250 / 100 :  2.061781
+43 / 25300 / 100 :  3.1917272
+Validation loss:  2.2905269
+44 / 25350 / 100 :  1.4162745
+44 / 25400 / 100 :  2.2395809
+44 / 25450 / 100 :  2.416795
+44 / 25500 / 100 :  2.0873377
+44 / 25550 / 100 :  3.101665
+44 / 25600 / 100 :  2.1205194
+44 / 25650 / 100 :  2.2872818
+44 / 25700 / 100 :  2.1686902
+44 / 25750 / 100 :  1.8959605
+44 / 25800 / 100 :  2.2484274
+44 / 25850 / 100 :  1.8510956
+44 / 25900 / 100 :  2.2356756
+Validation loss:  1.9404986
+45 / 25950 / 100 :  2.5032434
+45 / 26000 / 100 :  3.297862
+45 / 26050 / 100 :  1.9779472
+45 / 26100 / 100 :  1.7784863
+45 / 26150 / 100 :  2.5282629
+45 / 26200 / 100 :  3.2739296
+45 / 26250 / 100 :  3.4928527
+45 / 26300 / 100 :  1.6084684
+45 / 26350 / 100 :  2.8239841
+45 / 26400 / 100 :  2.2864363
+45 / 26450 / 100 :  1.5906374
+Validation loss:  1.7660258
+46 / 26500 / 100 :  2.224203
+46 / 26550 / 100 :  1.925856
+46 / 26600 / 100 :  2.3347049
+46 / 26650 / 100 :  2.2570076
+46 / 26700 / 100 :  1.7712775
+46 / 26750 / 100 :  3.308039
+46 / 26800 / 100 :  3.359434
+46 / 26850 / 100 :  3.04211
+46 / 26900 / 100 :  2.0997725
+46 / 26950 / 100 :  2.227748
+46 / 27000 / 100 :  3.6027036
+46 / 27050 / 100 :  1.4479818
+Validation loss:  1.8584605
+47 / 27100 / 100 :  1.9711571
+47 / 27150 / 100 :  2.6967137
+47 / 27200 / 100 :  1.8638673
+47 / 27250 / 100 :  2.1888623
+47 / 27300 / 100 :  2.96908
+47 / 27350 / 100 :  2.5685358
+47 / 27400 / 100 :  1.589375
+47 / 27450 / 100 :  2.8172476
+47 / 27500 / 100 :  2.4849312
+47 / 27550 / 100 :  2.320255
+47 / 27600 / 100 :  1.7733139
+Validation loss:  2.4140227
+48 / 27650 / 100 :  2.7169015
+48 / 27700 / 100 :  3.6032636
+48 / 27750 / 100 :  1.7906647
+48 / 27800 / 100 :  1.8351226
+48 / 27850 / 100 :  3.5591156
+48 / 27900 / 100 :  1.9181408
+48 / 27950 / 100 :  2.5638797
+48 / 28000 / 100 :  1.9200214
+48 / 28050 / 100 :  3.4836178
+48 / 28100 / 100 :  3.747928
+48 / 28150 / 100 :  1.7461239
+48 / 28200 / 100 :  4.25126
+Validation loss:  1.7454503
+49 / 28250 / 100 :  2.1662328
+49 / 28300 / 100 :  2.657621
+49 / 28350 / 100 :  3.2318678
+49 / 28400 / 100 :  1.7155749
+49 / 28450 / 100 :  1.9539925
+49 / 28500 / 100 :  4.036411
+49 / 28550 / 100 :  1.4658661
+49 / 28600 / 100 :  1.9021469
+49 / 28650 / 100 :  1.6235098
+49 / 28700 / 100 :  3.471946
+49 / 28750 / 100 :  1.8504974
+50 / 28800 / 100 :  2.1262
+Validation loss:  1.6599404
+50 / 28850 / 100 :  1.7701662
+50 / 28900 / 100 :  2.9547775
+50 / 28950 / 100 :  1.9316895
+50 / 29000 / 100 :  1.7673712
+50 / 29050 / 100 :  2.041689
+50 / 29100 / 100 :  1.6346155
+50 / 29150 / 100 :  1.8158123
+50 / 29200 / 100 :  1.8516138
+50 / 29250 / 100 :  1.391729
+50 / 29300 / 100 :  3.4448726
+50 / 29350 / 100 :  3.9288023
+Validation loss:  2.5877688
+51 / 29400 / 100 :  1.9340755
+51 / 29450 / 100 :  1.6784596
+51 / 29500 / 100 :  1.4868239
+51 / 29550 / 100 :  4.088381
+51 / 29600 / 100 :  3.7990015
+51 / 29650 / 100 :  2.3204348
+51 / 29700 / 100 :  3.0266821
+51 / 29750 / 100 :  3.4815462
+51 / 29800 / 100 :  2.6678524
+51 / 29850 / 100 :  1.8366596
+51 / 29900 / 100 :  2.884307
+51 / 29950 / 100 :  3.2700062
+Validation loss:  2.9357045
+52 / 30000 / 100 :  2.8390067
+52 / 30050 / 100 :  2.608834
+52 / 30100 / 100 :  1.8182269
+52 / 30150 / 100 :  1.9197438
+52 / 30200 / 100 :  3.7541656
+52 / 30250 / 100 :  3.4724443
+52 / 30300 / 100 :  2.0708752
+52 / 30350 / 100 :  3.268238
+52 / 30400 / 100 :  2.3636243
+52 / 30450 / 100 :  2.3130643
+52 / 30500 / 100 :  2.5799665
+Validation loss:  1.8563669
+53 / 30550 / 100 :  3.608198
+53 / 30600 / 100 :  2.2101517
+53 / 30650 / 100 :  1.4258568
+53 / 30700 / 100 :  1.8972039
+53 / 30750 / 100 :  3.312047
+53 / 30800 / 100 :  2.4602942
+53 / 30850 / 100 :  1.8265872
+53 / 30900 / 100 :  2.3912976
+53 / 30950 / 100 :  1.9295464
+53 / 31000 / 100 :  2.4361389
+53 / 31050 / 100 :  3.165933
+53 / 31100 / 100 :  1.8917284
+Validation loss:  1.7069646
+54 / 31150 / 100 :  3.47894
+54 / 31200 / 100 :  2.2577198
+54 / 31250 / 100 :  1.5288559
+54 / 31300 / 100 :  3.4840438
+54 / 31350 / 100 :  2.3970346
+54 / 31400 / 100 :  2.279093
+54 / 31450 / 100 :  2.754787
+54 / 31500 / 100 :  2.356254
+54 / 31550 / 100 :  3.4527698
+54 / 31600 / 100 :  2.0509777
+54 / 31650 / 100 :  2.6194186
+Validation loss:  2.2428126
+55 / 31700 / 100 :  3.37203
+55 / 31750 / 100 :  2.1237423
+55 / 31800 / 100 :  2.941587
+55 / 31850 / 100 :  2.2082458
+55 / 31900 / 100 :  2.0538282
+55 / 31950 / 100 :  3.0163178
+55 / 32000 / 100 :  3.7098722
+55 / 32050 / 100 :  1.7979062
+55 / 32100 / 100 :  1.8093191
+55 / 32150 / 100 :  2.101722
+55 / 32200 / 100 :  3.8663652
+55 / 32250 / 100 :  2.2463737
+Validation loss:  2.107411
+56 / 32300 / 100 :  2.1799924
+56 / 32350 / 100 :  1.9325635
+56 / 32400 / 100 :  3.331407
+56 / 32450 / 100 :  4.066702
+56 / 32500 / 100 :  1.4722077
+56 / 32550 / 100 :  1.7022399
+56 / 32600 / 100 :  2.711328
+56 / 32650 / 100 :  3.3112116
+56 / 32700 / 100 :  3.983111
+56 / 32750 / 100 :  2.6288059
+56 / 32800 / 100 :  1.8323114
+Validation loss:  1.9699752
+57 / 32850 / 100 :  3.7093928
+57 / 32900 / 100 :  1.6808947
+57 / 32950 / 100 :  1.82414
+57 / 33000 / 100 :  1.9837269
+57 / 33050 / 100 :  2.9150906
+57 / 33100 / 100 :  3.131613
+57 / 33150 / 100 :  2.934323
+57 / 33200 / 100 :  1.8593832
+57 / 33250 / 100 :  3.310786
+57 / 33300 / 100 :  2.241323
+57 / 33350 / 100 :  2.2902722
+57 / 33400 / 100 :  2.8382435
+Validation loss:  2.2905462
+58 / 33450 / 100 :  2.293179
+58 / 33500 / 100 :  3.3826916
+58 / 33550 / 100 :  2.878213
+58 / 33600 / 100 :  3.5639257
+58 / 33650 / 100 :  2.2820659
+58 / 33700 / 100 :  1.7418617
+58 / 33750 / 100 :  2.264254
+58 / 33800 / 100 :  1.4139031
+58 / 33850 / 100 :  2.6978738
+58 / 33900 / 100 :  2.7243786
+58 / 33950 / 100 :  3.9995213
+Validation loss:  2.4249823
+59 / 34000 / 100 :  2.4088197
+59 / 34050 / 100 :  1.8135296
+59 / 34100 / 100 :  1.8127649
+59 / 34150 / 100 :  2.4340103
+59 / 34200 / 100 :  2.0760653
+59 / 34250 / 100 :  2.599496
+59 / 34300 / 100 :  2.5131323
+59 / 34350 / 100 :  2.162084
+59 / 34400 / 100 :  2.6116953
+59 / 34450 / 100 :  1.4458034
+59 / 34500 / 100 :  1.4466045
+59 / 34550 / 100 :  3.7297702
+Validation loss:  2.4249647
+60 / 34600 / 100 :  2.68944
+60 / 34650 / 100 :  1.8778111
+60 / 34700 / 100 :  2.7717247
+60 / 34750 / 100 :  2.9255884
+60 / 34800 / 100 :  3.4638903
+60 / 34850 / 100 :  3.7949383
+60 / 34900 / 100 :  2.5918033
+60 / 34950 / 100 :  2.6380615
+60 / 35000 / 100 :  1.9653103
+60 / 35050 / 100 :  1.9404953
+60 / 35100 / 100 :  3.2695765
+Validation loss:  1.9006287
+61 / 35150 / 100 :  1.9924406
+61 / 35200 / 100 :  3.5693645
+61 / 35250 / 100 :  2.7051759
+61 / 35300 / 100 :  2.1907377
+61 / 35350 / 100 :  1.8112556
+61 / 35400 / 100 :  2.5727675
+61 / 35450 / 100 :  2.9114196
+61 / 35500 / 100 :  2.9921896
+61 / 35550 / 100 :  1.4866687
+61 / 35600 / 100 :  1.7680889
+61 / 35650 / 100 :  2.0498533
+61 / 35700 / 100 :  1.8921794
+Validation loss:  2.2457845
+62 / 35750 / 100 :  2.0389204
+62 / 35800 / 100 :  3.309759
+62 / 35850 / 100 :  3.2652967
+62 / 35900 / 100 :  1.9516002
+62 / 35950 / 100 :  2.0465581
+62 / 36000 / 100 :  2.2541518
+62 / 36050 / 100 :  2.8118696
+62 / 36100 / 100 :  1.4209983
+62 / 36150 / 100 :  1.4946241
+62 / 36200 / 100 :  2.275438
+62 / 36250 / 100 :  2.0025074
+Validation loss:  2.8194056
+63 / 36300 / 100 :  3.1693077
+63 / 36350 / 100 :  2.8651767
+63 / 36400 / 100 :  3.3371382
+63 / 36450 / 100 :  1.7126122
+63 / 36500 / 100 :  1.9086779
+63 / 36550 / 100 :  2.368601
+63 / 36600 / 100 :  3.1644428
+63 / 36650 / 100 :  1.8807429
+63 / 36700 / 100 :  3.405293
+63 / 36750 / 100 :  1.7970852
+63 / 36800 / 100 :  1.9349574
+63 / 36850 / 100 :  1.9707744
+Validation loss:  2.7237098
+64 / 36900 / 100 :  2.0076988
+64 / 36950 / 100 :  2.3831096
+64 / 37000 / 100 :  1.9220212
+64 / 37050 / 100 :  1.6339889
+64 / 37100 / 100 :  2.3386679
+64 / 37150 / 100 :  1.4691373
+64 / 37200 / 100 :  2.6697152
+64 / 37250 / 100 :  3.7819216
+64 / 37300 / 100 :  3.0443623
+64 / 37350 / 100 :  2.145434
+64 / 37400 / 100 :  3.866181
+Validation loss:  2.693117
+65 / 37450 / 100 :  2.0272381
+65 / 37500 / 100 :  2.0228543
+65 / 37550 / 100 :  1.3786373
+65 / 37600 / 100 :  3.5465262
+65 / 37650 / 100 :  1.4918195
+65 / 37700 / 100 :  1.8004818
+65 / 37750 / 100 :  1.8904583
+65 / 37800 / 100 :  1.693217
+65 / 37850 / 100 :  2.3757095
+65 / 37900 / 100 :  3.227936
+65 / 37950 / 100 :  2.1983607
+65 / 38000 / 100 :  3.269069
+Validation loss:  3.072843
+66 / 38050 / 100 :  1.7438519
+66 / 38100 / 100 :  1.8777635
+66 / 38150 / 100 :  3.2620535
+66 / 38200 / 100 :  2.2475748
+66 / 38250 / 100 :  3.1012216
+66 / 38300 / 100 :  1.9599054
+66 / 38350 / 100 :  1.9423767
+66 / 38400 / 100 :  3.6964593
+66 / 38450 / 100 :  2.4818614
+66 / 38500 / 100 :  1.976801
+66 / 38550 / 100 :  3.452128
+Validation loss:  2.1254206
+67 / 38600 / 100 :  1.7633904
+67 / 38650 / 100 :  2.4871023
+67 / 38700 / 100 :  2.3791473
+67 / 38750 / 100 :  2.6702538
+67 / 38800 / 100 :  1.9712067
+67 / 38850 / 100 :  1.8056673
+67 / 38900 / 100 :  2.0466022
+67 / 38950 / 100 :  1.5454112
+67 / 39000 / 100 :  2.4912868
+67 / 39050 / 100 :  2.987351
+67 / 39100 / 100 :  3.3041394
+67 / 39150 / 100 :  1.8883722
+Validation loss:  2.158548
+68 / 39200 / 100 :  3.747983
+68 / 39250 / 100 :  4.126584
+68 / 39300 / 100 :  3.4665275
+68 / 39350 / 100 :  2.0746427
+68 / 39400 / 100 :  1.4785001
+68 / 39450 / 100 :  2.658262
+68 / 39500 / 100 :  1.847972
+68 / 39550 / 100 :  2.0612268
+68 / 39600 / 100 :  2.2360835
+68 / 39650 / 100 :  2.0211484
+68 / 39700 / 100 :  2.6222036
+Validation loss:  1.9713333
+69 / 39750 / 100 :  1.5420661
+69 / 39800 / 100 :  3.4945545
+69 / 39850 / 100 :  3.257782
+69 / 39900 / 100 :  2.9555945
+69 / 39950 / 100 :  2.0589256
+69 / 40000 / 100 :  1.9549013
+69 / 40050 / 100 :  3.152382
+69 / 40100 / 100 :  2.1747215
+69 / 40150 / 100 :  1.834694
+69 / 40200 / 100 :  1.3666037
+69 / 40250 / 100 :  2.3328836
+69 / 40300 / 100 :  2.4025142
+Validation loss:  2.256532
+70 / 40350 / 100 :  2.153202
+70 / 40400 / 100 :  2.2262206
+70 / 40450 / 100 :  2.5366492
+70 / 40500 / 100 :  2.3514879
+70 / 40550 / 100 :  2.6514328
+70 / 40600 / 100 :  3.779959
+70 / 40650 / 100 :  1.9734669
+70 / 40700 / 100 :  1.6431085
+70 / 40750 / 100 :  2.284552
+70 / 40800 / 100 :  1.9578099
+70 / 40850 / 100 :  1.3745242
+Validation loss:  1.7363989
+71 / 40900 / 100 :  3.1570268
+71 / 40950 / 100 :  2.873126
+71 / 41000 / 100 :  1.5380878
+71 / 41050 / 100 :  2.6601224
+71 / 41100 / 100 :  1.4253643
+71 / 41150 / 100 :  2.6454704
+71 / 41200 / 100 :  2.0577257
+71 / 41250 / 100 :  3.2998137
+71 / 41300 / 100 :  2.4396718
+71 / 41350 / 100 :  2.038483
+71 / 41400 / 100 :  1.8567864
+71 / 41450 / 100 :  1.9287363
+Validation loss:  2.3093388
+72 / 41500 / 100 :  2.03096
+72 / 41550 / 100 :  3.48213
+72 / 41600 / 100 :  3.3759198
+72 / 41650 / 100 :  1.8040818
+72 / 41700 / 100 :  1.2997584
+72 / 41750 / 100 :  1.9279355
+72 / 41800 / 100 :  2.2574215
+72 / 41850 / 100 :  2.251719
+72 / 41900 / 100 :  3.9480875
+72 / 41950 / 100 :  3.26109
+72 / 42000 / 100 :  3.6721382
+Validation loss:  3.9437373
+73 / 42050 / 100 :  2.1185663
+73 / 42100 / 100 :  2.6459534
+73 / 42150 / 100 :  2.7306843
+73 / 42200 / 100 :  3.1464517
+73 / 42250 / 100 :  1.8447218
+73 / 42300 / 100 :  3.7819698
+73 / 42350 / 100 :  1.5292121
+73 / 42400 / 100 :  1.9187286
+73 / 42450 / 100 :  1.8558091
+73 / 42500 / 100 :  1.8780414
+73 / 42550 / 100 :  3.1146748
+73 / 42600 / 100 :  1.7986131
+Validation loss:  3.4127297
+74 / 42650 / 100 :  2.5306392
+74 / 42700 / 100 :  1.6342984
+74 / 42750 / 100 :  2.4116228
+74 / 42800 / 100 :  1.8474267
+74 / 42850 / 100 :  1.7440027
+74 / 42900 / 100 :  2.26927
+74 / 42950 / 100 :  2.1639278
+74 / 43000 / 100 :  2.2291327
+74 / 43050 / 100 :  1.4787225
+74 / 43100 / 100 :  3.3435757
+74 / 43150 / 100 :  2.0327194
+75 / 43200 / 100 :  2.0780225
+Validation loss:  2.2857382
+75 / 43250 / 100 :  3.213539
+75 / 43300 / 100 :  3.408962
+75 / 43350 / 100 :  2.2234695
+75 / 43400 / 100 :  1.967081
+75 / 43450 / 100 :  1.793716
+75 / 43500 / 100 :  2.6121912
+75 / 43550 / 100 :  3.1707478
+75 / 43600 / 100 :  2.4982705
+75 / 43650 / 100 :  1.4814095
+75 / 43700 / 100 :  1.8104166
+75 / 43750 / 100 :  2.980851
+Validation loss:  3.4213398
+76 / 43800 / 100 :  1.7360684
+76 / 43850 / 100 :  1.932529
+76 / 43900 / 100 :  2.7805965
+76 / 43950 / 100 :  3.5391626
+76 / 44000 / 100 :  2.6056712
+76 / 44050 / 100 :  2.145421
+76 / 44100 / 100 :  2.259809
+76 / 44150 / 100 :  4.0543566
+76 / 44200 / 100 :  3.5795722
+76 / 44250 / 100 :  2.5146759
+76 / 44300 / 100 :  2.1959229
+76 / 44350 / 100 :  1.7671231
+Validation loss:  1.4862938
+[D] Storing checkpoint as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/saved_weights/2018-05-08_11-21-49_epoch77_loss=1.4862938_model.ckpt ...
+Stored loss 1.4862937927246094
+77 / 44400 / 100 :  1.9670857
+77 / 44450 / 100 :  1.9488716
+77 / 44500 / 100 :  2.1337829
+77 / 44550 / 100 :  2.2685082
+77 / 44600 / 100 :  3.429493
+77 / 44650 / 100 :  1.6339718
+77 / 44700 / 100 :  1.5599971
+77 / 44750 / 100 :  2.3957164
+77 / 44800 / 100 :  2.8581688
+77 / 44850 / 100 :  1.7201809
+77 / 44900 / 100 :  2.3077822
+Validation loss:  2.496175
+78 / 44950 / 100 :  1.7107158
+78 / 45000 / 100 :  1.7955799
+78 / 45050 / 100 :  2.6091344
+78 / 45100 / 100 :  3.9661448
+78 / 45150 / 100 :  3.5979657
+78 / 45200 / 100 :  3.4498868
+78 / 45250 / 100 :  2.9634228
+78 / 45300 / 100 :  4.1860113
+78 / 45350 / 100 :  2.253669
+78 / 45400 / 100 :  2.4912295
+78 / 45450 / 100 :  2.523096
+78 / 45500 / 100 :  2.1129715
+Validation loss:  2.3917544
+79 / 45550 / 100 :  2.284161
+79 / 45600 / 100 :  3.6566315
+79 / 45650 / 100 :  2.4278924
+79 / 45700 / 100 :  2.149105
+79 / 45750 / 100 :  3.484245
+79 / 45800 / 100 :  1.7376229
+79 / 45850 / 100 :  2.9017324
+79 / 45900 / 100 :  3.1584387
+79 / 45950 / 100 :  1.837885
+79 / 46000 / 100 :  3.0938694
+79 / 46050 / 100 :  2.9192405
+Validation loss:  3.142343
+80 / 46100 / 100 :  2.3902297
+80 / 46150 / 100 :  3.864333
+80 / 46200 / 100 :  2.0746646
+80 / 46250 / 100 :  2.9012294
+80 / 46300 / 100 :  3.070369
+80 / 46350 / 100 :  2.3688686
+80 / 46400 / 100 :  1.8551385
+80 / 46450 / 100 :  1.941057
+80 / 46500 / 100 :  1.4649819
+80 / 46550 / 100 :  1.874818
+80 / 46600 / 100 :  2.7467887
+80 / 46650 / 100 :  2.7805605
+Validation loss:  2.1916883
+81 / 46700 / 100 :  1.7679414
+81 / 46750 / 100 :  4.176277
+81 / 46800 / 100 :  3.521956
+81 / 46850 / 100 :  2.3379297
+81 / 46900 / 100 :  2.1041038
+81 / 46950 / 100 :  1.3826481
+81 / 47000 / 100 :  3.1317756
+81 / 47050 / 100 :  1.7556274
+81 / 47100 / 100 :  2.2040172
+81 / 47150 / 100 :  1.8093812
+81 / 47200 / 100 :  2.3197126
+Validation loss:  1.472254
+[D] Storing checkpoint as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/saved_weights/2018-05-08_11-21-49_epoch82_loss=1.472254_model.ckpt ...
+Stored loss 1.4722540378570557
+82 / 47250 / 100 :  3.9662383
+82 / 47300 / 100 :  2.1563368
+82 / 47350 / 100 :  2.0235217
+82 / 47400 / 100 :  2.463983
+82 / 47450 / 100 :  2.2900112
+82 / 47500 / 100 :  3.7749207
+82 / 47550 / 100 :  1.6762509
+82 / 47600 / 100 :  1.9513288
+82 / 47650 / 100 :  2.5624201
+82 / 47700 / 100 :  3.26269
+82 / 47750 / 100 :  1.8457462
+82 / 47800 / 100 :  2.3243134
+Validation loss:  3.163543
+83 / 47850 / 100 :  2.7167811
+83 / 47900 / 100 :  1.8437582
+83 / 47950 / 100 :  1.7491522
+83 / 48000 / 100 :  2.3176155
+83 / 48050 / 100 :  3.4780114
+83 / 48100 / 100 :  1.9819465
+83 / 48150 / 100 :  1.8639555
+83 / 48200 / 100 :  3.7990856
+83 / 48250 / 100 :  2.0153565
+83 / 48300 / 100 :  2.831284
+83 / 48350 / 100 :  2.90923
+Validation loss:  2.5760577
+84 / 48400 / 100 :  1.8859203
+84 / 48450 / 100 :  3.4078872
+84 / 48500 / 100 :  2.74951
+84 / 48550 / 100 :  2.0411758
+84 / 48600 / 100 :  1.670587
+84 / 48650 / 100 :  2.0826907
+84 / 48700 / 100 :  1.849983
+84 / 48750 / 100 :  1.3186378
+84 / 48800 / 100 :  2.2424264
+84 / 48850 / 100 :  2.2381241
+84 / 48900 / 100 :  3.5725222
+84 / 48950 / 100 :  3.7657657
+Validation loss:  2.2080603
+85 / 49000 / 100 :  3.2668884
+85 / 49050 / 100 :  1.9595683
+85 / 49100 / 100 :  2.1433883
+85 / 49150 / 100 :  1.5246912
+85 / 49200 / 100 :  2.0789409
+85 / 49250 / 100 :  2.246136
+85 / 49300 / 100 :  3.8728397
+85 / 49350 / 100 :  2.335036
+85 / 49400 / 100 :  3.453078
+85 / 49450 / 100 :  3.5913444
+85 / 49500 / 100 :  2.2121544
+Validation loss:  1.5340092
+86 / 49550 / 100 :  2.0513806
+86 / 49600 / 100 :  2.3775015
+86 / 49650 / 100 :  2.3389232
+86 / 49700 / 100 :  2.369222
+86 / 49750 / 100 :  1.6607584
+86 / 49800 / 100 :  2.1127717
+86 / 49850 / 100 :  2.2327764
+86 / 49900 / 100 :  1.7611432
+86 / 49950 / 100 :  3.8279903
+86 / 50000 / 100 :  1.8093172
+86 / 50050 / 100 :  1.5196241
+86 / 50100 / 100 :  2.2530239
+Validation loss:  3.2989926
+87 / 50150 / 100 :  1.9197724
+87 / 50200 / 100 :  2.0549426
+87 / 50250 / 100 :  2.070342
+87 / 50300 / 100 :  2.4441102
+87 / 50350 / 100 :  2.134011
+87 / 50400 / 100 :  1.7395912
+87 / 50450 / 100 :  1.8718768
+87 / 50500 / 100 :  2.5671473
+87 / 50550 / 100 :  2.0826392
+87 / 50600 / 100 :  2.9446704
+87 / 50650 / 100 :  1.9686435
+Validation loss:  2.7689574
+88 / 50700 / 100 :  2.8117754
+88 / 50750 / 100 :  2.9451969
+88 / 50800 / 100 :  2.6084695
+88 / 50850 / 100 :  2.4490645
+88 / 50900 / 100 :  2.2526834
+88 / 50950 / 100 :  2.1255832
+88 / 51000 / 100 :  2.3611634
+88 / 51050 / 100 :  2.0997705
+88 / 51100 / 100 :  1.410731
+88 / 51150 / 100 :  2.187278
+88 / 51200 / 100 :  1.780511
+88 / 51250 / 100 :  1.3637886
+Validation loss:  3.350738
+89 / 51300 / 100 :  2.6459851
+89 / 51350 / 100 :  1.9349971
+89 / 51400 / 100 :  2.6154373
+89 / 51450 / 100 :  1.3544097
+89 / 51500 / 100 :  3.4063525
+89 / 51550 / 100 :  2.733988
+89 / 51600 / 100 :  1.8003217
+89 / 51650 / 100 :  3.1887903
+89 / 51700 / 100 :  1.9873446
+89 / 51750 / 100 :  2.2503502
+89 / 51800 / 100 :  3.3868997
+Validation loss:  3.426998
+90 / 51850 / 100 :  3.1966648
+90 / 51900 / 100 :  1.7535988
+90 / 51950 / 100 :  1.9243885
+90 / 52000 / 100 :  3.288448
+90 / 52050 / 100 :  2.246727
+90 / 52100 / 100 :  1.9353292
+90 / 52150 / 100 :  2.0221663
+90 / 52200 / 100 :  2.693409
+90 / 52250 / 100 :  3.4884565
+90 / 52300 / 100 :  2.3873127
+90 / 52350 / 100 :  2.1015475
+90 / 52400 / 100 :  3.1614494
+Validation loss:  3.722447
+91 / 52450 / 100 :  3.1478975
+91 / 52500 / 100 :  2.0272355
+91 / 52550 / 100 :  4.0530443
+91 / 52600 / 100 :  3.271702
+91 / 52650 / 100 :  2.5662553
+91 / 52700 / 100 :  2.2489097
+91 / 52750 / 100 :  3.1979766
+91 / 52800 / 100 :  2.918628
+91 / 52850 / 100 :  2.5245357
+91 / 52900 / 100 :  1.8208354
+91 / 52950 / 100 :  2.6454089
+Validation loss:  3.5659406
+92 / 53000 / 100 :  4.1995325
+92 / 53050 / 100 :  1.5252723
+92 / 53100 / 100 :  1.745047
+92 / 53150 / 100 :  2.2160237
+92 / 53200 / 100 :  3.0374866
+92 / 53250 / 100 :  2.0813818
+92 / 53300 / 100 :  3.8067458
+92 / 53350 / 100 :  1.9499453
+92 / 53400 / 100 :  3.394285
+92 / 53450 / 100 :  2.0428088
+92 / 53500 / 100 :  2.5785265
+92 / 53550 / 100 :  2.3383605
+Validation loss:  3.462715
+93 / 53600 / 100 :  2.365904
+93 / 53650 / 100 :  1.8599964
+93 / 53700 / 100 :  2.1654809
+93 / 53750 / 100 :  1.6565821
+93 / 53800 / 100 :  2.886425
+93 / 53850 / 100 :  1.3712362
+93 / 53900 / 100 :  3.4439337
+93 / 53950 / 100 :  1.3956716
+93 / 54000 / 100 :  1.7782284
+93 / 54050 / 100 :  2.5988922
+93 / 54100 / 100 :  4.2025385
+Validation loss:  3.0320513
+94 / 54150 / 100 :  2.8220468
+94 / 54200 / 100 :  3.244528
+94 / 54250 / 100 :  1.5582716
+94 / 54300 / 100 :  2.145387
+94 / 54350 / 100 :  2.4855802
+94 / 54400 / 100 :  1.4578625
+94 / 54450 / 100 :  2.6119423
+94 / 54500 / 100 :  3.3421743
+94 / 54550 / 100 :  3.565267
+94 / 54600 / 100 :  2.0929694
+94 / 54650 / 100 :  1.4566876
+94 / 54700 / 100 :  1.9380511
+Validation loss:  2.6722677
+95 / 54750 / 100 :  2.5409632
+95 / 54800 / 100 :  2.2302744
+95 / 54850 / 100 :  1.4727275
+95 / 54900 / 100 :  1.6968656
+95 / 54950 / 100 :  3.4270232
+95 / 55000 / 100 :  1.798985
+95 / 55050 / 100 :  2.4358878
+95 / 55100 / 100 :  2.0188692
+95 / 55150 / 100 :  1.4668857
+95 / 55200 / 100 :  4.0511026
+95 / 55250 / 100 :  2.0136518
+Validation loss:  3.9208841
+96 / 55300 / 100 :  1.8533088
+96 / 55350 / 100 :  2.4553165
+96 / 55400 / 100 :  3.5168812
+96 / 55450 / 100 :  2.1105175
+96 / 55500 / 100 :  2.0112717
+96 / 55550 / 100 :  1.8497248
+96 / 55600 / 100 :  2.217542
+96 / 55650 / 100 :  1.6323686
+96 / 55700 / 100 :  1.9079264
+96 / 55750 / 100 :  3.210755
+96 / 55800 / 100 :  2.1916866
+96 / 55850 / 100 :  3.6790001
+Validation loss:  3.0718603
+97 / 55900 / 100 :  2.1873214
+97 / 55950 / 100 :  3.5603273
+97 / 56000 / 100 :  3.2914598
+97 / 56050 / 100 :  1.4810356
+97 / 56100 / 100 :  1.8412
+97 / 56150 / 100 :  2.6275504
+97 / 56200 / 100 :  2.100818
+97 / 56250 / 100 :  3.7605488
+97 / 56300 / 100 :  3.1084971
+97 / 56350 / 100 :  2.6349454
+97 / 56400 / 100 :  2.4377916
+Validation loss:  4.0397487
+98 / 56450 / 100 :  2.048402
+98 / 56500 / 100 :  1.7623163
+98 / 56550 / 100 :  2.628202
+98 / 56600 / 100 :  2.2220862
+98 / 56650 / 100 :  2.349519
+98 / 56700 / 100 :  1.3698537
+98 / 56750 / 100 :  2.9314551
+98 / 56800 / 100 :  2.4041033
+98 / 56850 / 100 :  1.9630891
+98 / 56900 / 100 :  3.420238
+98 / 56950 / 100 :  1.9187785
+98 / 57000 / 100 :  1.8073431
+Validation loss:  2.9866014
+99 / 57050 / 100 :  2.4199102
+99 / 57100 / 100 :  2.1777065
+99 / 57150 / 100 :  1.812978
+99 / 57200 / 100 :  1.8665534
+99 / 57250 / 100 :  1.3533442
+99 / 57300 / 100 :  3.1440198
+99 / 57350 / 100 :  2.1334558
+99 / 57400 / 100 :  2.9072266
+99 / 57450 / 100 :  3.9309769
+99 / 57500 / 100 :  1.3597435
+99 / 57550 / 100 :  1.9478424
+Final loss:  1.472254
+Validation loss:  2.321327
+[0.0, 0.08680555555555555, 0.1736111111111111, 0.2604166666666667, 0.3472222222222222, 0.4340277777777778, 0.5208333333333334, 0.6076388888888888, 0.6944444444444444, 0.78125, 0.8680555555555556, 0.9548611111111112, 1.0416666666666667, 1.1284722222222223, 1.2152777777777777, 1.3020833333333333, 1.3888888888888888, 1.4756944444444444, 1.5625, 1.6493055555555556, 1.7361111111111112, 1.8229166666666667, 1.9097222222222223, 1.9965277777777777, 2.0833333333333335, 2.170138888888889, 2.2569444444444446, 2.34375, 2.4305555555555554, 2.517361111111111, 2.6041666666666665, 2.6909722222222223, 2.7777777777777777, 2.8645833333333335, 2.951388888888889, 3.0381944444444446, 3.125, 3.2118055555555554, 3.298611111111111, 3.3854166666666665, 3.4722222222222223, 3.5590277777777777, 3.6458333333333335, 3.732638888888889, 3.8194444444444446, 3.90625, 3.9930555555555554, 4.079861111111111, 4.166666666666667, 4.253472222222222, 4.340277777777778, 4.427083333333333, 4.513888888888889, 4.600694444444445, 4.6875, 4.774305555555555, 4.861111111111111, 4.947916666666667, 5.034722222222222, 5.121527777777778, 5.208333333333333, 5.295138888888889, 5.381944444444445, 5.46875, 5.555555555555555, 5.642361111111111, 5.729166666666667, 5.815972222222222, 5.902777777777778, 5.989583333333333, 6.076388888888889, 6.163194444444445, 6.25, 6.336805555555555, 6.423611111111111, 6.510416666666667, 6.597222222222222, 6.684027777777778, 6.770833333333333, 6.857638888888889, 6.944444444444445, 7.03125, 7.118055555555555, 7.204861111111111, 7.291666666666667, 7.378472222222222, 7.465277777777778, 7.552083333333333, 7.638888888888889, 7.725694444444445, 7.8125, 7.899305555555555, 7.986111111111111, 8.072916666666666, 8.159722222222221, 8.246527777777779, 8.333333333333334, 8.42013888888889, 8.506944444444445, 8.59375, 8.680555555555555, 8.76736111111111, 8.854166666666666, 8.940972222222221, 9.027777777777779, 9.114583333333334, 9.20138888888889, 9.288194444444445, 9.375, 9.461805555555555, 9.54861111111111, 9.635416666666666, 9.722222222222221, 9.809027777777779, 9.895833333333334, 9.98263888888889, 10.069444444444445, 10.15625, 10.243055555555555, 10.32986111111111, 10.416666666666666, 10.503472222222221, 10.590277777777779, 10.677083333333334, 10.76388888888889, 10.850694444444445, 10.9375, 11.024305555555555, 11.11111111111111, 11.197916666666666, 11.284722222222221, 11.371527777777779, 11.458333333333334, 11.54513888888889, 11.631944444444445, 11.71875, 11.805555555555555, 11.89236111111111, 11.979166666666666, 12.065972222222221, 12.152777777777779, 12.239583333333334, 12.32638888888889, 12.413194444444445, 12.5, 12.586805555555555, 12.67361111111111, 12.760416666666666, 12.847222222222221, 12.934027777777779, 13.020833333333334, 13.10763888888889, 13.194444444444445, 13.28125, 13.368055555555555, 13.45486111111111, 13.541666666666666, 13.628472222222221, 13.715277777777779, 13.802083333333334, 13.88888888888889, 13.975694444444445, 14.0625, 14.149305555555555, 14.23611111111111, 14.322916666666666, 14.409722222222221, 14.496527777777779, 14.583333333333334, 14.67013888888889, 14.756944444444445, 14.84375, 14.930555555555555, 15.01736111111111, 15.104166666666666, 15.190972222222221, 15.277777777777779, 15.364583333333334, 15.45138888888889, 15.538194444444445, 15.625, 15.711805555555555, 15.79861111111111, 15.885416666666666, 15.972222222222221, 16.05902777777778, 16.145833333333332, 16.23263888888889, 16.319444444444443, 16.40625, 16.493055555555557, 16.57986111111111, 16.666666666666668, 16.75347222222222, 16.84027777777778, 16.927083333333332, 17.01388888888889, 17.100694444444443, 17.1875, 17.274305555555557, 17.36111111111111, 17.447916666666668, 17.53472222222222, 17.62152777777778, 17.708333333333332, 17.79513888888889, 17.881944444444443, 17.96875, 18.055555555555557, 18.14236111111111, 18.229166666666668, 18.31597222222222, 18.40277777777778, 18.489583333333332, 18.57638888888889, 18.663194444444443, 18.75, 18.836805555555557, 18.92361111111111, 19.010416666666668, 19.09722222222222, 19.18402777777778, 19.270833333333332, 19.35763888888889, 19.444444444444443, 19.53125, 19.618055555555557, 19.70486111111111, 19.791666666666668, 19.87847222222222, 19.96527777777778, 20.052083333333332, 20.13888888888889, 20.225694444444443, 20.3125, 20.399305555555557, 20.48611111111111, 20.572916666666668, 20.65972222222222, 20.74652777777778, 20.833333333333332, 20.92013888888889, 21.006944444444443, 21.09375, 21.180555555555557, 21.26736111111111, 21.354166666666668, 21.44097222222222, 21.52777777777778, 21.614583333333332, 21.70138888888889, 21.788194444444443, 21.875, 21.961805555555557, 22.04861111111111, 22.135416666666668, 22.22222222222222, 22.30902777777778, 22.395833333333332, 22.48263888888889, 22.569444444444443, 22.65625, 22.743055555555557, 22.82986111111111, 22.916666666666668, 23.00347222222222, 23.09027777777778, 23.177083333333332, 23.26388888888889, 23.350694444444443, 23.4375, 23.524305555555557, 23.61111111111111, 23.697916666666668, 23.78472222222222, 23.87152777777778, 23.958333333333332, 24.04513888888889, 24.131944444444443, 24.21875, 24.305555555555557, 24.39236111111111, 24.479166666666668, 24.56597222222222, 24.65277777777778, 24.739583333333332, 24.82638888888889, 24.913194444444443, 25.0, 25.086805555555557, 25.17361111111111, 25.260416666666668, 25.34722222222222, 25.43402777777778, 25.520833333333332, 25.60763888888889, 25.694444444444443, 25.78125, 25.868055555555557, 25.95486111111111, 26.041666666666668, 26.12847222222222, 26.21527777777778, 26.302083333333332, 26.38888888888889, 26.475694444444443, 26.5625, 26.649305555555557, 26.73611111111111, 26.822916666666668, 26.90972222222222, 26.99652777777778, 27.083333333333332, 27.17013888888889, 27.256944444444443, 27.34375, 27.430555555555557, 27.51736111111111, 27.604166666666668, 27.69097222222222, 27.77777777777778, 27.864583333333332, 27.95138888888889, 28.038194444444443, 28.125, 28.211805555555557, 28.29861111111111, 28.385416666666668, 28.47222222222222, 28.55902777777778, 28.645833333333332, 28.73263888888889, 28.819444444444443, 28.90625, 28.993055555555557, 29.07986111111111, 29.166666666666668, 29.25347222222222, 29.34027777777778, 29.427083333333332, 29.51388888888889, 29.600694444444443, 29.6875, 29.774305555555557, 29.86111111111111, 29.947916666666668, 30.03472222222222, 30.12152777777778, 30.208333333333332, 30.29513888888889, 30.381944444444443, 30.46875, 30.555555555555557, 30.64236111111111, 30.729166666666668, 30.81597222222222, 30.90277777777778, 30.989583333333332, 31.07638888888889, 31.163194444444443, 31.25, 31.336805555555557, 31.42361111111111, 31.510416666666668, 31.59722222222222, 31.68402777777778, 31.770833333333332, 31.85763888888889, 31.944444444444443, 32.03125, 32.11805555555556, 32.204861111111114, 32.291666666666664, 32.37847222222222, 32.46527777777778, 32.552083333333336, 32.638888888888886, 32.72569444444444, 32.8125, 32.89930555555556, 32.986111111111114, 33.072916666666664, 33.15972222222222, 33.24652777777778, 33.333333333333336, 33.420138888888886, 33.50694444444444, 33.59375, 33.68055555555556, 33.767361111111114, 33.854166666666664, 33.94097222222222, 34.02777777777778, 34.114583333333336, 34.201388888888886, 34.28819444444444, 34.375, 34.46180555555556, 34.548611111111114, 34.635416666666664, 34.72222222222222, 34.80902777777778, 34.895833333333336, 34.982638888888886, 35.06944444444444, 35.15625, 35.24305555555556, 35.329861111111114, 35.416666666666664, 35.50347222222222, 35.59027777777778, 35.677083333333336, 35.763888888888886, 35.85069444444444, 35.9375, 36.02430555555556, 36.111111111111114, 36.197916666666664, 36.28472222222222, 36.37152777777778, 36.458333333333336, 36.545138888888886, 36.63194444444444, 36.71875, 36.80555555555556, 36.892361111111114, 36.979166666666664, 37.06597222222222, 37.15277777777778, 37.239583333333336, 37.326388888888886, 37.41319444444444, 37.5, 37.58680555555556, 37.673611111111114, 37.760416666666664, 37.84722222222222, 37.93402777777778, 38.020833333333336, 38.107638888888886, 38.19444444444444, 38.28125, 38.36805555555556, 38.454861111111114, 38.541666666666664, 38.62847222222222, 38.71527777777778, 38.802083333333336, 38.888888888888886, 38.97569444444444, 39.0625, 39.14930555555556, 39.236111111111114, 39.322916666666664, 39.40972222222222, 39.49652777777778, 39.583333333333336, 39.670138888888886, 39.75694444444444, 39.84375, 39.93055555555556, 40.017361111111114, 40.104166666666664, 40.19097222222222, 40.27777777777778, 40.364583333333336, 40.451388888888886, 40.53819444444444, 40.625, 40.71180555555556, 40.798611111111114, 40.885416666666664, 40.97222222222222, 41.05902777777778, 41.145833333333336, 41.232638888888886, 41.31944444444444, 41.40625, 41.49305555555556, 41.579861111111114, 41.666666666666664, 41.75347222222222, 41.84027777777778, 41.927083333333336, 42.013888888888886, 42.10069444444444, 42.1875, 42.27430555555556, 42.361111111111114, 42.447916666666664, 42.53472222222222, 42.62152777777778, 42.708333333333336, 42.795138888888886, 42.88194444444444, 42.96875, 43.05555555555556, 43.142361111111114, 43.229166666666664, 43.31597222222222, 43.40277777777778, 43.489583333333336, 43.576388888888886, 43.66319444444444, 43.75, 43.83680555555556, 43.923611111111114, 44.010416666666664, 44.09722222222222, 44.18402777777778, 44.270833333333336, 44.357638888888886, 44.44444444444444, 44.53125, 44.61805555555556, 44.704861111111114, 44.791666666666664, 44.87847222222222, 44.96527777777778, 45.052083333333336, 45.138888888888886, 45.22569444444444, 45.3125, 45.39930555555556, 45.486111111111114, 45.572916666666664, 45.65972222222222, 45.74652777777778, 45.833333333333336, 45.920138888888886, 46.00694444444444, 46.09375, 46.18055555555556, 46.267361111111114, 46.354166666666664, 46.44097222222222, 46.52777777777778, 46.614583333333336, 46.701388888888886, 46.78819444444444, 46.875, 46.96180555555556, 47.048611111111114, 47.135416666666664, 47.22222222222222, 47.30902777777778, 47.395833333333336, 47.482638888888886, 47.56944444444444, 47.65625, 47.74305555555556, 47.829861111111114, 47.916666666666664, 48.00347222222222, 48.09027777777778, 48.177083333333336, 48.263888888888886, 48.35069444444444, 48.4375, 48.52430555555556, 48.611111111111114, 48.697916666666664, 48.78472222222222, 48.87152777777778, 48.958333333333336, 49.045138888888886, 49.13194444444444, 49.21875, 49.30555555555556, 49.392361111111114, 49.479166666666664, 49.56597222222222, 49.65277777777778, 49.739583333333336, 49.826388888888886, 49.91319444444444, 50.0, 50.08680555555556, 50.173611111111114, 50.260416666666664, 50.34722222222222, 50.43402777777778, 50.520833333333336, 50.607638888888886, 50.69444444444444, 50.78125, 50.86805555555556, 50.954861111111114, 51.041666666666664, 51.12847222222222, 51.21527777777778, 51.302083333333336, 51.388888888888886, 51.47569444444444, 51.5625, 51.64930555555556, 51.736111111111114, 51.822916666666664, 51.90972222222222, 51.99652777777778, 52.083333333333336, 52.170138888888886, 52.25694444444444, 52.34375, 52.43055555555556, 52.517361111111114, 52.604166666666664, 52.69097222222222, 52.77777777777778, 52.864583333333336, 52.951388888888886, 53.03819444444444, 53.125, 53.21180555555556, 53.298611111111114, 53.385416666666664, 53.47222222222222, 53.55902777777778, 53.645833333333336, 53.732638888888886, 53.81944444444444, 53.90625, 53.99305555555556, 54.079861111111114, 54.166666666666664, 54.25347222222222, 54.34027777777778, 54.427083333333336, 54.513888888888886, 54.60069444444444, 54.6875, 54.77430555555556, 54.861111111111114, 54.947916666666664, 55.03472222222222, 55.12152777777778, 55.208333333333336, 55.295138888888886, 55.38194444444444, 55.46875, 55.55555555555556, 55.642361111111114, 55.729166666666664, 55.81597222222222, 55.90277777777778, 55.989583333333336, 56.076388888888886, 56.16319444444444, 56.25, 56.33680555555556, 56.423611111111114, 56.510416666666664, 56.59722222222222, 56.68402777777778, 56.770833333333336, 56.857638888888886, 56.94444444444444, 57.03125, 57.11805555555556, 57.204861111111114, 57.291666666666664, 57.37847222222222, 57.46527777777778, 57.552083333333336, 57.638888888888886, 57.72569444444444, 57.8125, 57.89930555555556, 57.986111111111114, 58.072916666666664, 58.15972222222222, 58.24652777777778, 58.333333333333336, 58.420138888888886, 58.50694444444444, 58.59375, 58.68055555555556, 58.767361111111114, 58.854166666666664, 58.94097222222222, 59.02777777777778, 59.114583333333336, 59.201388888888886, 59.28819444444444, 59.375, 59.46180555555556, 59.548611111111114, 59.635416666666664, 59.72222222222222, 59.80902777777778, 59.895833333333336, 59.982638888888886, 60.06944444444444, 60.15625, 60.24305555555556, 60.329861111111114, 60.416666666666664, 60.50347222222222, 60.59027777777778, 60.677083333333336, 60.763888888888886, 60.85069444444444, 60.9375, 61.02430555555556, 61.111111111111114, 61.197916666666664, 61.28472222222222, 61.37152777777778, 61.458333333333336, 61.545138888888886, 61.63194444444444, 61.71875, 61.80555555555556, 61.892361111111114, 61.979166666666664, 62.06597222222222, 62.15277777777778, 62.239583333333336, 62.326388888888886, 62.41319444444444, 62.5, 62.58680555555556, 62.673611111111114, 62.760416666666664, 62.84722222222222, 62.93402777777778, 63.020833333333336, 63.107638888888886, 63.19444444444444, 63.28125, 63.36805555555556, 63.454861111111114, 63.541666666666664, 63.62847222222222, 63.71527777777778, 63.802083333333336, 63.888888888888886, 63.97569444444444, 64.0625, 64.14930555555556, 64.23611111111111, 64.32291666666667, 64.40972222222223, 64.49652777777777, 64.58333333333333, 64.67013888888889, 64.75694444444444, 64.84375, 64.93055555555556, 65.01736111111111, 65.10416666666667, 65.19097222222223, 65.27777777777777, 65.36458333333333, 65.45138888888889, 65.53819444444444, 65.625, 65.71180555555556, 65.79861111111111, 65.88541666666667, 65.97222222222223, 66.05902777777777, 66.14583333333333, 66.23263888888889, 66.31944444444444, 66.40625, 66.49305555555556, 66.57986111111111, 66.66666666666667, 66.75347222222223, 66.84027777777777, 66.92708333333333, 67.01388888888889, 67.10069444444444, 67.1875, 67.27430555555556, 67.36111111111111, 67.44791666666667, 67.53472222222223, 67.62152777777777, 67.70833333333333, 67.79513888888889, 67.88194444444444, 67.96875, 68.05555555555556, 68.14236111111111, 68.22916666666667, 68.31597222222223, 68.40277777777777, 68.48958333333333, 68.57638888888889, 68.66319444444444, 68.75, 68.83680555555556, 68.92361111111111, 69.01041666666667, 69.09722222222223, 69.18402777777777, 69.27083333333333, 69.35763888888889, 69.44444444444444, 69.53125, 69.61805555555556, 69.70486111111111, 69.79166666666667, 69.87847222222223, 69.96527777777777, 70.05208333333333, 70.13888888888889, 70.22569444444444, 70.3125, 70.39930555555556, 70.48611111111111, 70.57291666666667, 70.65972222222223, 70.74652777777777, 70.83333333333333, 70.92013888888889, 71.00694444444444, 71.09375, 71.18055555555556, 71.26736111111111, 71.35416666666667, 71.44097222222223, 71.52777777777777, 71.61458333333333, 71.70138888888889, 71.78819444444444, 71.875, 71.96180555555556, 72.04861111111111, 72.13541666666667, 72.22222222222223, 72.30902777777777, 72.39583333333333, 72.48263888888889, 72.56944444444444, 72.65625, 72.74305555555556, 72.82986111111111, 72.91666666666667, 73.00347222222223, 73.09027777777777, 73.17708333333333, 73.26388888888889, 73.35069444444444, 73.4375, 73.52430555555556, 73.61111111111111, 73.69791666666667, 73.78472222222223, 73.87152777777777, 73.95833333333333, 74.04513888888889, 74.13194444444444, 74.21875, 74.30555555555556, 74.39236111111111, 74.47916666666667, 74.56597222222223, 74.65277777777777, 74.73958333333333, 74.82638888888889, 74.91319444444444, 75.0, 75.08680555555556, 75.17361111111111, 75.26041666666667, 75.34722222222223, 75.43402777777777, 75.52083333333333, 75.60763888888889, 75.69444444444444, 75.78125, 75.86805555555556, 75.95486111111111, 76.04166666666667, 76.12847222222223, 76.21527777777777, 76.30208333333333, 76.38888888888889, 76.47569444444444, 76.5625, 76.64930555555556, 76.73611111111111, 76.82291666666667, 76.90972222222223, 76.99652777777777, 77.08333333333333, 77.17013888888889, 77.25694444444444, 77.34375, 77.43055555555556, 77.51736111111111, 77.60416666666667, 77.69097222222223, 77.77777777777777, 77.86458333333333, 77.95138888888889, 78.03819444444444, 78.125, 78.21180555555556, 78.29861111111111, 78.38541666666667, 78.47222222222223, 78.55902777777777, 78.64583333333333, 78.73263888888889, 78.81944444444444, 78.90625, 78.99305555555556, 79.07986111111111, 79.16666666666667, 79.25347222222223, 79.34027777777777, 79.42708333333333, 79.51388888888889, 79.60069444444444, 79.6875, 79.77430555555556, 79.86111111111111, 79.94791666666667, 80.03472222222223, 80.12152777777777, 80.20833333333333, 80.29513888888889, 80.38194444444444, 80.46875, 80.55555555555556, 80.64236111111111, 80.72916666666667, 80.81597222222223, 80.90277777777777, 80.98958333333333, 81.07638888888889, 81.16319444444444, 81.25, 81.33680555555556, 81.42361111111111, 81.51041666666667, 81.59722222222223, 81.68402777777777, 81.77083333333333, 81.85763888888889, 81.94444444444444, 82.03125, 82.11805555555556, 82.20486111111111, 82.29166666666667, 82.37847222222223, 82.46527777777777, 82.55208333333333, 82.63888888888889, 82.72569444444444, 82.8125, 82.89930555555556, 82.98611111111111, 83.07291666666667, 83.15972222222223, 83.24652777777777, 83.33333333333333, 83.42013888888889, 83.50694444444444, 83.59375, 83.68055555555556, 83.76736111111111, 83.85416666666667, 83.94097222222223, 84.02777777777777, 84.11458333333333, 84.20138888888889, 84.28819444444444, 84.375, 84.46180555555556, 84.54861111111111, 84.63541666666667, 84.72222222222223, 84.80902777777777, 84.89583333333333, 84.98263888888889, 85.06944444444444, 85.15625, 85.24305555555556, 85.32986111111111, 85.41666666666667, 85.50347222222223, 85.59027777777777, 85.67708333333333, 85.76388888888889, 85.85069444444444, 85.9375, 86.02430555555556, 86.11111111111111, 86.19791666666667, 86.28472222222223, 86.37152777777777, 86.45833333333333, 86.54513888888889, 86.63194444444444, 86.71875, 86.80555555555556, 86.89236111111111, 86.97916666666667, 87.06597222222223, 87.15277777777777, 87.23958333333333, 87.32638888888889, 87.41319444444444, 87.5, 87.58680555555556, 87.67361111111111, 87.76041666666667, 87.84722222222223, 87.93402777777777, 88.02083333333333, 88.10763888888889, 88.19444444444444, 88.28125, 88.36805555555556, 88.45486111111111, 88.54166666666667, 88.62847222222223, 88.71527777777777, 88.80208333333333, 88.88888888888889, 88.97569444444444, 89.0625, 89.14930555555556, 89.23611111111111, 89.32291666666667, 89.40972222222223, 89.49652777777777, 89.58333333333333, 89.67013888888889, 89.75694444444444, 89.84375, 89.93055555555556, 90.01736111111111, 90.10416666666667, 90.19097222222223, 90.27777777777777, 90.36458333333333, 90.45138888888889, 90.53819444444444, 90.625, 90.71180555555556, 90.79861111111111, 90.88541666666667, 90.97222222222223, 91.05902777777777, 91.14583333333333, 91.23263888888889, 91.31944444444444, 91.40625, 91.49305555555556, 91.57986111111111, 91.66666666666667, 91.75347222222223, 91.84027777777777, 91.92708333333333, 92.01388888888889, 92.10069444444444, 92.1875, 92.27430555555556, 92.36111111111111, 92.44791666666667, 92.53472222222223, 92.62152777777777, 92.70833333333333, 92.79513888888889, 92.88194444444444, 92.96875, 93.05555555555556, 93.14236111111111, 93.22916666666667, 93.31597222222223, 93.40277777777777, 93.48958333333333, 93.57638888888889, 93.66319444444444, 93.75, 93.83680555555556, 93.92361111111111, 94.01041666666667, 94.09722222222223, 94.18402777777777, 94.27083333333333, 94.35763888888889, 94.44444444444444, 94.53125, 94.61805555555556, 94.70486111111111, 94.79166666666667, 94.87847222222223, 94.96527777777777, 95.05208333333333, 95.13888888888889, 95.22569444444444, 95.3125, 95.39930555555556, 95.48611111111111, 95.57291666666667, 95.65972222222223, 95.74652777777777, 95.83333333333333, 95.92013888888889, 96.00694444444444, 96.09375, 96.18055555555556, 96.26736111111111, 96.35416666666667, 96.44097222222223, 96.52777777777777, 96.61458333333333, 96.70138888888889, 96.78819444444444, 96.875, 96.96180555555556, 97.04861111111111, 97.13541666666667, 97.22222222222223, 97.30902777777777, 97.39583333333333, 97.48263888888889, 97.56944444444444, 97.65625, 97.74305555555556, 97.82986111111111, 97.91666666666667, 98.00347222222223, 98.09027777777777, 98.17708333333333, 98.26388888888889, 98.35069444444444, 98.4375, 98.52430555555556, 98.61111111111111, 98.69791666666667, 98.78472222222223, 98.87152777777777, 98.95833333333333, 99.04513888888889, 99.13194444444444, 99.21875, 99.30555555555556, 99.39236111111111, 99.47916666666667, 99.56597222222223, 99.65277777777777, 99.73958333333333, 99.82638888888889, 99.91319444444444, 100.0]
+[0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0, 27.0, 28.0, 29.0, 30.0, 31.0, 32.0, 33.0, 34.0, 35.0, 36.0, 37.0, 38.0, 39.0, 40.0, 41.0, 42.0, 43.0, 44.0, 45.0, 46.0, 47.0, 48.0, 49.0, 50.0, 51.0, 52.0, 53.0, 54.0, 55.0, 56.0, 57.0, 58.0, 59.0, 60.0, 61.0, 62.0, 63.0, 64.0, 65.0, 66.0, 67.0, 68.0, 69.0, 70.0, 71.0, 72.0, 73.0, 74.0, 75.0, 76.0, 77.0, 78.0, 79.0, 80.0, 81.0, 82.0, 83.0, 84.0, 85.0, 86.0, 87.0, 88.0, 89.0, 90.0, 91.0, 92.0, 93.0, 94.0, 95.0, 96.0, 97.0, 98.0, 99.0, 100.0]
+[D] Saving plot of losses as '/pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/training_process_2018-05-08_11-21-49.pdf'
+Training took  13279.593518972397  s
+Starting seeding generation with len(waveform_bins)= 58515
+0 / 24000
+100 / 24000
+200 / 24000
+300 / 24000
+400 / 24000
+500 / 24000
+600 / 24000
+700 / 24000
+800 / 24000
+900 / 24000
+1000 / 24000
+1100 / 24000
+1200 / 24000
+1300 / 24000
+1400 / 24000
+1500 / 24000
+1600 / 24000
+1700 / 24000
+1800 / 24000
+1900 / 24000
+2000 / 24000
+2100 / 24000
+2200 / 24000
+2300 / 24000
+2400 / 24000
+2500 / 24000
+2600 / 24000
+2700 / 24000
+2800 / 24000
+2900 / 24000
+3000 / 24000
+3100 / 24000
+3200 / 24000
+3300 / 24000
+3400 / 24000
+3500 / 24000
+3600 / 24000
+3700 / 24000
+3800 / 24000
+3900 / 24000
+4000 / 24000
+4100 / 24000
+4200 / 24000
+4300 / 24000
+4400 / 24000
+4500 / 24000
+4600 / 24000
+4700 / 24000
+4800 / 24000
+4900 / 24000
+5000 / 24000
+5100 / 24000
+5200 / 24000
+5300 / 24000
+5400 / 24000
+5500 / 24000
+5600 / 24000
+5700 / 24000
+5800 / 24000
+5900 / 24000
+6000 / 24000
+6100 / 24000
+6200 / 24000
+6300 / 24000
+6400 / 24000
+6500 / 24000
+6600 / 24000
+6700 / 24000
+6800 / 24000
+6900 / 24000
+7000 / 24000
+7100 / 24000
+7200 / 24000
+7300 / 24000
+7400 / 24000
+7500 / 24000
+7600 / 24000
+7700 / 24000
+7800 / 24000
+7900 / 24000
+8000 / 24000
+8100 / 24000
+8200 / 24000
+8300 / 24000
+8400 / 24000
+8500 / 24000
+8600 / 24000
+8700 / 24000
+8800 / 24000
+8900 / 24000
+9000 / 24000
+9100 / 24000
+9200 / 24000
+9300 / 24000
+9400 / 24000
+9500 / 24000
+9600 / 24000
+9700 / 24000
+9800 / 24000
+9900 / 24000
+10000 / 24000
+10100 / 24000
+10200 / 24000
+10300 / 24000
+10400 / 24000
+10500 / 24000
+10600 / 24000
+10700 / 24000
+10800 / 24000
+10900 / 24000
+11000 / 24000
+11100 / 24000
+11200 / 24000
+11300 / 24000
+11400 / 24000
+11500 / 24000
+11600 / 24000
+11700 / 24000
+11800 / 24000
+11900 / 24000
+12000 / 24000
+12100 / 24000
+12200 / 24000
+12300 / 24000
+12400 / 24000
+12500 / 24000
+12600 / 24000
+12700 / 24000
+12800 / 24000
+12900 / 24000
+13000 / 24000
+13100 / 24000
+13200 / 24000
+13300 / 24000
+13400 / 24000
+13500 / 24000
+13600 / 24000
+13700 / 24000
+13800 / 24000
+13900 / 24000
+14000 / 24000
+14100 / 24000
+14200 / 24000
+14300 / 24000
+14400 / 24000
+14500 / 24000
+14600 / 24000
+14700 / 24000
+14800 / 24000
+14900 / 24000
+15000 / 24000
+15100 / 24000
+15200 / 24000
+15300 / 24000
+15400 / 24000
+15500 / 24000
+15600 / 24000
+15700 / 24000
+15800 / 24000
+15900 / 24000
+16000 / 24000
+16100 / 24000
+16200 / 24000
+16300 / 24000
+16400 / 24000
+16500 / 24000
+16600 / 24000
+16700 / 24000
+16800 / 24000
+16900 / 24000
+17000 / 24000
+17100 / 24000
+17200 / 24000
+17300 / 24000
+17400 / 24000
+17500 / 24000
+17600 / 24000
+17700 / 24000
+17800 / 24000
+17900 / 24000
+18000 / 24000
+18100 / 24000
+18200 / 24000
+18300 / 24000
+18400 / 24000
+18500 / 24000
+18600 / 24000
+18700 / 24000
+18800 / 24000
+18900 / 24000
+19000 / 24000
+19100 / 24000
+19200 / 24000
+19300 / 24000
+19400 / 24000
+19500 / 24000
+19600 / 24000
+19700 / 24000
+19800 / 24000
+19900 / 24000
+20000 / 24000
+20100 / 24000
+20200 / 24000
+20300 / 24000
+20400 / 24000
+20500 / 24000
+20600 / 24000
+20700 / 24000
+20800 / 24000
+20900 / 24000
+21000 / 24000
+21100 / 24000
+21200 / 24000
+21300 / 24000
+21400 / 24000
+21500 / 24000
+21600 / 24000
+21700 / 24000
+21800 / 24000
+21900 / 24000
+22000 / 24000
+22100 / 24000
+22200 / 24000
+22300 / 24000
+22400 / 24000
+22500 / 24000
+22600 / 24000
+22700 / 24000
+22800 / 24000
+22900 / 24000
+23000 / 24000
+23100 / 24000
+23200 / 24000
+23300 / 24000
+23400 / 24000
+23500 / 24000
+23600 / 24000
+23700 / 24000
+23800 / 24000
+23900 / 24000
+[D] Saving entropy plot as '/pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/entropy_2018-05-08_11-21-49.pdf'
+[D] Saving plot of the waveform as '/pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/out_2018-05-08_11-21-49.pdf'
+[D] Saving spectogram as '/pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/out_spectograms_2018-05-08_11-21-49.pdf'
+[D] Saving generated wav as /pub/tmp/xslani06/wavenet/2018-05-08_11-21-49_8_drop025_small/pred_2018-05-08_11-21-49.wav

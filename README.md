@@ -36,3 +36,5 @@ These datasets were tested:
 
 ## Output
 The output directory storing training and generation results is dictated by `output_dir` attribute in `parameters.json` if set, otherwise a directory identified by a timestamp is created at the root level.
+
+Check out the published thesis [here](https://wis.fit.vutbr.cz/FIT/st/rp.php/rp/2017/BP/20864.pdf).

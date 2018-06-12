@@ -1,5 +1,5 @@
 # WaveNet for music generation
-[WaveNet](https://arxiv.org/abs/1609.03499) is a generative model for raw audio waveforms, introduced by van den Oord et al in 2016, that has since found many applications in multiple domains. The purpose of this repo is to form a codebase that would use wavenet to generate music. 
+[WaveNet](https://arxiv.org/abs/1609.03499) is a generative model for raw audio waveforms, introduced by van den Oord et al in 2016, that has since found many applications in multiple domains. The purpose of this repo is to form a codebase that would use wavenet to generate music. A lot of WaveNet's architecture was repurposed from [ibab's implementation](https://wis.fit.vutbr.cz/FIT/st/rp.php/rp/2017/BP/20864.pdf), as well as [fast-wavenet](https://github.com/tomlepaine/fast-wavenet), kudos to them.
 
 ## How to use
 Prerequisites:
@@ -36,3 +36,5 @@ These datasets were tested:
 
 ## Output
 The output directory storing training and generation results is dictated by `output_dir` attribute in `parameters.json` if set, otherwise a directory identified by a timestamp is created at the root level.
+
+Check out the published thesis [here](https://wis.fit.vutbr.cz/FIT/st/rp.php/rp/2017/BP/20864.pdf).
